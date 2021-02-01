@@ -5,13 +5,13 @@ Things like...
 (such as python version etc.))
 
 >>> import collections
->>> modules_info_df(collections)
+>>> modules_info_df(collections)  #doctest: +SKIP
                       lines  empty_lines  ...  num_of_functions  num_of_classes
 collections.__init__   1280          189  ...                 1               9
 collections.abc           3            1  ...                 0              25
 <BLANKLINE>
 [2 rows x 7 columns]
->>> modules_info_df_stats(collections.abc)
+>>> modules_info_df_stats(collections.abc)   #doctest: +SKIP
 lines                      1283.000000
 empty_lines                 190.000000
 comment_lines                79.000000
@@ -24,7 +24,7 @@ comment_lines_ratio           0.061574
 function_lines_ratio          0.107560
 mean_lines_per_function     138.000000
 dtype: float64
->>> stats_of(['urllib', 'json', 'collections'])
+>>> stats_of(['urllib', 'json', 'collections'])   #doctest: +SKIP
                               urllib         json  collections
 empty_lines_ratio           0.157293     0.136503     0.148090
 comment_lines_ratio         0.075217     0.038344     0.061574
@@ -117,15 +117,13 @@ def get_objs(root, k):
     )
 
     def obj_filt(
-            obj,
+        obj,
     ):  # to make sure we only analyze objects defined in module itself, not imported
         obj_module = getattr(obj, "__module__", None)
         if obj_module:
             return obj_module == name
 
-    objs = list(
-        filter(obj_filt, (vv._source for vv in module_store.values()))
-    )
+    objs = list(filter(obj_filt, (vv._source for vv in module_store.values())))
     return objs
 
 
@@ -161,7 +159,7 @@ def modules_info_gen(root, filepath_filt=only_py_ext, on_error=DFLT_ON_ERROR):
             )
 
             def obj_filt(
-                    obj,
+                obj,
             ):  # to make sure we only analyze objects defined in module itself, not imported
                 obj_module = getattr(obj, "__module__", None)
                 if obj_module:
@@ -170,7 +168,9 @@ def modules_info_gen(root, filepath_filt=only_py_ext, on_error=DFLT_ON_ERROR):
             objs = list(
                 filter(obj_filt, (vv._source for vv in module_store.values()))
             )
-            yield _code_stats_dict_for_file_and_objects(code_str, filepath, objs)
+            yield _code_stats_dict_for_file_and_objects(
+                code_str, filepath, objs
+            )
         except Exception as e:
             if on_error == "print":
                 print(f"Problem with {filepath}: {str(e)[:50]}\n")
@@ -190,26 +190,21 @@ def _code_stats_dict_for_file_and_objects(code_str, filepath, objs):
             bool(empty_line.match(line)) for line in lines(code_str)
         ),
         "comment_lines": sum(
-            bool(comment_line_p.match(line))
-            for line in lines(code_str)
+            bool(comment_line_p.match(line)) for line in lines(code_str)
         ),
-        "docs_lines": sum(
-            len(lines(obj.__doc__ or "")) for obj in objs
-        ),
+        "docs_lines": sum(len(lines(obj.__doc__ or "")) for obj in objs),
         "function_lines": sum(
             _num_lines_of_function_code(obj)
             for obj in objs
             if isinstance(obj, FunctionType)
         ),
-        "num_of_functions": sum(
-            isinstance(obj, FunctionType) for obj in objs
-        ),
+        "num_of_functions": sum(isinstance(obj, FunctionType) for obj in objs),
         "num_of_classes": sum(isinstance(obj, type) for obj in objs),
     }
 
 
 def modules_info_df(
-        root, filepath_filt=only_py_ext, index_field=None, on_error=DFLT_ON_ERROR
+    root, filepath_filt=only_py_ext, index_field=None, on_error=DFLT_ON_ERROR
 ):
     """
     A pandas DataFrame of stats of the root (package or directory thereof).
@@ -221,7 +216,8 @@ def modules_info_df(
     :return: A DataFrame whose rows contain information for each module
 
     >>> import urllib
-    >>> modules_info_df(urllib)
+    >>> df = modules_info_df(urllib)
+    >>> df  #doctest: +SKIP
                         lines  empty_lines  ...  num_of_functions  num_of_classes
     urllib.error           78           18  ...                 0               3
     urllib.request       2774          410  ...                23              28
@@ -250,7 +246,7 @@ def modules_info_df(
 
 
 def modules_info_df_stats(
-        root, filepath_filt=only_py_ext, index_field=None, on_error=DFLT_ON_ERROR
+    root, filepath_filt=only_py_ext, index_field=None, on_error=DFLT_ON_ERROR
 ):
     """
     A pandas Series of statistics over all modules of some root (package or directory thereof).
@@ -262,7 +258,8 @@ def modules_info_df_stats(
     :return: A Series whose rows containing statistics
 
     >>> import json
-    >>> modules_info_df_stats(json)
+    >>> df = modules_info_df_stats(json)
+    >>> df  #doctest: +SKIP
     lines                      1301.000000
     empty_lines                 178.000000
     comment_lines                50.000000
@@ -275,7 +272,7 @@ def modules_info_df_stats(
     function_lines_ratio          0.449654
     mean_lines_per_function      41.785714
     dtype: float64
-    >>> modules_info_df_stats('collections.abc')
+    >>> modules_info_df_stats('collections.abc')  #doctest: +SKIP
     lines                      1276.000000
     empty_lines                 190.000000
     comment_lines                73.000000
@@ -297,17 +294,17 @@ def modules_info_df_stats(
             df[f"{col}_ratio"] = df[col] / df["lines"]
     if {"num_of_functions", "function_lines"}.issubset(cols):
         df["mean_lines_per_function"] = (
-                df["function_lines"] / df["num_of_functions"]
+            df["function_lines"] / df["num_of_functions"]
         )
 
     return df
 
 
 def stats_of(
-        modules,
-        filepath_filt=only_py_ext,
-        index_field=None,
-        on_error=DFLT_ON_ERROR,
+    modules,
+    filepath_filt=only_py_ext,
+    index_field=None,
+    on_error=DFLT_ON_ERROR,
 ):
     """
     A dataframe of stats of the input modules.
@@ -320,7 +317,10 @@ def stats_of(
         Values are 'ignore', 'print', or 'raise'
     :return:
 
-    >>> stats_of(['urllib', 'json', 'collections'])
+    >>> df = stats_of(['urllib', 'json', 'collections'])
+    >>> assert set(df.index.values).issuperset(
+    ...     {'empty_lines_ratio', 'comment_lines_ratio', 'function_lines_ratio', 'mean_lines_per_function'})
+    >>> stats_of(['urllib', 'json', 'collections'])  #doctest: +SKIP
                                   urllib         json  collections
     empty_lines_ratio           0.157293     0.136503     0.148090
     comment_lines_ratio         0.075217     0.038344     0.061574
@@ -335,8 +335,12 @@ def stats_of(
     num_of_classes             55.000000     3.000000    34.000000
     """
 
-    stats_func = partial(modules_info_df_stats,
-                         filepath_filt=filepath_filt, index_field=index_field, on_error=on_error)
+    stats_func = partial(
+        modules_info_df_stats,
+        filepath_filt=filepath_filt,
+        index_field=index_field,
+        on_error=on_error,
+    )
 
     if isinstance(modules, str):
         modules = [modules]
