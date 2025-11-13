@@ -54,8 +54,8 @@ psep = os.path.sep
 
 DFLT_ON_ERROR = "ignore"  # could be 'print', 'ignore', or 'raise'
 
-empty_line = re.compile("^\s*$")
-comment_line_p = re.compile("^\s+#.+$")
+empty_line = re.compile(r"^\s*$")
+comment_line_p = re.compile(r"^\s+#.+$")
 line_p = re.compile("\n|\r|\n\r|\r\n")
 only_py_ext = lambda path: path.endswith(".py")
 no_test_folder = lambda path: "test" not in path.split(psep)
