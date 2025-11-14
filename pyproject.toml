@@ -6,19 +6,26 @@ build-backend = "hatchling.build"
 
 [project]
 name = "umpyre"
-version = "0.0.2"
-description = "Code analysis and quality metrics"
+version = "0.1.0"
+description = "Code analysis and quality metrics tracking system for CI/CD"
 readme = "README.md"
 requires-python = ">=3.10"
 keywords = [
     "code analysis",
-    "SOLID",
+    "metrics",
+    "CI/CD",
+    "quality tracking",
 ]
 authors = []
 dependencies = [
     "py2store",
     "pandas",
+    "pyyaml",
+    "requests",
 ]
+
+[project.scripts]
+umpyre = "umpyre.cli:main"
 
 [project.license]
 text = "Apache-2.0"
