@@ -46,9 +46,9 @@ from functools import partial
 import collections
 
 import pandas as pd
-from py2store import filt_iter
-from py2store.sources import Attrs
-from py2store.filesys import FileStringReader
+from dol import filt_iter
+from dol.sources import Attrs
+from dol.filesys import FileStringReader
 
 psep = os.path.sep
 
@@ -355,7 +355,7 @@ def stats_of(
 
 
 if __name__ == "__main__":
-    from py2store.util import ModuleNotFoundErrorNiceMessage
+    from dol.util import ModuleNotFoundErrorNiceMessage
 
     with ModuleNotFoundErrorNiceMessage():
         import argh

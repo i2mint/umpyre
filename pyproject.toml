@@ -18,7 +18,7 @@ keywords = [
 ]
 authors = []
 dependencies = [
-    "py2store",
+    "dol",
     "pandas",
     "pyyaml",
     "requests",

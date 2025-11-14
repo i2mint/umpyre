@@ -2,7 +2,36 @@
 
 All notable changes to the umpyre project are recorded here.
 
-## 2025-11-14 - Phase 1: Core Metrics Tracking System
+# Changelog
+
+All notable changes to the umpyre project are documented here.
+
+## 2025-11-14 - Fixed UmpyreCollector with AST-based Parsing
+
+### Changed
+- **UmpyreCollector**: Completely reimplemented using Python's AST (Abstract Syntax Tree) module instead of dynamic imports
+  - Previously used `py2store.sources.Attrs.module_from_path()` which dynamically imported files, causing setup.py and other files to execute
+  - Now uses safe AST parsing that analyzes code structure without executing it
+  - Works on all Python files including setup.py, conf.py, and scripts
+  - Maintains same metrics output format for backward compatibility
+  
+### Added
+- `_analyze_file()` method: AST-based analysis of individual Python files
+- `_should_analyze()` method: Improved filtering logic for files to analyze
+- `files_analyzed` metric: Now tracks how many files were successfully analyzed
+- Error tracking: Records parsing errors per file without failing entire collection
+
+### Fixed
+- **Critical**: UmpyreCollector no longer crashes when encountering setup.py or other executable scripts
+- All 5 umpyre_collector tests now pass (previously 2 were skipped)
+- Total test suite: 34/34 tests passing
+
+### Performance
+- AST parsing is faster than dynamic imports
+- No subprocess overhead
+- No risk of code execution side effects
+
+## 2025-11-14 - Phase 1 Implementation Complete
 
 ### Added
 

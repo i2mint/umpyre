@@ -7,12 +7,8 @@ import pytest
 from umpyre.collectors.umpyre_collector import UmpyreCollector
 
 
-@pytest.mark.skip(reason="python_code_stats has issues with some directory structures")
 def test_umpyre_collector_basic():
-    """Should collect basic code statistics."""
-    # Note: UmpyreCollector uses the existing python_code_stats module
-    # which may have compatibility issues with temporary directories.
-    # For real packages (with proper __init__.py and module structure), it works.
+    """Should collect basic code statistics using AST parsing."""
     # Test with real umpyre package itself
     import umpyre
     import os
@@ -22,15 +18,15 @@ def test_umpyre_collector_basic():
     metrics = collector.collect()
 
     # Should have collected metrics from umpyre package itself
-    assert metrics["num_functions"] > 0 or metrics["total_lines"] > 0
-    # If it fails, it should have an error key
-    if metrics["num_functions"] == 0 and metrics["total_lines"] == 0:
-        assert "error" in metrics
+    assert metrics["num_functions"] > 0
+    assert metrics["total_lines"] > 0
+    assert metrics["files_analyzed"] > 0
+    # Should not have errors (AST parsing is safe)
+    assert "error" not in metrics
 
 
-@pytest.mark.skip(reason="python_code_stats has issues with some directory structures")
 def test_umpyre_collector_exclude_dirs():
-    """Should exclude specified directories."""
+    """Should exclude specified directories using AST parsing."""
     import umpyre
     import os
 
@@ -45,10 +41,9 @@ def test_umpyre_collector_exclude_dirs():
     collector2 = UmpyreCollector(root_path=umpyre_root, exclude_dirs=["tests"])
     metrics2 = collector2.collect()
 
-    # With tests excluded, should have fewer or equal functions
-    # (unless there are errors, in which case both might be 0)
-    if "error" not in metrics1 and "error" not in metrics2:
-        assert metrics2["num_functions"] <= metrics1["num_functions"]
+    # With tests excluded, should have fewer or equal functions and files
+    assert metrics2["num_functions"] <= metrics1["num_functions"]
+    assert metrics2["files_analyzed"] < metrics1["files_analyzed"]
 
 
 def test_umpyre_collector_empty_directory():
