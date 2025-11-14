@@ -2,6 +2,7 @@
 
 import os
 import ast
+import re
 from pathlib import Path
 from typing import Optional
 
@@ -51,7 +52,7 @@ class UmpyreCollector(MetricCollector):
             exclude_dirs: List of directory names to exclude (e.g., ['tests', 'examples'])
         """
         super().__init__()
-        self.root_path = root_path or os.getcwd()
+        self.root_path = Path(root_path or os.getcwd())
         self.exclude_dirs = exclude_dirs or []
 
     def _analyze_file(self, filepath: Path) -> dict:
@@ -122,17 +123,80 @@ class UmpyreCollector(MetricCollector):
                 'error': str(e),
             }
 
-    def _should_analyze(self, filepath: Path) -> bool:
-        """Check if file should be analyzed."""
-        if not filepath.suffix == '.py':
-            return False
+    def _should_analyze(self, file_path: Path) -> bool:
+        """
+        Check if file should be analyzed.
 
-        # Check exclude directories
+        Args:
+            file_path: Path to check
+
+        Returns:
+            True if file should be analyzed
+        """
+        # Skip excluded directories
         for exclude_dir in self.exclude_dirs:
-            if exclude_dir in filepath.parts:
+            if exclude_dir in file_path.parts:
                 return False
 
         return True
+
+    def _extract_pypi_version(self) -> Optional[str]:
+        """
+        Extract PyPI version from package files.
+
+        Checks in order:
+        1. pyproject.toml (version = "x.y.z")
+        2. setup.py (__version__ or version=)
+        3. __init__.py (__version__)
+
+        Returns:
+            Version string or None if not found
+        """
+        # Try pyproject.toml first
+        pyproject = self.root_path / "pyproject.toml"
+        if pyproject.exists():
+            try:
+                content = pyproject.read_text()
+                # Look for version = "x.y.z" in [project] or [tool.poetry] section
+                match = re.search(
+                    r'version\s*=\s*["\']([\d\.]+(?:[-\w\.]*)?)["\']', content
+                )
+                if match:
+                    return match.group(1)
+            except Exception:
+                pass
+
+        # Try setup.py
+        setup_py = self.root_path / "setup.py"
+        if setup_py.exists():
+            try:
+                content = setup_py.read_text()
+                # Look for __version__ = "x.y.z" or version="x.y.z"
+                match = re.search(
+                    r'(?:__version__|version)\s*=\s*["\']([\d\.]+(?:[-\w\.]*)?)["\']',
+                    content,
+                )
+                if match:
+                    return match.group(1)
+            except Exception:
+                pass
+
+        # Try package __init__.py
+        # Look for {root_path}/{package_name}/__init__.py
+        for init_file in self.root_path.rglob("__init__.py"):
+            # Only check top-level package (max 1 level deep)
+            if len(init_file.relative_to(self.root_path).parts) <= 2:
+                try:
+                    content = init_file.read_text()
+                    match = re.search(
+                        r'__version__\s*=\s*["\']([\d\.]+(?:[-\w\.]*)?)["\']', content
+                    )
+                    if match:
+                        return match.group(1)
+                except Exception:
+                    continue
+
+        return None
 
     def collect(self) -> dict:
         """
@@ -213,6 +277,7 @@ class UmpyreCollector(MetricCollector):
                     else 0.0
                 ),
                 'files_analyzed': files_analyzed,
+                'pypi_version': self._extract_pypi_version(),
             }
 
             if errors:

@@ -39,17 +39,34 @@ runs:
       run: |
         pip install umpyre coverage wily bandit interrogate
     
-    - name: Collect Metrics
+    - name: Collect and Store Metrics
       shell: bash
-      env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
-        GITHUB_REPOSITORY: ${{ github.repository }}
-        GITHUB_SHA: ${{ github.sha }}
       run: |
-        python -m umpyre.cli collect \
-          --config ${{ inputs.config-path }} \
-          --commit ${{ github.sha }}
-
-branding:
+        echo "::group::Collecting Code Metrics"
+        
+        # Set up error handling - continue even if collection fails
+        set +e
+        
+        # Run umpyre collect
+        if [ -f "${{ inputs.config-path }}" ]; then
+          python -m umpyre.cli collect --config "${{ inputs.config-path }}"
+          EXIT_CODE=$?
+        else
+          python -m umpyre.cli collect
+          EXIT_CODE=$?
+        fi
+        
+        # Report status but don't fail
+        if [ $EXIT_CODE -eq 0 ]; then
+          echo "✅ Metrics collection completed successfully"
+        else
+          echo "⚠️ Metrics collection failed with exit code $EXIT_CODE"
+          echo "This is informational only - CI pipeline continues"
+        fi
+        
+        echo "::endgroup::"
+        
+        # Always exit successfully to not break CI
+        exit 0branding:
   icon: 'bar-chart-2'
   color: 'blue'

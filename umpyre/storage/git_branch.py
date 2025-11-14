@@ -62,23 +62,32 @@ class GitBranchStorage:
             self._fetch_branch(branch)
             self._checkout_branch(branch, tmpdir)
 
-            # Create directory structure
-            timestamp = datetime.now().strftime("%Y-%m")
-            history_dir = tmpdir / "history" / timestamp
-            history_dir.mkdir(parents=True, exist_ok=True)
+            # Create history directory (flat structure)
+            history_dir = tmpdir / "history"
+            history_dir.mkdir(exist_ok=True)
 
-            # Write metrics in requested formats
-            timestamp_str = datetime.now().strftime("%Y-%m-%d_%H%M%S")
-            filename_base = f"{timestamp_str}_{commit_sha[:7]}"
+            # Build filename: YYYY_MM_DD_HH_MM_SS__shahash__version.json
+            timestamp = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+            commit_short = commit_sha[:7]
+
+            # Extract pypi_version if available (use 'none' if not found)
+            pypi_version = (
+                metrics.get('metrics', {}).get('umpyre_stats', {}).get('pypi_version')
+                or 'none'
+            )
+
+            # Filename format: timestamp__sha__version (parseable, chronological)
+            filename_base = f"{timestamp}__{commit_short}__{pypi_version}"
 
             for fmt in formats:
                 if fmt == "json":
                     # Latest snapshot
                     serialize_metrics(metrics, tmpdir / "metrics.json", format="json")
-                    # Historical record
-                    serialize_metrics(
-                        metrics, history_dir / f"{filename_base}.json", format="json"
-                    )
+
+                    # Historical record (flat structure, parseable filename)
+                    history_file = history_dir / f"{filename_base}.json"
+                    serialize_metrics(metrics, history_file, format="json")
+
                 elif fmt == "csv":
                     serialize_metrics(metrics, tmpdir / "metrics.csv", format="csv")
 

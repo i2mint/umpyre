@@ -2,6 +2,53 @@
 
 All notable changes to the umpyre project are recorded here.
 
+## 2025-11-14 - Simplified Storage Structure (SSOT Compliance)
+
+### Changed
+- **Storage structure**: Completely redesigned for SSOT principles and simplicity
+  - **Flat structure**: Removed monthly folders (`history/2025-11/`) - now just `history/`
+  - **Removed data duplication**: Eliminated `by_version/` folder (was redundant)
+  - **New filename format**: `YYYY_MM_DD_HH_MM_SS__shahash__version.json`
+    - Chronologically ordered (sorts naturally by time)
+    - All info parseable from filename (timestamp, commit, version)
+    - Example: `2025_11_14_22_45_00__700e012__0.1.0.json`
+  - **Benefits**: Single source of truth, easier querying, simpler maintenance
+
+### Rationale
+- User feedback: "Is it a good idea to have a separate by_version folder? We'll be repeating data there no? That's not very SSOT."
+- Flat structure is simpler than nested monthly directories
+- Filename contains all indexing info (no need for duplicate folders)
+- Shell-friendly: `ls`, `grep`, `sort` work perfectly
+
+## 2025-11-14 - Added PyPI Version Tracking and Commit-Based Indexing
+
+### Added
+- **PyPI version extraction**: `UmpyreCollector` now automatically detects and includes `pypi_version` in metrics
+  - Checks `pyproject.toml` (preferred), `setup.py` (fallback), or `__init__.py` (last resort)
+  - Uses regex to extract version strings (e.g., "0.1.0", "1.2.3-beta")
+  - Returns `null` if no version found
+- **Commit-SHA indexing**: Storage now uses commit hash as primary index for uniqueness
+  - Historical files named as `{commit_sha[:7]}.json` (e.g., `700e012.json`)
+  - Guarantees one entry per commit (prevents duplicates)
+  - Timestamp removed from filename for cleaner structure
+- **By-version secondary index**: New `by_version/` directory for easy version-based queries
+  - Files named as `{pypi_version}.json` (e.g., `0.1.0.json`)
+  - Contains latest metrics for each published version
+  - Enables comparison across releases
+
+### Changed
+- **Storage structure**: Now uses dual indexing system
+  ```
+  code-metrics/
+  ├── history/2025-11/{commit_sha}.json  ← Primary index
+  └── by_version/{version}.json           ← Secondary index
+  ```
+- **Root path handling**: Fixed `UmpyreCollector.__init__` to convert `root_path` to `Path` object (was causing type errors)
+
+### Documentation
+- Added `STORAGE_STRUCTURE.md` with comprehensive storage design documentation
+- Explains uniqueness guarantees, querying patterns, and CI integration
+
 # Changelog
 
 All notable changes to the umpyre project are documented here.

@@ -54,9 +54,12 @@ In your `.github/workflows/ci.yml` (after successful PyPI publish):
 - name: Track Code Metrics
   if: success()
   uses: i2mint/umpyre/actions/track-metrics@master
+  continue-on-error: true  # Never fails CI - see FAILURE_PROTECTION.md
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+**Important**: Metrics collection has **triple-layer failure protection** and will never break your CI pipeline. See [FAILURE_PROTECTION.md](FAILURE_PROTECTION.md) for details.
 
 ### 3. View Metrics
 
@@ -80,6 +83,68 @@ python -m umpyre.cli collect --no-store
 # Validate against thresholds (coming soon)
 python -m umpyre.cli validate
 ```
+
+## Querying Stored Metrics
+
+Metrics are stored in a flat structure with parseable filenames: `YYYY_MM_DD_HH_MM_SS__shahash__version.json`
+
+### Shell Queries
+
+```bash
+# Switch to metrics branch
+git checkout code-metrics
+
+# Get all metrics from November 14
+ls history/2025_11_14_*
+
+# Find metrics for specific commit
+ls history/*__700e012__*
+
+# Find all v0.1.0 metrics
+ls history/*__0.1.0.json
+
+# Get latest 10 metrics
+ls -t history/ | head -10
+
+# Exclude metrics without version
+ls history/ | grep -v "__none.json"
+```
+
+### Python Queries
+
+```python
+from pathlib import Path
+from umpyre.storage import (
+    parse_metric_filename,
+    find_metrics_by_commit,
+    find_metrics_by_version,
+    get_latest_metric_for_version,
+    get_all_versions,
+)
+
+history_dir = Path("history")
+
+# Parse filename
+info = parse_metric_filename("2025_11_14_22_45_00__700e012__0.1.0.json")
+print(info['commit_sha'])    # '700e012'
+print(info['pypi_version'])  # '0.1.0'
+print(info['timestamp'])     # datetime object
+
+# Find by commit
+metrics = find_metrics_by_commit(history_dir, "700e012")
+
+# Find all metrics for a version
+all_v0_1_0 = find_metrics_by_version(history_dir, "0.1.0")
+
+# Get latest metric for a version
+latest = get_latest_metric_for_version(history_dir, "0.1.0")
+
+# List all versions
+versions = get_all_versions(history_dir)
+print(versions)  # ['0.1.0', '0.1.1', '0.2.0']
+```
+
+See `STORAGE_STRUCTURE.md` for detailed storage design documentation.
 
 ## Available Collectors
 
