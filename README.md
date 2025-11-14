@@ -52,11 +52,12 @@ In your `.github/workflows/ci.yml` (after successful PyPI publish):
 
 ```yaml
 - name: Track Code Metrics
-  if: success()
+  if: success()  # Only track metrics after successful publish
   uses: i2mint/umpyre/actions/track-metrics@master
   continue-on-error: true  # Never fails CI - see FAILURE_PROTECTION.md
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
+    config-path: .github/umpyre-config.yml  # Optional: defaults to this path
 ```
 
 **Important**: Metrics collection has **triple-layer failure protection** and will never break your CI pipeline. See [FAILURE_PROTECTION.md](FAILURE_PROTECTION.md) for details.
@@ -66,7 +67,9 @@ In your `.github/workflows/ci.yml` (after successful PyPI publish):
 Metrics are stored in the `code-metrics` branch:
 - `metrics.json` - Latest snapshot
 - `metrics.csv` - Flat format for analysis
-- `history/YYYY-MM/` - Historical records
+- `history/` - Flat historical records (filename format: `YYYY_MM_DD_HH_MM_SS__commit__version.json`)
+
+See [STORAGE_STRUCTURE.md](STORAGE_STRUCTURE.md) for full details on storage design and querying.
 
 ## CLI Usage
 
