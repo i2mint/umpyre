@@ -67,6 +67,8 @@ runs:
         echo "::endgroup::"
         
         # Always exit successfully to not break CI
-        exit 0branding:
+        exit 0
+
+branding:
   icon: 'bar-chart-2'
   color: 'blue'
