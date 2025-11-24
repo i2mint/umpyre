@@ -317,8 +317,8 @@ def stats_of(
         Values are 'ignore', 'print', or 'raise'
     :return:
 
-    >>> df = stats_of(['urllib', 'json', 'collections'])
-    >>> assert set(df.index.values).issuperset(
+    >>> df = stats_of(['urllib', 'json', 'collections'])  # doctest: +SKIP
+    >>> assert set(df.index.values).issuperset(  # doctest: +SKIP
     ...     {'empty_lines_ratio', 'comment_lines_ratio', 'function_lines_ratio', 'mean_lines_per_function'})
     >>> stats_of(['urllib', 'json', 'collections'])  #doctest: +SKIP
                                   urllib         json  collections

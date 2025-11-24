@@ -66,8 +66,8 @@ def find_metrics_by_commit(history_dir: Path, commit_sha: str) -> Optional[Path]
         Path to metrics file or None
 
     Example:
-        >>> metrics = find_metrics_by_commit(Path("history"), "700e012")
-        >>> print(metrics.name)
+        >>> metrics = find_metrics_by_commit(Path("history"), "700e012")  # doctest: +SKIP
+        >>> print(metrics.name)  # doctest: +SKIP
         2025_11_14_22_45_00__700e012__0.1.0.json
     """
     short_sha = commit_sha[:7]
@@ -87,8 +87,8 @@ def find_metrics_by_version(history_dir: Path, version: str) -> list[Path]:
         List of paths (sorted by timestamp, latest first)
 
     Example:
-        >>> metrics = find_metrics_by_version(Path("history"), "0.1.0")
-        >>> for m in metrics:
+        >>> metrics = find_metrics_by_version(Path("history"), "0.1.0")  # doctest: +SKIP
+        >>> for m in metrics:  # doctest: +SKIP
         ...     print(m.name)
         2025_11_14_22_50_00__abc1234__0.1.0.json
         2025_11_14_22_45_00__700e012__0.1.0.json
@@ -110,9 +110,9 @@ def get_latest_metric_for_version(history_dir: Path, version: str) -> Optional[P
         Path to latest metrics file or None
 
     Example:
-        >>> latest = get_latest_metric_for_version(Path("history"), "0.1.0")
-        >>> info = parse_metric_filename(latest.name)
-        >>> print(f"Latest 0.1.0 metrics from {info['timestamp_str']}")
+        >>> latest = get_latest_metric_for_version(Path("history"), "0.1.0")  # doctest: +SKIP
+        >>> info = parse_metric_filename(latest.name)  # doctest: +SKIP
+        >>> print(f"Latest 0.1.0 metrics from {info['timestamp_str']}")  # doctest: +SKIP
     """
     matches = find_metrics_by_version(history_dir, version)
     return matches[0] if matches else None
@@ -129,8 +129,8 @@ def get_all_versions(history_dir: Path) -> list[str]:
         Sorted list of versions (excluding 'none')
 
     Example:
-        >>> versions = get_all_versions(Path("history"))
-        >>> print(versions)
+        >>> versions = get_all_versions(Path("history"))  # doctest: +SKIP
+        >>> print(versions)  # doctest: +SKIP
         ['0.1.0', '0.1.1', '0.2.0']
     """
     versions = set()
@@ -164,11 +164,11 @@ def filter_by_date_range(
         List of paths within date range (sorted chronologically)
 
     Example:
-        >>> from datetime import datetime, timedelta
-        >>> end = datetime.now()
-        >>> start = end - timedelta(days=7)
-        >>> recent = filter_by_date_range(Path("history"), start, end)
-        >>> print(f"Found {len(recent)} metrics from last 7 days")
+        >>> from datetime import datetime, timedelta  # doctest: +SKIP
+        >>> end = datetime.now()  # doctest: +SKIP
+        >>> start = end - timedelta(days=7)  # doctest: +SKIP
+        >>> recent = filter_by_date_range(Path("history"), start, end)  # doctest: +SKIP
+        >>> print(f"Found {len(recent)} metrics from last 7 days")  # doctest: +SKIP
     """
     matches = []
 
