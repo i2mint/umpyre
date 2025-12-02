@@ -17,9 +17,9 @@ class GitBranchStorage:
     the main branch or requiring external artifacts.
 
     Example:
-        >>> storage = GitBranchStorage(repo_path="/path/to/repo")  # doctest: +SKIP
-        >>> metrics = {"lines": 100, "functions": 10}  # doctest: +SKIP
-        >>> storage.store_metrics(metrics, "abc123", branch="code-metrics")  # doctest: +SKIP
+        >>> storage = GitBranchStorage(repo_path="/path/to/repo")
+        >>> metrics = {"lines": 100, "functions": 10}
+        >>> storage.store_metrics(metrics, "abc123", branch="code-metrics")
     """
 
     def __init__(self, repo_path: str, remote: str = "origin"):
