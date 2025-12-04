@@ -18,6 +18,7 @@ import tempfile
 import shutil
 from pathlib import Path
 from datetime import datetime
+import pytest
 
 # Add umpyre to path
 umpyre_root = Path(__file__).parent
@@ -26,6 +27,17 @@ sys.path.insert(0, str(umpyre_root))
 from umpyre import Config, MetricSchema, registry
 from umpyre.collectors.base import MetricCollector
 from umpyre.storage.formats import serialize_metrics, deserialize_metrics
+
+
+@pytest.fixture
+def repo_path():
+    """Fixture providing the astate repository path."""
+    astate_path = Path("/Users/thorwhalen/Dropbox/py/proj/t/astate")
+    if not astate_path.exists():
+        pytest.skip(f"astate repository not found at: {astate_path}")
+    if not (astate_path / '.git').exists():
+        pytest.skip(f"{astate_path} is not a git repository")
+    return astate_path
 
 
 class TestResult:
