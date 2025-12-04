@@ -72,8 +72,8 @@ class GitBranchStorage:
 
             # Extract pypi_version if available (use 'none' if not found)
             pypi_version = (
-                metrics.get('metrics', {}).get('umpyre_stats', {}).get('pypi_version')
-                or 'none'
+                metrics.get("metrics", {}).get("umpyre_stats", {}).get("pypi_version")
+                or "none"
             )
 
             # Filename format: timestamp__sha__version (parseable, chronological)

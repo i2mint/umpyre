@@ -9,7 +9,7 @@ from io import StringIO
 
 def _serialize_json(data: dict, file_path: Path, indent: int = 2):
     """Serialize metrics to JSON file."""
-    with open(file_path, 'w') as f:
+    with open(file_path, "w") as f:
         json.dump(data, f, indent=indent, sort_keys=True)
 
 
@@ -30,10 +30,10 @@ def _serialize_csv(data: dict, file_path: Path):
     # Flatten nested structure
     flat_data = _flatten_dict(data)
 
-    with open(file_path, 'w', newline='') as f:
+    with open(file_path, "w", newline="") as f:
         writer = csv.writer(f)
         # Write header
-        writer.writerow(['metric', 'value'])
+        writer.writerow(["metric", "value"])
         # Write data
         for key, value in flat_data.items():
             writer.writerow([key, value])
@@ -47,14 +47,14 @@ def _deserialize_csv(file_path: Path) -> dict:
         Flat dictionary of metrics
     """
     data = {}
-    with open(file_path, newline='') as f:
+    with open(file_path, newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            data[row['metric']] = row['value']
+            data[row["metric"]] = row["value"]
     return data
 
 
-def _flatten_dict(d: dict, parent_key: str = '', sep: str = '.') -> dict:
+def _flatten_dict(d: dict, parent_key: str = "", sep: str = ".") -> dict:
     """
     Flatten nested dictionary.
 
@@ -72,7 +72,7 @@ def _flatten_dict(d: dict, parent_key: str = '', sep: str = '.') -> dict:
     return dict(items)
 
 
-def serialize_metrics(data: dict, output_path: Path, format: str = 'json'):
+def serialize_metrics(data: dict, output_path: Path, format: str = "json"):
     """
     Serialize metrics to file.
 
@@ -81,15 +81,15 @@ def serialize_metrics(data: dict, output_path: Path, format: str = 'json'):
         output_path: Path to output file
         format: Format ('json' or 'csv')
     """
-    if format == 'json':
+    if format == "json":
         _serialize_json(data, output_path)
-    elif format == 'csv':
+    elif format == "csv":
         _serialize_csv(data, output_path)
     else:
         raise ValueError(f"Unsupported format: {format}")
 
 
-def deserialize_metrics(file_path: Path, format: str = 'json') -> dict:
+def deserialize_metrics(file_path: Path, format: str = "json") -> dict:
     """
     Deserialize metrics from file.
 
@@ -100,9 +100,9 @@ def deserialize_metrics(file_path: Path, format: str = 'json') -> dict:
     Returns:
         Metric dictionary
     """
-    if format == 'json':
+    if format == "json":
         return _deserialize_json(file_path)
-    elif format == 'csv':
+    elif format == "csv":
         return _deserialize_csv(file_path)
     else:
         raise ValueError(f"Unsupported format: {format}")

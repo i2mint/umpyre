@@ -124,7 +124,7 @@ def cmd_collect(args):
         print(f"Collection failed after {duration:.2f}s", file=sys.stderr)
 
         # In CI mode, log but don't fail
-        if os.getenv('CI') or os.getenv('GITHUB_ACTIONS'):
+        if os.getenv("CI") or os.getenv("GITHUB_ACTIONS"):
             print("⚠️  Running in CI - treating as non-fatal", file=sys.stderr)
             return 0
 
@@ -227,7 +227,7 @@ def main():
         print(f"Error: {e}", file=sys.stderr)
 
         # In CI mode, be more forgiving
-        if os.getenv('CI') or os.getenv('GITHUB_ACTIONS'):
+        if os.getenv("CI") or os.getenv("GITHUB_ACTIONS"):
             print("⚠️  Running in CI - treating error as non-fatal", file=sys.stderr)
             return 0
 

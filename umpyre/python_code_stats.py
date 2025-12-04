@@ -38,6 +38,7 @@ function_lines            929.000000   585.000000   138.000000
 num_of_functions           69.000000    14.000000     1.000000
 num_of_classes             55.000000     3.000000    34.000000
 """
+
 import re
 import os
 from types import FunctionType, ModuleType
@@ -67,9 +68,7 @@ def lines(string):
 
 def _num_lines_of_function_code(obj: FunctionType):
     assert isinstance(obj, FunctionType)
-    return len(getsource(obj).split("\n")) - len(
-        (obj.__doc__ or "").split("\n")
-    )
+    return len(getsource(obj).split("\n")) - len((obj.__doc__ or "").split("\n"))
 
 
 def _root_dir_and_name(root):
@@ -165,12 +164,8 @@ def modules_info_gen(root, filepath_filt=only_py_ext, on_error=DFLT_ON_ERROR):
                 if obj_module:
                     return obj_module == name
 
-            objs = list(
-                filter(obj_filt, (vv._source for vv in module_store.values()))
-            )
-            yield _code_stats_dict_for_file_and_objects(
-                code_str, filepath, objs
-            )
+            objs = list(filter(obj_filt, (vv._source for vv in module_store.values())))
+            yield _code_stats_dict_for_file_and_objects(code_str, filepath, objs)
         except Exception as e:
             if on_error == "print":
                 print(f"Problem with {filepath}: {str(e)[:50]}\n")
@@ -186,9 +181,7 @@ def _code_stats_dict_for_file_and_objects(code_str, filepath, objs):
     return {
         "filepath": filepath,
         "lines": len(lines(code_str)),
-        "empty_lines": sum(
-            bool(empty_line.match(line)) for line in lines(code_str)
-        ),
+        "empty_lines": sum(bool(empty_line.match(line)) for line in lines(code_str)),
         "comment_lines": sum(
             bool(comment_line_p.match(line)) for line in lines(code_str)
         ),
@@ -293,9 +286,7 @@ def modules_info_df_stats(
         if {col, "lines"}.issubset(cols):
             df[f"{col}_ratio"] = df[col] / df["lines"]
     if {"num_of_functions", "function_lines"}.issubset(cols):
-        df["mean_lines_per_function"] = (
-            df["function_lines"] / df["num_of_functions"]
-        )
+        df["mean_lines_per_function"] = df["function_lines"] / df["num_of_functions"]
 
     return df
 
@@ -346,9 +337,7 @@ def stats_of(
         modules = [modules]
     df = pd.concat([stats_func(x) for x in modules], axis=1)
     df.columns = modules
-    put_at_the_end = [
-        x for x in df.index if x.endswith("lines") or x.startswith("num")
-    ]
+    put_at_the_end = [x for x in df.index if x.endswith("lines") or x.startswith("num")]
     put_at_the_front = [x for x in df.index if x not in put_at_the_end]
     df = df.loc[put_at_the_front + put_at_the_end]
     return df
@@ -360,6 +349,4 @@ if __name__ == "__main__":
     with ModuleNotFoundErrorNiceMessage():
         import argh
 
-        argh.dispatch_commands(
-            [modules_info_df, modules_info_df_stats, stats_of]
-        )
+        argh.dispatch_commands([modules_info_df, modules_info_df_stats, stats_of])
