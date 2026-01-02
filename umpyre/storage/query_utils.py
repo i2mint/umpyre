@@ -30,7 +30,7 @@ def parse_metric_filename(filename: str) -> dict:
         >>> info['pypi_version']
         '0.1.0'
     """
-    pattern = r'(\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2})__(\w{7})__(.+)\.json'
+    pattern = r"(\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2})__(\w{7})__(.+)\.json"
     match = re.match(pattern, filename)
 
     if not match:
@@ -138,8 +138,8 @@ def get_all_versions(history_dir: Path) -> list[str]:
     for filepath in history_dir.glob("*.json"):
         try:
             info = parse_metric_filename(filepath.name)
-            if info['has_version']:
-                versions.add(info['pypi_version'])
+            if info["has_version"]:
+                versions.add(info["pypi_version"])
         except ValueError:
             continue
 
@@ -175,7 +175,7 @@ def filter_by_date_range(
     for filepath in history_dir.glob("*.json"):
         try:
             info = parse_metric_filename(filepath.name)
-            timestamp = info['timestamp']
+            timestamp = info["timestamp"]
 
             if start_date and timestamp < start_date:
                 continue

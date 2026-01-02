@@ -35,7 +35,7 @@ def repo_path():
     astate_path = Path("/Users/thorwhalen/Dropbox/py/proj/t/astate")
     if not astate_path.exists():
         pytest.skip(f"astate repository not found at: {astate_path}")
-    if not (astate_path / '.git').exists():
+    if not (astate_path / ".git").exists():
         pytest.skip(f"{astate_path} is not a git repository")
     return astate_path
 
@@ -126,18 +126,18 @@ def test_config(repo_path: Path):
     try:
         # Test with minimal config
         config_data = {
-            'repo_path': str(repo_path),
-            'collectors': {
-                'workflow_status': {'enabled': True},
-                'coverage': {'enabled': True},
+            "repo_path": str(repo_path),
+            "collectors": {
+                "workflow_status": {"enabled": True},
+                "coverage": {"enabled": True},
             },
         }
 
         # Write temporary config
-        config_file = repo_path / '.umpyre.yml'
+        config_file = repo_path / ".umpyre.yml"
         import yaml
 
-        with open(config_file, 'w') as f:
+        with open(config_file, "w") as f:
             yaml.dump(config_data, f)
 
         config = Config(config_path=str(config_file))
@@ -145,7 +145,7 @@ def test_config(repo_path: Path):
         result.pass_test("Config loading", f"Loaded config from {config_file}")
 
         # Test config access
-        if config.is_collector_enabled('workflow_status'):
+        if config.is_collector_enabled("workflow_status"):
             result.pass_test("Config collector check", "workflow_status is enabled")
         else:
             result.fail_test(
@@ -168,17 +168,17 @@ def test_schema():
     try:
         # Create sample metric data
         sample_metrics = {
-            'workflow_status': {
-                'last_run_status': 'success',
-                'last_run_conclusion': 'success',
+            "workflow_status": {
+                "last_run_status": "success",
+                "last_run_conclusion": "success",
             }
         }
 
         metric_data = MetricSchema.create_metric_data(
-            commit_sha='abc123',
+            commit_sha="abc123",
             metrics=sample_metrics,
-            commit_message='Test commit',
-            python_version='3.10',
+            commit_message="Test commit",
+            python_version="3.10",
         )
 
         # Validate
@@ -192,7 +192,7 @@ def test_schema():
             result.fail_test("Schema validation", "Validation failed")
 
         # Check required fields
-        required_fields = ['schema_version', 'timestamp', 'commit_sha', 'metrics']
+        required_fields = ["schema_version", "timestamp", "commit_sha", "metrics"]
         missing = [f for f in required_fields if f not in metric_data]
 
         if not missing:
@@ -213,28 +213,28 @@ def test_collectors_on_astate(repo_path: Path):
 
     # Test each collector with proper initialization
     test_specs = {
-        'coverage': {
-            'description': 'Test coverage',
-            'init_kwargs': {'repo_path': str(repo_path), 'source': 'pytest-cov'},
+        "coverage": {
+            "description": "Test coverage",
+            "init_kwargs": {"repo_path": str(repo_path), "source": "pytest-cov"},
         },
-        'umpyre_stats': {
-            'description': 'Code statistics (AST-based)',
-            'init_kwargs': {
-                'root_path': str(repo_path),
-                'exclude_dirs': ['tests', 'examples', 'docsrc'],
+        "umpyre_stats": {
+            "description": "Code statistics (AST-based)",
+            "init_kwargs": {
+                "root_path": str(repo_path),
+                "exclude_dirs": ["tests", "examples", "docsrc"],
             },
         },
     }
 
     for collector_name, spec in test_specs.items():
-        description = spec['description']
+        description = spec["description"]
         try:
             if collector_name not in registry.list_collectors():
                 result.warn(f"Collector '{collector_name}' not registered, skipping")
                 continue
 
             collector_class = registry.get(collector_name)
-            collector = collector_class(**spec['init_kwargs'])
+            collector = collector_class(**spec["init_kwargs"])
 
             # Collect metrics
             start = time.time()
@@ -243,7 +243,7 @@ def test_collectors_on_astate(repo_path: Path):
 
             if metrics:
                 # Check for errors
-                if 'error' in metrics:
+                if "error" in metrics:
                     result.warn(
                         f"{description}: Collector returned error: {metrics['error']}"
                     )
@@ -278,20 +278,20 @@ def test_full_collection(repo_path: Path):
             from umpyre.collectors.coverage_collector import CoverageCollector
 
             collector = CoverageCollector(repo_path=str(repo_path))
-            all_metrics['coverage'] = collector.to_dict()
+            all_metrics["coverage"] = collector.to_dict()
         except Exception as e:
-            all_metrics['coverage'] = {'error': str(e)}
+            all_metrics["coverage"] = {"error": str(e)}
 
         # Umpyre stats collector
         try:
             from umpyre.collectors.umpyre_collector import UmpyreCollector
 
             collector = UmpyreCollector(
-                root_path=str(repo_path), exclude_dirs=['tests', 'docsrc']
+                root_path=str(repo_path), exclude_dirs=["tests", "docsrc"]
             )
-            all_metrics['umpyre_stats'] = collector.to_dict()
+            all_metrics["umpyre_stats"] = collector.to_dict()
         except Exception as e:
-            all_metrics['umpyre_stats'] = {'error': str(e)}
+            all_metrics["umpyre_stats"] = {"error": str(e)}
 
         if all_metrics:
             result.pass_test(
@@ -304,10 +304,10 @@ def test_full_collection(repo_path: Path):
 
             try:
                 commit_sha = subprocess.check_output(
-                    ['git', 'rev-parse', 'HEAD'], cwd=repo_path, text=True
+                    ["git", "rev-parse", "HEAD"], cwd=repo_path, text=True
                 ).strip()
             except:
-                commit_sha = 'unknown'
+                commit_sha = "unknown"
 
             metrics_data = MetricSchema.create_metric_data(
                 commit_sha=commit_sha, metrics=all_metrics
@@ -324,19 +324,19 @@ def test_full_collection(repo_path: Path):
             import tempfile
 
             with tempfile.NamedTemporaryFile(
-                mode='w', suffix='.json', delete=False
+                mode="w", suffix=".json", delete=False
             ) as f:
                 temp_json = Path(f.name)
 
             try:
-                serialize_metrics(metrics_data, temp_json, 'json')
+                serialize_metrics(metrics_data, temp_json, "json")
                 result.pass_test(
                     "JSON serialization",
                     f"Serialized to {temp_json.stat().st_size} bytes",
                 )
 
                 # Test deserialization
-                recovered = deserialize_metrics(temp_json, 'json')
+                recovered = deserialize_metrics(temp_json, "json")
                 if recovered == metrics_data:
                     result.pass_test("JSON deserialization", "Round-trip successful")
                 else:
@@ -384,7 +384,7 @@ def main():
         print("   Please update the path in the script")
         return 1
 
-    if not (astate_path / '.git').exists():
+    if not (astate_path / ".git").exists():
         print(f"❌ {astate_path} is not a git repository")
         return 1
 
@@ -440,5 +440,5 @@ def main():
         return 1
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

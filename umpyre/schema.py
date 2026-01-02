@@ -87,7 +87,7 @@ class MetricSchema:
         """
         return {
             "schema_version": cls.current_version(),
-            "timestamp": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
+            "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             "commit_sha": commit_sha,
             "commit_message": commit_message,
             "python_version": python_version,

@@ -66,10 +66,10 @@ class UmpyreCollector(MetricCollector):
             Dictionary with file metrics
         """
         try:
-            with open(filepath, 'r', encoding='utf-8') as f:
+            with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
 
-            lines = content.split('\n')
+            lines = content.split("\n")
             tree = ast.parse(content, filename=str(filepath))
 
             # Count functions and classes
@@ -82,45 +82,45 @@ class UmpyreCollector(MetricCollector):
                 if isinstance(node, ast.FunctionDef):
                     num_functions += 1
                     # Count lines in function (end_lineno - lineno)
-                    if hasattr(node, 'end_lineno') and node.end_lineno:
+                    if hasattr(node, "end_lineno") and node.end_lineno:
                         function_lines += node.end_lineno - node.lineno + 1
                     # Extract docstring lines
                     docstring = ast.get_docstring(node)
                     if docstring:
-                        docs_lines += len(docstring.split('\n'))
+                        docs_lines += len(docstring.split("\n"))
 
                 elif isinstance(node, ast.ClassDef):
                     num_classes += 1
                     # Extract class docstring
                     docstring = ast.get_docstring(node)
                     if docstring:
-                        docs_lines += len(docstring.split('\n'))
+                        docs_lines += len(docstring.split("\n"))
 
             # Count empty and comment lines
             empty_lines = sum(1 for line in lines if not line.strip())
-            comment_lines = sum(1 for line in lines if line.strip().startswith('#'))
+            comment_lines = sum(1 for line in lines if line.strip().startswith("#"))
 
             return {
-                'num_functions': num_functions,
-                'num_classes': num_classes,
-                'total_lines': len(lines),
-                'empty_lines': empty_lines,
-                'comment_lines': comment_lines,
-                'docs_lines': docs_lines,
-                'function_lines': function_lines,
+                "num_functions": num_functions,
+                "num_classes": num_classes,
+                "total_lines": len(lines),
+                "empty_lines": empty_lines,
+                "comment_lines": comment_lines,
+                "docs_lines": docs_lines,
+                "function_lines": function_lines,
             }
 
         except Exception as e:
             # Return zeros on error but track the file
             return {
-                'num_functions': 0,
-                'num_classes': 0,
-                'total_lines': 0,
-                'empty_lines': 0,
-                'comment_lines': 0,
-                'docs_lines': 0,
-                'function_lines': 0,
-                'error': str(e),
+                "num_functions": 0,
+                "num_classes": 0,
+                "total_lines": 0,
+                "empty_lines": 0,
+                "comment_lines": 0,
+                "docs_lines": 0,
+                "function_lines": 0,
+                "error": str(e),
             }
 
     def _should_analyze(self, file_path: Path) -> bool:
@@ -221,13 +221,13 @@ class UmpyreCollector(MetricCollector):
 
         # Aggregate metrics across all files
         total_metrics = {
-            'num_functions': 0,
-            'num_classes': 0,
-            'total_lines': 0,
-            'empty_lines': 0,
-            'comment_lines': 0,
-            'docs_lines': 0,
-            'function_lines': 0,
+            "num_functions": 0,
+            "num_classes": 0,
+            "total_lines": 0,
+            "empty_lines": 0,
+            "comment_lines": 0,
+            "docs_lines": 0,
+            "function_lines": 0,
         }
 
         files_analyzed = 0
@@ -235,13 +235,13 @@ class UmpyreCollector(MetricCollector):
 
         try:
             # Walk through all Python files
-            for filepath in root.rglob('*.py'):
+            for filepath in root.rglob("*.py"):
                 if not self._should_analyze(filepath):
                     continue
 
                 file_metrics = self._analyze_file(filepath)
 
-                if 'error' in file_metrics:
+                if "error" in file_metrics:
                     errors.append(f"{filepath.name}: {file_metrics['error']}")
                     continue
 
@@ -252,37 +252,37 @@ class UmpyreCollector(MetricCollector):
                     total_metrics[key] += file_metrics.get(key, 0)
 
             # Calculate ratios
-            total_lines = total_metrics['total_lines']
+            total_lines = total_metrics["total_lines"]
 
             result = {
                 **total_metrics,
-                'empty_lines_ratio': (
-                    total_metrics['empty_lines'] / total_lines
+                "empty_lines_ratio": (
+                    total_metrics["empty_lines"] / total_lines
                     if total_lines > 0
                     else 0.0
                 ),
-                'comment_lines_ratio': (
-                    total_metrics['comment_lines'] / total_lines
+                "comment_lines_ratio": (
+                    total_metrics["comment_lines"] / total_lines
                     if total_lines > 0
                     else 0.0
                 ),
-                'function_lines_ratio': (
-                    total_metrics['function_lines'] / total_lines
+                "function_lines_ratio": (
+                    total_metrics["function_lines"] / total_lines
                     if total_lines > 0
                     else 0.0
                 ),
-                'mean_lines_per_function': (
-                    total_metrics['function_lines'] / total_metrics['num_functions']
-                    if total_metrics['num_functions'] > 0
+                "mean_lines_per_function": (
+                    total_metrics["function_lines"] / total_metrics["num_functions"]
+                    if total_metrics["num_functions"] > 0
                     else 0.0
                 ),
-                'files_analyzed': files_analyzed,
-                'pypi_version': self._extract_pypi_version(),
+                "files_analyzed": files_analyzed,
+                "pypi_version": self._extract_pypi_version(),
             }
 
             if errors:
-                result['errors'] = errors[:10]  # Keep first 10 errors
-                result['total_errors'] = len(errors)
+                result["errors"] = errors[:10]  # Keep first 10 errors
+                result["total_errors"] = len(errors)
 
             return result
 
