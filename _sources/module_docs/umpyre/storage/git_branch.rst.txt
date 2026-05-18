@@ -1,0 +1,4 @@
+umpyre.storage.git_branch
+=========================
+.. automodule:: umpyre.storage.git_branch
+   :members:

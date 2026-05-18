@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>umpyre.python_code_stats &mdash; umpyre 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=92734c54"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="umpyre.schema" href="schema.html" />
+    <link rel="prev" title="umpyre.config" href="config.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            umpyre
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../umpyre.html">umpyre</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">umpyre.cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors.html">umpyre.collectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/base.html">umpyre.collectors.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/coverage_collector.html">umpyre.collectors.coverage_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/umpyre_collector.html">umpyre.collectors.umpyre_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/wily_collector.html">umpyre.collectors.wily_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/workflow_status.html">umpyre.collectors.workflow_status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">umpyre.config</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">umpyre.python_code_stats</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.python_code_stats.modules_info_df"><code class="docutils literal notranslate"><span class="pre">modules_info_df()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.python_code_stats.modules_info_df_stats"><code class="docutils literal notranslate"><span class="pre">modules_info_df_stats()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.python_code_stats.modules_info_gen"><code class="docutils literal notranslate"><span class="pre">modules_info_gen()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.python_code_stats.stats_of"><code class="docutils literal notranslate"><span class="pre">stats_of()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="schema.html">umpyre.schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage.html">umpyre.storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage/formats.html">umpyre.storage.formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage/git_branch.html">umpyre.storage.git_branch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage/query_utils.html">umpyre.storage.query_utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">umpyre</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">umpyre.python_code_stats</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/umpyre/python_code_stats.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-umpyre.python_code_stats">
+<span id="umpyre-python-code-stats"></span><h1>umpyre.python_code_stats<a class="headerlink" href="#module-umpyre.python_code_stats" title="Link to this heading"></a></h1>
+<p>Get stats about packages. Your own, or other’s.
+Things like…
+(Note that these will probably not work as doctests, since results are sensisitive to other slight system differences
+(such as python version etc.))</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">modules_info_df</span><span class="p">(</span><span class="n">collections</span><span class="p">)</span>
+<span class="go">                      lines  empty_lines  ...  num_of_functions  num_of_classes</span>
+<span class="go">collections.__init__   1280          189  ...                 1               9</span>
+<span class="go">collections.abc           3            1  ...                 0              25</span>
+
+<span class="go">[2 rows x 7 columns]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">modules_info_df_stats</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="p">)</span>
+<span class="go">lines                      1283.000000</span>
+<span class="go">empty_lines                 190.000000</span>
+<span class="go">comment_lines                79.000000</span>
+<span class="go">docs_lines                  133.000000</span>
+<span class="go">function_lines              138.000000</span>
+<span class="go">num_of_functions              1.000000</span>
+<span class="go">num_of_classes               34.000000</span>
+<span class="go">empty_lines_ratio             0.148090</span>
+<span class="go">comment_lines_ratio           0.061574</span>
+<span class="go">function_lines_ratio          0.107560</span>
+<span class="go">mean_lines_per_function     138.000000</span>
+<span class="go">dtype: float64</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stats_of</span><span class="p">([</span><span class="s1">&#39;urllib&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="s1">&#39;collections&#39;</span><span class="p">])</span>
+<span class="go">                              urllib         json  collections</span>
+<span class="go">empty_lines_ratio           0.157293     0.136503     0.148090</span>
+<span class="go">comment_lines_ratio         0.075217     0.038344     0.061574</span>
+<span class="go">function_lines_ratio        0.212391     0.448620     0.107560</span>
+<span class="go">mean_lines_per_function    13.463768    41.785714   138.000000</span>
+<span class="go">lines                    4374.000000  1304.000000  1283.000000</span>
+<span class="go">empty_lines               688.000000   178.000000   190.000000</span>
+<span class="go">comment_lines             329.000000    50.000000    79.000000</span>
+<span class="go">docs_lines                425.000000   218.000000   133.000000</span>
+<span class="go">function_lines            929.000000   585.000000   138.000000</span>
+<span class="go">num_of_functions           69.000000    14.000000     1.000000</span>
+<span class="go">num_of_classes             55.000000     3.000000    34.000000</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.python_code_stats.modules_info_df">
+<span class="sig-prename descclassname"><span class="pre">umpyre.python_code_stats.</span></span><span class="sig-name descname"><span class="pre">modules_info_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath_filt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/umpyre/python_code_stats.html#modules_info_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.python_code_stats.modules_info_df" title="Link to this definition"></a></dt>
+<dd><p>A pandas DataFrame of stats of the root (package or directory thereof).
+:param root: module or directory path
+:param filepath_filt: filepath filter function or regular expression
+:param index_field: function or field string that should be used for the indexing of modules
+:param on_error: What to do when an error occurs when extracting information from a module.</p>
+<blockquote>
+<div><p>Values are ‘ignore’, ‘print’, or ‘raise’</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A DataFrame whose rows contain information for each module</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">urllib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">modules_info_df</span><span class="p">(</span><span class="n">urllib</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span>
+<span class="go">                    lines  empty_lines  ...  num_of_functions  num_of_classes</span>
+<span class="go">urllib.error           78           18  ...                 0               3</span>
+<span class="go">urllib.request       2774          410  ...                23              28</span>
+<span class="go">urllib.__init__         1            1  ...                 0               0</span>
+<span class="go">urllib.response        81           24  ...                 0               4</span>
+<span class="go">urllib.robotparser    274           36  ...                 0               4</span>
+<span class="go">urllib.parse         1166          199  ...                46              16</span>
+
+<span class="go">[6 rows x 7 columns]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.python_code_stats.modules_info_df_stats">
+<span class="sig-prename descclassname"><span class="pre">umpyre.python_code_stats.</span></span><span class="sig-name descname"><span class="pre">modules_info_df_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath_filt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/umpyre/python_code_stats.html#modules_info_df_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.python_code_stats.modules_info_df_stats" title="Link to this definition"></a></dt>
+<dd><p>A pandas Series of statistics over all modules of some root (package or directory thereof).
+:param root: module or directory path
+:param filepath_filt: filepath filter function or regular expression
+:param index_field: function or field string that should be used for the indexing of modules
+:param on_error: What to do when an error occurs when extracting information from a module.</p>
+<blockquote>
+<div><p>Values are ‘ignore’, ‘print’, or ‘raise’</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A Series whose rows containing statistics</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">modules_info_df_stats</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span>
+<span class="go">lines                      1301.000000</span>
+<span class="go">empty_lines                 178.000000</span>
+<span class="go">comment_lines                50.000000</span>
+<span class="go">docs_lines                  218.000000</span>
+<span class="go">function_lines              585.000000</span>
+<span class="go">num_of_functions             14.000000</span>
+<span class="go">num_of_classes                3.000000</span>
+<span class="go">empty_lines_ratio             0.136818</span>
+<span class="go">comment_lines_ratio           0.038432</span>
+<span class="go">function_lines_ratio          0.449654</span>
+<span class="go">mean_lines_per_function      41.785714</span>
+<span class="go">dtype: float64</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">modules_info_df_stats</span><span class="p">(</span><span class="s1">&#39;collections.abc&#39;</span><span class="p">)</span>
+<span class="go">lines                      1276.000000</span>
+<span class="go">empty_lines                 190.000000</span>
+<span class="go">comment_lines                73.000000</span>
+<span class="go">docs_lines                  133.000000</span>
+<span class="go">function_lines              138.000000</span>
+<span class="go">num_of_functions              1.000000</span>
+<span class="go">num_of_classes               34.000000</span>
+<span class="go">empty_lines_ratio             0.148903</span>
+<span class="go">comment_lines_ratio           0.057210</span>
+<span class="go">function_lines_ratio          0.108150</span>
+<span class="go">mean_lines_per_function     138.000000</span>
+<span class="go">dtype: float64</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.python_code_stats.modules_info_gen">
+<span class="sig-prename descclassname"><span class="pre">umpyre.python_code_stats.</span></span><span class="sig-name descname"><span class="pre">modules_info_gen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath_filt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/umpyre/python_code_stats.html#modules_info_gen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.python_code_stats.modules_info_gen" title="Link to this definition"></a></dt>
+<dd><p>Yields statistics (as dicts) of modules under the root module or directory of a python package.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root</strong> – module instance, dot path, or directory path</p></li>
+<li><p><strong>filepath_filt</strong> – filepath filter function or regular expression</p></li>
+<li><p><strong>on_error</strong> – What to do when an error occurs when extracting information from a module.
+Values are ‘ignore’, ‘print’, ‘raise’, or ‘yield’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of dicts</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.python_code_stats.stats_of">
+<span class="sig-prename descclassname"><span class="pre">umpyre.python_code_stats.</span></span><span class="sig-name descname"><span class="pre">stats_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modules</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath_filt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/umpyre/python_code_stats.html#stats_of"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.python_code_stats.stats_of" title="Link to this definition"></a></dt>
+<dd><p>A dataframe of stats of the input modules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modules</strong> – list of importable names</p></li>
+<li><p><strong>root</strong> – module or directory path</p></li>
+<li><p><strong>filepath_filt</strong> – filepath filter function or regular expression</p></li>
+<li><p><strong>index_field</strong> – function or field string that should be used for the indexing of modules</p></li>
+<li><p><strong>on_error</strong> – What to do when an error occurs when extracting information from a module.
+Values are ‘ignore’, ‘print’, or ‘raise’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">stats_of</span><span class="p">([</span><span class="s1">&#39;urllib&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="s1">&#39;collections&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">issuperset</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s1">&#39;empty_lines_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;comment_lines_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;function_lines_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;mean_lines_per_function&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stats_of</span><span class="p">([</span><span class="s1">&#39;urllib&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="s1">&#39;collections&#39;</span><span class="p">])</span>
+<span class="go">                              urllib         json  collections</span>
+<span class="go">empty_lines_ratio           0.157293     0.136503     0.148090</span>
+<span class="go">comment_lines_ratio         0.075217     0.038344     0.061574</span>
+<span class="go">function_lines_ratio        0.212391     0.448620     0.107560</span>
+<span class="go">mean_lines_per_function    13.463768    41.785714   138.000000</span>
+<span class="go">lines                    4374.000000  1304.000000  1283.000000</span>
+<span class="go">empty_lines               688.000000   178.000000   190.000000</span>
+<span class="go">comment_lines             329.000000    50.000000    79.000000</span>
+<span class="go">docs_lines                425.000000   218.000000   133.000000</span>
+<span class="go">function_lines            929.000000   585.000000   138.000000</span>
+<span class="go">num_of_functions           69.000000    14.000000     1.000000</span>
+<span class="go">num_of_classes             55.000000     3.000000    34.000000</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="config.html" class="btn btn-neutral float-left" title="umpyre.config" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="schema.html" class="btn btn-neutral float-right" title="umpyre.schema" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

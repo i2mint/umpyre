@@ -1,0 +1,4 @@
+umpyre.config
+=============
+.. automodule:: umpyre.config
+   :members:

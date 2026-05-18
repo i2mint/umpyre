@@ -1,0 +1,4 @@
+umpyre.collectors
+=================
+.. automodule:: umpyre.collectors
+   :members:

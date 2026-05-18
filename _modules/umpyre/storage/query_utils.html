@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>umpyre.storage.query_utils &mdash; umpyre 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=92734c54"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            umpyre
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre.html">umpyre</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/cli.html">umpyre.cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors.html">umpyre.collectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/base.html">umpyre.collectors.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/coverage_collector.html">umpyre.collectors.coverage_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/umpyre_collector.html">umpyre.collectors.umpyre_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/wily_collector.html">umpyre.collectors.wily_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/workflow_status.html">umpyre.collectors.workflow_status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/config.html">umpyre.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/python_code_stats.html">umpyre.python_code_stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/schema.html">umpyre.schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/storage.html">umpyre.storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/storage/formats.html">umpyre.storage.formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/storage/git_branch.html">umpyre.storage.git_branch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/storage/query_utils.html">umpyre.storage.query_utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">umpyre</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">umpyre.storage.query_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for umpyre.storage.query_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Helper utilities for working with umpyre metrics storage.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+
+<div class="viewcode-block" id="parse_metric_filename">
+<a class="viewcode-back" href="../../../module_docs/umpyre/storage/query_utils.html#umpyre.storage.parse_metric_filename">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_metric_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parse metric filename into components.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename: Filename like &quot;2025_11_14_22_45_00__700e012__0.1.0.json&quot;</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with parsed components:</span>
+<span class="sd">        {</span>
+<span class="sd">            &quot;timestamp&quot;: datetime object,</span>
+<span class="sd">            &quot;timestamp_str&quot;: &quot;2025-11-14T22:45:00&quot;,</span>
+<span class="sd">            &quot;commit_sha&quot;: &quot;700e012&quot;,</span>
+<span class="sd">            &quot;pypi_version&quot;: &quot;0.1.0&quot; or None,</span>
+<span class="sd">            &quot;has_version&quot;: bool,</span>
+<span class="sd">        }</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; info = parse_metric_filename(&quot;2025_11_14_22_45_00__700e012__0.1.0.json&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; info[&#39;commit_sha&#39;]</span>
+<span class="sd">        &#39;700e012&#39;</span>
+<span class="sd">        &gt;&gt;&gt; info[&#39;pypi_version&#39;]</span>
+<span class="sd">        &#39;0.1.0&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;(\d</span><span class="si">{4}</span><span class="s2">_\d</span><span class="si">{2}</span><span class="s2">_\d</span><span class="si">{2}</span><span class="s2">_\d</span><span class="si">{2}</span><span class="s2">_\d</span><span class="si">{2}</span><span class="s2">_\d</span><span class="si">{2}</span><span class="s2">)__(\w</span><span class="si">{7}</span><span class="s2">)__(.+)\.json&quot;</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid filename format: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">timestamp_str</span><span class="p">,</span> <span class="n">sha</span><span class="p">,</span> <span class="n">version</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+
+    <span class="c1"># Parse timestamp</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">timestamp_str</span><span class="p">,</span> <span class="s2">&quot;%Y_%m_</span><span class="si">%d</span><span class="s2">_%H_%M_%S&quot;</span><span class="p">)</span>
+    <span class="n">timestamp_iso</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+
+    <span class="c1"># Parse version (None if &#39;none&#39;)</span>
+    <span class="n">pypi_version</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span> <span class="k">else</span> <span class="n">version</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">dt</span><span class="p">,</span>
+        <span class="s2">&quot;timestamp_str&quot;</span><span class="p">:</span> <span class="n">timestamp_iso</span><span class="p">,</span>
+        <span class="s2">&quot;commit_sha&quot;</span><span class="p">:</span> <span class="n">sha</span><span class="p">,</span>
+        <span class="s2">&quot;pypi_version&quot;</span><span class="p">:</span> <span class="n">pypi_version</span><span class="p">,</span>
+        <span class="s2">&quot;has_version&quot;</span><span class="p">:</span> <span class="n">pypi_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="find_metrics_by_commit">
+<a class="viewcode-back" href="../../../module_docs/umpyre/storage/query_utils.html#umpyre.storage.find_metrics_by_commit">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_metrics_by_commit</span><span class="p">(</span><span class="n">history_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">commit_sha</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find metrics file for a specific commit.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        history_dir: Path to history directory</span>
+<span class="sd">        commit_sha: Commit SHA (7 chars or full)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Path to metrics file or None</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; metrics = find_metrics_by_commit(Path(&quot;history&quot;), &quot;700e012&quot;)  #doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; print(metrics.name)  #doctest: +SKIP</span>
+<span class="sd">        2025_11_14_22_45_00__700e012__0.1.0.json</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">short_sha</span> <span class="o">=</span> <span class="n">commit_sha</span><span class="p">[:</span><span class="mi">7</span><span class="p">]</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">history_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;*__</span><span class="si">{</span><span class="n">short_sha</span><span class="si">}</span><span class="s2">__*.json&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">matches</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="find_metrics_by_version">
+<a class="viewcode-back" href="../../../module_docs/umpyre/storage/query_utils.html#umpyre.storage.find_metrics_by_version">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_metrics_by_version</span><span class="p">(</span><span class="n">history_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find all metrics files for a specific PyPI version.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        history_dir: Path to history directory</span>
+<span class="sd">        version: PyPI version string (e.g., &quot;0.1.0&quot;)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List of paths (sorted by timestamp, latest first)</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; metrics = find_metrics_by_version(Path(&quot;history&quot;), &quot;0.1.0&quot;)  #doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; for m in metrics:  #doctest: +SKIP</span>
+<span class="sd">        ...     print(m.name)</span>
+<span class="sd">        2025_11_14_22_50_00__abc1234__0.1.0.json</span>
+<span class="sd">        2025_11_14_22_45_00__700e012__0.1.0.json</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">history_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;*__</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">.json&quot;</span><span class="p">))</span>
+    <span class="c1"># Sort by filename (chronological order), reverse for latest first</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_latest_metric_for_version">
+<a class="viewcode-back" href="../../../module_docs/umpyre/storage/query_utils.html#umpyre.storage.get_latest_metric_for_version">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_latest_metric_for_version</span><span class="p">(</span><span class="n">history_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the most recent metrics file for a version.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        history_dir: Path to history directory</span>
+<span class="sd">        version: PyPI version string</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Path to latest metrics file or None</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; latest = get_latest_metric_for_version(Path(&quot;history&quot;), &quot;0.1.0&quot;)  #doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; info = parse_metric_filename(latest.name)  #doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; print(f&quot;Latest 0.1.0 metrics from {info[&#39;timestamp_str&#39;]}&quot;)  #doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="n">find_metrics_by_version</span><span class="p">(</span><span class="n">history_dir</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">matches</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="get_all_versions">
+<a class="viewcode-back" href="../../../module_docs/umpyre/storage/query_utils.html#umpyre.storage.get_all_versions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_all_versions</span><span class="p">(</span><span class="n">history_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get all unique PyPI versions found in metrics.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        history_dir: Path to history directory</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Sorted list of versions (excluding &#39;none&#39;)</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; versions = get_all_versions(Path(&quot;history&quot;))  #doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; print(versions)  #doctest: +SKIP</span>
+<span class="sd">        [&#39;0.1.0&#39;, &#39;0.1.1&#39;, &#39;0.2.0&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">versions</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">history_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.json&quot;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="n">parse_metric_filename</span><span class="p">(</span><span class="n">filepath</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;has_version&quot;</span><span class="p">]:</span>
+                <span class="n">versions</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;pypi_version&quot;</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+    <span class="c1"># Sort semantically (simple lexicographic works for most cases)</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">versions</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="filter_by_date_range">
+<a class="viewcode-back" href="../../../module_docs/umpyre/storage/query_utils.html#umpyre.storage.filter_by_date_range">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_by_date_range</span><span class="p">(</span>
+    <span class="n">history_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get metrics files within a date range.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        history_dir: Path to history directory</span>
+<span class="sd">        start_date: Start datetime (inclusive)</span>
+<span class="sd">        end_date: End datetime (inclusive)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List of paths within date range (sorted chronologically)</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from datetime import datetime, timedelta</span>
+<span class="sd">        &gt;&gt;&gt; end = datetime.now()</span>
+<span class="sd">        &gt;&gt;&gt; start = end - timedelta(days=7)</span>
+<span class="sd">        &gt;&gt;&gt; recent = filter_by_date_range(Path(&quot;history&quot;), start, end)  #doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; print(f&quot;Found {len(recent)} metrics from last 7 days&quot;)  #doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">history_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.json&quot;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="n">parse_metric_filename</span><span class="p">(</span><span class="n">filepath</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">start_date</span> <span class="ow">and</span> <span class="n">timestamp</span> <span class="o">&lt;</span> <span class="n">start_date</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">end_date</span> <span class="ow">and</span> <span class="n">timestamp</span> <span class="o">&gt;</span> <span class="n">end_date</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">doctest</span>
+
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

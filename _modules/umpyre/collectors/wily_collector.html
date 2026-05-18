@@ -1,0 +1,347 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>umpyre.collectors.wily_collector &mdash; umpyre 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=92734c54"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            umpyre
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre.html">umpyre</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/cli.html">umpyre.cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors.html">umpyre.collectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/base.html">umpyre.collectors.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/coverage_collector.html">umpyre.collectors.coverage_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/umpyre_collector.html">umpyre.collectors.umpyre_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/wily_collector.html">umpyre.collectors.wily_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/workflow_status.html">umpyre.collectors.workflow_status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/config.html">umpyre.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/python_code_stats.html">umpyre.python_code_stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/schema.html">umpyre.schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/storage.html">umpyre.storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/storage/formats.html">umpyre.storage.formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/storage/git_branch.html">umpyre.storage.git_branch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/storage/query_utils.html">umpyre.storage.query_utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">umpyre</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">umpyre.collectors.wily_collector</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for umpyre.collectors.wily_collector</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Collector for complexity metrics using wily.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">umpyre.collectors.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">MetricCollector</span><span class="p">,</span> <span class="n">registry</span>
+
+
+<div class="viewcode-block" id="WilyCollector">
+<a class="viewcode-back" href="../../../module_docs/umpyre/collectors/wily_collector.html#umpyre.WilyCollector">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WilyCollector</span><span class="p">(</span><span class="n">MetricCollector</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collect complexity metrics using wily.</span>
+
+<span class="sd">    Tracks:</span>
+<span class="sd">    - Cyclomatic complexity (average)</span>
+<span class="sd">    - Maintainability index</span>
+<span class="sd">    - Total lines of code</span>
+<span class="sd">    - Files analyzed</span>
+
+<span class="sd">    Note: Limited to recent commits (max_revisions) for performance.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; # This requires wily to be installed and a git repo</span>
+<span class="sd">        &gt;&gt;&gt; # Skip in doctest as it requires git setup</span>
+<span class="sd">        &gt;&gt;&gt; True  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">repo_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_revisions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="n">operators</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize collector.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            repo_path: Path to git repository (defaults to current directory)</span>
+<span class="sd">            max_revisions: Number of recent commits to analyze (for speed)</span>
+<span class="sd">            operators: Wily operators to use (defaults to [&#39;cyclomatic&#39;, &#39;maintainability&#39;])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span> <span class="o">=</span> <span class="n">repo_path</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_revisions</span> <span class="o">=</span> <span class="n">max_revisions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">operators</span> <span class="o">=</span> <span class="n">operators</span> <span class="ow">or</span> <span class="p">[</span><span class="s2">&quot;cyclomatic&quot;</span><span class="p">,</span> <span class="s2">&quot;maintainability&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="WilyCollector.collect">
+<a class="viewcode-back" href="../../../module_docs/umpyre/collectors/wily_collector.html#umpyre.WilyCollector.collect">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">collect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Collect complexity metrics using wily.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with:</span>
+<span class="sd">            - cyclomatic_avg: Average cyclomatic complexity</span>
+<span class="sd">            - maintainability_index: Maintainability index score</span>
+<span class="sd">            - total_loc: Total lines of code</span>
+<span class="sd">            - files_analyzed: Number of files analyzed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Check if wily is available</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_wily_available</span><span class="p">():</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_empty_metrics</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="s2">&quot;wily not installed&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Check if repo is initialized</span>
+            <span class="n">wily_cache</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;.wily&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">wily_cache</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="c1"># Build wily cache (limited revisions for speed)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_build_wily_cache</span><span class="p">()</span>
+
+            <span class="c1"># Get latest metrics</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_latest_metrics</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="n">metrics</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_empty_metrics</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_wily_available</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if wily is installed.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="p">[</span><span class="s2">&quot;wily&quot;</span><span class="p">,</span> <span class="s2">&quot;--version&quot;</span><span class="p">],</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_wily_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build wily cache with limited revisions.&quot;&quot;&quot;</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;wily&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;build&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">,</span>
+            <span class="s2">&quot;--max-revisions&quot;</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_revisions</span><span class="p">),</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Add operators</span>
+        <span class="k">for</span> <span class="n">operator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="p">:</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;--operators&quot;</span><span class="p">,</span> <span class="n">operator</span><span class="p">])</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="n">cmd</span><span class="p">,</span>
+            <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;wily build failed: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_latest_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract metrics from wily report.&quot;&quot;&quot;</span>
+        <span class="c1"># Get report in JSON format</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;wily&quot;</span><span class="p">,</span> <span class="s2">&quot;report&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">,</span> <span class="s2">&quot;--format&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">],</span>
+            <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;wily report failed: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Parse JSON output</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">report</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+            <span class="c1"># Fallback: parse text output</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_text_report</span><span class="p">()</span>
+
+        <span class="c1"># Extract metrics from JSON</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_metrics_from_json</span><span class="p">(</span><span class="n">report</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_text_report</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse text output as fallback (wily doesn&#39;t always output valid JSON).&quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;wily&quot;</span><span class="p">,</span> <span class="s2">&quot;report&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">],</span>
+            <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Simple parsing of key metrics from text</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span>
+
+        <span class="c1"># This is a simplified parser - actual implementation would be more robust</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;cyclomatic_avg&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;maintainability_index&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;total_loc&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;files_analyzed&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Count files</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;files_analyzed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;.py&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">metrics</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_metrics_from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">report</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract metrics from JSON report.&quot;&quot;&quot;</span>
+        <span class="c1"># Wily JSON structure varies, this is a best-effort extraction</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;cyclomatic_avg&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;maintainability_index&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;total_loc&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;files_analyzed&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Navigate report structure (this varies by wily version)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">report</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;files_analyzed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">report</span><span class="p">)</span>
+
+            <span class="c1"># Calculate averages</span>
+            <span class="n">cyclomatic_values</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">maintainability_values</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">loc_values</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">file_data</span> <span class="ow">in</span> <span class="n">report</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="s2">&quot;cyclomatic&quot;</span> <span class="ow">in</span> <span class="n">file_data</span><span class="p">:</span>
+                        <span class="n">cyclomatic_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_data</span><span class="p">[</span><span class="s2">&quot;cyclomatic&quot;</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="s2">&quot;maintainability&quot;</span> <span class="ow">in</span> <span class="n">file_data</span><span class="p">:</span>
+                        <span class="n">maintainability_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_data</span><span class="p">[</span><span class="s2">&quot;maintainability&quot;</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="s2">&quot;loc&quot;</span> <span class="ow">in</span> <span class="n">file_data</span><span class="p">:</span>
+                        <span class="n">loc_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_data</span><span class="p">[</span><span class="s2">&quot;loc&quot;</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">cyclomatic_values</span><span class="p">:</span>
+                <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;cyclomatic_avg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">cyclomatic_values</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span>
+                    <span class="n">cyclomatic_values</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">maintainability_values</span><span class="p">:</span>
+                <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;maintainability_index&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">maintainability_values</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span>
+                    <span class="n">maintainability_values</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">loc_values</span><span class="p">:</span>
+                <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;total_loc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">loc_values</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">metrics</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_empty_metrics</span><span class="p">(</span><span class="n">error</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return empty metrics.&quot;&quot;&quot;</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;cyclomatic_avg&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;maintainability_index&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;total_loc&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;files_analyzed&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">error</span><span class="p">:</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>
+        <span class="k">return</span> <span class="n">metrics</span></div>
+
+
+
+<span class="c1"># Register collector</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;wily&quot;</span><span class="p">,</span> <span class="n">WilyCollector</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>umpyre.collectors.workflow_status &mdash; umpyre 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=92734c54"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            umpyre
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre.html">umpyre</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/cli.html">umpyre.cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors.html">umpyre.collectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/base.html">umpyre.collectors.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/coverage_collector.html">umpyre.collectors.coverage_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/umpyre_collector.html">umpyre.collectors.umpyre_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/wily_collector.html">umpyre.collectors.wily_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/collectors/workflow_status.html">umpyre.collectors.workflow_status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/config.html">umpyre.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/python_code_stats.html">umpyre.python_code_stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/schema.html">umpyre.schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/storage.html">umpyre.storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/storage/formats.html">umpyre.storage.formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/storage/git_branch.html">umpyre.storage.git_branch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/umpyre/storage/query_utils.html">umpyre.storage.query_utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">umpyre</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">umpyre.collectors.workflow_status</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for umpyre.collectors.workflow_status</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Collector for GitHub workflow status using GitHub API.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">umpyre.collectors.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">MetricCollector</span><span class="p">,</span> <span class="n">registry</span>
+
+
+<div class="viewcode-block" id="WorkflowStatusCollector">
+<a class="viewcode-back" href="../../../module_docs/umpyre/collectors/workflow_status.html#umpyre.WorkflowStatusCollector">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WorkflowStatusCollector</span><span class="p">(</span><span class="n">MetricCollector</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collect GitHub workflow status using GitHub API.</span>
+
+<span class="sd">    Tracks:</span>
+<span class="sd">    - Last workflow run status (success/failure)</span>
+<span class="sd">    - Last successful run timestamp</span>
+<span class="sd">    - Recent failure count</span>
+<span class="sd">    - Workflow run URL</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; # Mock test (requires actual GitHub API)</span>
+<span class="sd">        &gt;&gt;&gt; import os</span>
+<span class="sd">        &gt;&gt;&gt; if os.getenv(&#39;GITHUB_TOKEN&#39;):  # doctest: +SKIP</span>
+<span class="sd">        ...     collector = WorkflowStatusCollector(</span>
+<span class="sd">        ...         repo=&quot;thorwhalen/astate&quot;,</span>
+<span class="sd">        ...         token=os.getenv(&#39;GITHUB_TOKEN&#39;)</span>
+<span class="sd">        ...     )</span>
+<span class="sd">        ...     metrics = collector.collect()</span>
+<span class="sd">        ...     &#39;last_run_status&#39; in metrics</span>
+<span class="sd">        ... else:</span>
+<span class="sd">        ...     True  # Skip if no token</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">repo</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">lookback_runs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">workflow_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize collector.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            repo: Repository in format &quot;owner/repo&quot;</span>
+<span class="sd">            token: GitHub token (defaults to GITHUB_TOKEN env var)</span>
+<span class="sd">            lookback_runs: Number of recent runs to analyze</span>
+<span class="sd">            workflow_name: Specific workflow name to track (None = all workflows)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="n">repo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">token</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;GITHUB_TOKEN&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lookback_runs</span> <span class="o">=</span> <span class="n">lookback_runs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workflow_name</span> <span class="o">=</span> <span class="n">workflow_name</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;GitHub token required (set GITHUB_TOKEN env var)&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WorkflowStatusCollector.collect">
+<a class="viewcode-back" href="../../../module_docs/umpyre/collectors/workflow_status.html#umpyre.WorkflowStatusCollector.collect">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">collect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Collect workflow status from GitHub API.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with:</span>
+<span class="sd">            - last_run_status: &#39;success&#39;, &#39;failure&#39;, or &#39;other&#39;</span>
+<span class="sd">            - last_success_timestamp: ISO timestamp or None</span>
+<span class="sd">            - recent_failure_count: Number of failures in lookback window</span>
+<span class="sd">            - run_url: URL of last run</span>
+<span class="sd">            - total_runs_analyzed: Number of runs examined</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">runs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_workflow_runs</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">runs</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_empty_metrics</span><span class="p">()</span>
+
+            <span class="c1"># Analyze runs</span>
+            <span class="n">last_run</span> <span class="o">=</span> <span class="n">runs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">last_run_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_conclusion</span><span class="p">(</span><span class="n">last_run</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;conclusion&quot;</span><span class="p">))</span>
+
+            <span class="c1"># Find last successful run</span>
+            <span class="n">last_success</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">runs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">run</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;conclusion&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
+                    <span class="n">last_success</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;updated_at&quot;</span><span class="p">)</span>
+                    <span class="k">break</span>
+
+            <span class="c1"># Count recent failures</span>
+            <span class="n">failure_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+                <span class="mi">1</span>
+                <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">runs</span>
+                <span class="k">if</span> <span class="n">run</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;conclusion&quot;</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;failure&quot;</span><span class="p">,</span> <span class="s2">&quot;cancelled&quot;</span><span class="p">,</span> <span class="s2">&quot;timed_out&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;last_run_status&quot;</span><span class="p">:</span> <span class="n">last_run_status</span><span class="p">,</span>
+                <span class="s2">&quot;last_success_timestamp&quot;</span><span class="p">:</span> <span class="n">last_success</span><span class="p">,</span>
+                <span class="s2">&quot;recent_failure_count&quot;</span><span class="p">:</span> <span class="n">failure_count</span><span class="p">,</span>
+                <span class="s2">&quot;run_url&quot;</span><span class="p">:</span> <span class="n">last_run</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;html_url&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;total_runs_analyzed&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">runs</span><span class="p">),</span>
+            <span class="p">}</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;last_run_status&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;last_success_timestamp&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">&quot;recent_failure_count&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;run_url&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">&quot;total_runs_analyzed&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
+            <span class="p">}</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_fetch_workflow_runs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetch recent workflow runs from GitHub API.&quot;&quot;&quot;</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;application/vnd.github.v3+json&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Fetch workflow runs</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://api.github.com/repos/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="si">}</span><span class="s2">/actions/runs&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;per_page&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">lookback_runs</span><span class="p">,</span>
+            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;completed&quot;</span><span class="p">,</span>  <span class="c1"># Only completed runs</span>
+        <span class="p">}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="n">runs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;workflow_runs&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+        <span class="c1"># Filter by workflow name if specified</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">:</span>
+            <span class="n">runs</span> <span class="o">=</span> <span class="p">[</span><span class="n">run</span> <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">runs</span> <span class="k">if</span> <span class="n">run</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">runs</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">lookback_runs</span><span class="p">]</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_map_conclusion</span><span class="p">(</span><span class="n">conclusion</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Map GitHub conclusion to simplified status.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">conclusion</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;success&quot;</span>
+        <span class="k">elif</span> <span class="n">conclusion</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;failure&quot;</span><span class="p">,</span> <span class="s2">&quot;cancelled&quot;</span><span class="p">,</span> <span class="s2">&quot;timed_out&quot;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="s2">&quot;failure&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;other&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_empty_metrics</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return empty metrics when no data available.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;last_run_status&quot;</span><span class="p">:</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;last_success_timestamp&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;recent_failure_count&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;run_url&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;total_runs_analyzed&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">}</span></div>
+
+
+
+<span class="c1"># Register collector</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;workflow_status&quot;</span><span class="p">,</span> <span class="n">WorkflowStatusCollector</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

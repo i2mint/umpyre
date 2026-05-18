@@ -1,0 +1,228 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>umpyre.config &mdash; umpyre 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=92734c54"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="umpyre.python_code_stats" href="python_code_stats.html" />
+    <link rel="prev" title="umpyre.collectors.workflow_status" href="collectors/workflow_status.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            umpyre
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../umpyre.html">umpyre</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">umpyre.cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors.html">umpyre.collectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/base.html">umpyre.collectors.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/coverage_collector.html">umpyre.collectors.coverage_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/umpyre_collector.html">umpyre.collectors.umpyre_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/wily_collector.html">umpyre.collectors.wily_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/workflow_status.html">umpyre.collectors.workflow_status</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">umpyre.config</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.config.Config.collector_config"><code class="docutils literal notranslate"><span class="pre">Config.collector_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.config.Config.from_dict"><code class="docutils literal notranslate"><span class="pre">Config.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.config.Config.from_file"><code class="docutils literal notranslate"><span class="pre">Config.from_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.config.Config.get"><code class="docutils literal notranslate"><span class="pre">Config.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.config.Config.is_collector_enabled"><code class="docutils literal notranslate"><span class="pre">Config.is_collector_enabled()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.config.Config.retention_strategy"><code class="docutils literal notranslate"><span class="pre">Config.retention_strategy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.config.Config.storage_branch"><code class="docutils literal notranslate"><span class="pre">Config.storage_branch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.config.Config.storage_formats"><code class="docutils literal notranslate"><span class="pre">Config.storage_formats</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.config.Config.to_dict"><code class="docutils literal notranslate"><span class="pre">Config.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.config.ConfigError"><code class="docutils literal notranslate"><span class="pre">ConfigError</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python_code_stats.html">umpyre.python_code_stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema.html">umpyre.schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage.html">umpyre.storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage/formats.html">umpyre.storage.formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage/git_branch.html">umpyre.storage.git_branch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage/query_utils.html">umpyre.storage.query_utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">umpyre</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">umpyre.config</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/umpyre/config.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-umpyre.config">
+<span id="umpyre-config"></span><h1>umpyre.config<a class="headerlink" href="#module-umpyre.config" title="Link to this heading"></a></h1>
+<p>Configuration loading and validation for umpyre.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="umpyre.config.Config">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">umpyre.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/umpyre/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.config.Config" title="Link to this definition"></a></dt>
+<dd><p>Configuration manager for umpyre metrics collection.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.config.Config.collector_config">
+<span class="sig-name descname"><span class="pre">collector_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collector_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../_modules/umpyre/config.html#Config.collector_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.config.Config.collector_config" title="Link to this definition"></a></dt>
+<dd><p>Get configuration for a specific collector.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.config.Config.from_dict">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#umpyre.config.Config" title="umpyre.config.Config"><span class="pre">Config</span></a></span></span><a class="reference internal" href="../../_modules/umpyre/config.html#Config.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.config.Config.from_dict" title="Link to this definition"></a></dt>
+<dd><p>Create config from dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.config.Config.from_file">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#umpyre.config.Config" title="umpyre.config.Config"><span class="pre">Config</span></a></span></span><a class="reference internal" href="../../_modules/umpyre/config.html#Config.from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.config.Config.from_file" title="Link to this definition"></a></dt>
+<dd><p>Load config from YAML file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.config.Config.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/umpyre/config.html#Config.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.config.Config.get" title="Link to this definition"></a></dt>
+<dd><p>Get nested config value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*keys</strong> – Nested keys (e.g., ‘collectors’, ‘wily’, ‘enabled’)</p></li>
+<li><p><strong>default</strong> – Default value if key not found</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Config value or default</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">config_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;collectors&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;wily&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;enabled&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}}})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;collectors&#39;</span><span class="p">,</span> <span class="s1">&#39;wily&#39;</span><span class="p">,</span> <span class="s1">&#39;enabled&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;collectors&#39;</span><span class="p">,</span> <span class="s1">&#39;missing&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;default_value&#39;</span><span class="p">)</span>
+<span class="go">&#39;default_value&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.config.Config.is_collector_enabled">
+<span class="sig-name descname"><span class="pre">is_collector_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collector_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../../_modules/umpyre/config.html#Config.is_collector_enabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.config.Config.is_collector_enabled" title="Link to this definition"></a></dt>
+<dd><p>Check if a collector is enabled.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="umpyre.config.Config.retention_strategy">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">retention_strategy</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#umpyre.config.Config.retention_strategy" title="Link to this definition"></a></dt>
+<dd><p>Get data retention strategy.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="umpyre.config.Config.storage_branch">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">storage_branch</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#umpyre.config.Config.storage_branch" title="Link to this definition"></a></dt>
+<dd><p>Get the storage branch name.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="umpyre.config.Config.storage_formats">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">storage_formats</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#umpyre.config.Config.storage_formats" title="Link to this definition"></a></dt>
+<dd><p>Get enabled storage formats.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.config.Config.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../_modules/umpyre/config.html#Config.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.config.Config.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Export config as dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="umpyre.config.ConfigError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">umpyre.config.</span></span><span class="sig-name descname"><span class="pre">ConfigError</span></span><a class="reference internal" href="../../_modules/umpyre/config.html#ConfigError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.config.ConfigError" title="Link to this definition"></a></dt>
+<dd><p>Raised when configuration is invalid.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="collectors/workflow_status.html" class="btn btn-neutral float-left" title="umpyre.collectors.workflow_status" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python_code_stats.html" class="btn btn-neutral float-right" title="umpyre.python_code_stats" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

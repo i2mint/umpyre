@@ -1,0 +1,4 @@
+umpyre.collectors.coverage_collector
+====================================
+.. automodule:: umpyre.collectors.coverage_collector
+   :members:

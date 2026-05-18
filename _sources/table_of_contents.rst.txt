@@ -1,0 +1,19 @@
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   module_docs/umpyre
+   module_docs/umpyre/cli
+   module_docs/umpyre/collectors
+   module_docs/umpyre/collectors/base
+   module_docs/umpyre/collectors/coverage_collector
+   module_docs/umpyre/collectors/umpyre_collector
+   module_docs/umpyre/collectors/wily_collector
+   module_docs/umpyre/collectors/workflow_status
+   module_docs/umpyre/config
+   module_docs/umpyre/python_code_stats
+   module_docs/umpyre/schema
+   module_docs/umpyre/storage
+   module_docs/umpyre/storage/formats
+   module_docs/umpyre/storage/git_branch
+   module_docs/umpyre/storage/query_utils

@@ -1,0 +1,4 @@
+umpyre.schema
+=============
+.. automodule:: umpyre.schema
+   :members:

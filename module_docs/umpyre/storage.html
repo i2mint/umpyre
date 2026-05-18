@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>umpyre.storage &mdash; umpyre 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=92734c54"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="umpyre.storage.formats" href="storage/formats.html" />
+    <link rel="prev" title="umpyre.schema" href="schema.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            umpyre
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../umpyre.html">umpyre</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">umpyre.cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors.html">umpyre.collectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/base.html">umpyre.collectors.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/coverage_collector.html">umpyre.collectors.coverage_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/umpyre_collector.html">umpyre.collectors.umpyre_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/wily_collector.html">umpyre.collectors.wily_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collectors/workflow_status.html">umpyre.collectors.workflow_status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">umpyre.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_code_stats.html">umpyre.python_code_stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema.html">umpyre.schema</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">umpyre.storage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.storage.GitBranchStorage"><code class="docutils literal notranslate"><span class="pre">GitBranchStorage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.storage.GitBranchStorage.store_metrics"><code class="docutils literal notranslate"><span class="pre">GitBranchStorage.store_metrics()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.storage.GitBranchStorageError"><code class="docutils literal notranslate"><span class="pre">GitBranchStorageError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.storage.deserialize_metrics"><code class="docutils literal notranslate"><span class="pre">deserialize_metrics()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.storage.filter_by_date_range"><code class="docutils literal notranslate"><span class="pre">filter_by_date_range()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.storage.find_metrics_by_commit"><code class="docutils literal notranslate"><span class="pre">find_metrics_by_commit()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.storage.find_metrics_by_version"><code class="docutils literal notranslate"><span class="pre">find_metrics_by_version()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.storage.get_all_versions"><code class="docutils literal notranslate"><span class="pre">get_all_versions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.storage.get_latest_metric_for_version"><code class="docutils literal notranslate"><span class="pre">get_latest_metric_for_version()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.storage.parse_metric_filename"><code class="docutils literal notranslate"><span class="pre">parse_metric_filename()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.storage.serialize_metrics"><code class="docutils literal notranslate"><span class="pre">serialize_metrics()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="storage/formats.html">umpyre.storage.formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage/git_branch.html">umpyre.storage.git_branch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage/query_utils.html">umpyre.storage.query_utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">umpyre</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">umpyre.storage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/umpyre/storage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-umpyre.storage">
+<span id="umpyre-storage"></span><h1>umpyre.storage<a class="headerlink" href="#module-umpyre.storage" title="Link to this heading"></a></h1>
+<p>Storage operations for metrics.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="umpyre.storage.GitBranchStorage">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">umpyre.storage.</span></span><span class="sig-name descname"><span class="pre">GitBranchStorage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'origin'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/umpyre/storage/git_branch.html#GitBranchStorage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.storage.GitBranchStorage" title="Link to this definition"></a></dt>
+<dd><p>Store metrics in a separate git branch.</p>
+<p>This provides versioned, branch-based storage without polluting
+the main branch or requiring external artifacts.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">storage</span> <span class="o">=</span> <span class="n">GitBranchStorage</span><span class="p">(</span><span class="n">repo_path</span><span class="o">=</span><span class="s2">&quot;/path/to/repo&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lines&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;functions&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">storage</span><span class="o">.</span><span class="n">store_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="s2">&quot;abc123&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;code-metrics&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.storage.GitBranchStorage.store_metrics">
+<span class="sig-name descname"><span class="pre">store_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit_sha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'code-metrics'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/umpyre/storage/git_branch.html#GitBranchStorage.store_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.storage.GitBranchStorage.store_metrics" title="Link to this definition"></a></dt>
+<dd><p>Store metrics to git branch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metrics</strong> – Metric dictionary to store</p></li>
+<li><p><strong>commit_sha</strong> – Git commit SHA</p></li>
+<li><p><strong>branch</strong> – Target branch name</p></li>
+<li><p><strong>formats</strong> – List of formats (‘json’, ‘csv’)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="umpyre.storage.GitBranchStorageError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">umpyre.storage.</span></span><span class="sig-name descname"><span class="pre">GitBranchStorageError</span></span><a class="reference internal" href="../../_modules/umpyre/storage/git_branch.html#GitBranchStorageError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.storage.GitBranchStorageError" title="Link to this definition"></a></dt>
+<dd><p>Raised when git branch storage operations fail.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.storage.deserialize_metrics">
+<span class="sig-prename descclassname"><span class="pre">umpyre.storage.</span></span><span class="sig-name descname"><span class="pre">deserialize_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'json'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../_modules/umpyre/storage/formats.html#deserialize_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.storage.deserialize_metrics" title="Link to this definition"></a></dt>
+<dd><p>Deserialize metrics from file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> – Path to input file</p></li>
+<li><p><strong>format</strong> – Format (‘json’ or ‘csv’)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Metric dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.storage.filter_by_date_range">
+<span class="sig-prename descclassname"><span class="pre">umpyre.storage.</span></span><span class="sig-name descname"><span class="pre">filter_by_date_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">history_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/umpyre/storage/query_utils.html#filter_by_date_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.storage.filter_by_date_range" title="Link to this definition"></a></dt>
+<dd><p>Get metrics files within a date range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>history_dir</strong> – Path to history directory</p></li>
+<li><p><strong>start_date</strong> – Start datetime (inclusive)</p></li>
+<li><p><strong>end_date</strong> – End datetime (inclusive)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of paths within date range (sorted chronologically)</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">recent</span> <span class="o">=</span> <span class="n">filter_by_date_range</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;history&quot;</span><span class="p">),</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">recent</span><span class="p">)</span><span class="si">}</span><span class="s2"> metrics from last 7 days&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.storage.find_metrics_by_commit">
+<span class="sig-prename descclassname"><span class="pre">umpyre.storage.</span></span><span class="sig-name descname"><span class="pre">find_metrics_by_commit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">history_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit_sha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/umpyre/storage/query_utils.html#find_metrics_by_commit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.storage.find_metrics_by_commit" title="Link to this definition"></a></dt>
+<dd><p>Find metrics file for a specific commit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>history_dir</strong> – Path to history directory</p></li>
+<li><p><strong>commit_sha</strong> – Commit SHA (7 chars or full)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to metrics file or None</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metrics</span> <span class="o">=</span> <span class="n">find_metrics_by_commit</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;history&quot;</span><span class="p">),</span> <span class="s2">&quot;700e012&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="go">2025_11_14_22_45_00__700e012__0.1.0.json</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.storage.find_metrics_by_version">
+<span class="sig-prename descclassname"><span class="pre">umpyre.storage.</span></span><span class="sig-name descname"><span class="pre">find_metrics_by_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">history_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/umpyre/storage/query_utils.html#find_metrics_by_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.storage.find_metrics_by_version" title="Link to this definition"></a></dt>
+<dd><p>Find all metrics files for a specific PyPI version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>history_dir</strong> – Path to history directory</p></li>
+<li><p><strong>version</strong> – PyPI version string (e.g., “0.1.0”)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of paths (sorted by timestamp, latest first)</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metrics</span> <span class="o">=</span> <span class="n">find_metrics_by_version</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;history&quot;</span><span class="p">),</span> <span class="s2">&quot;0.1.0&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="go">2025_11_14_22_50_00__abc1234__0.1.0.json</span>
+<span class="go">2025_11_14_22_45_00__700e012__0.1.0.json</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.storage.get_all_versions">
+<span class="sig-prename descclassname"><span class="pre">umpyre.storage.</span></span><span class="sig-name descname"><span class="pre">get_all_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">history_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/umpyre/storage/query_utils.html#get_all_versions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.storage.get_all_versions" title="Link to this definition"></a></dt>
+<dd><p>Get all unique PyPI versions found in metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>history_dir</strong> – Path to history directory</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sorted list of versions (excluding ‘none’)</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">versions</span> <span class="o">=</span> <span class="n">get_all_versions</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;history&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">versions</span><span class="p">)</span>
+<span class="go">[&#39;0.1.0&#39;, &#39;0.1.1&#39;, &#39;0.2.0&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.storage.get_latest_metric_for_version">
+<span class="sig-prename descclassname"><span class="pre">umpyre.storage.</span></span><span class="sig-name descname"><span class="pre">get_latest_metric_for_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">history_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/umpyre/storage/query_utils.html#get_latest_metric_for_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.storage.get_latest_metric_for_version" title="Link to this definition"></a></dt>
+<dd><p>Get the most recent metrics file for a version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>history_dir</strong> – Path to history directory</p></li>
+<li><p><strong>version</strong> – PyPI version string</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to latest metrics file or None</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">latest</span> <span class="o">=</span> <span class="n">get_latest_metric_for_version</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;history&quot;</span><span class="p">),</span> <span class="s2">&quot;0.1.0&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info</span> <span class="o">=</span> <span class="n">parse_metric_filename</span><span class="p">(</span><span class="n">latest</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Latest 0.1.0 metrics from </span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;timestamp_str&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.storage.parse_metric_filename">
+<span class="sig-prename descclassname"><span class="pre">umpyre.storage.</span></span><span class="sig-name descname"><span class="pre">parse_metric_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../_modules/umpyre/storage/query_utils.html#parse_metric_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.storage.parse_metric_filename" title="Link to this definition"></a></dt>
+<dd><p>Parse metric filename into components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> – Filename like “2025_11_14_22_45_00__700e012__0.1.0.json”</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>{</dt><dd><p>“timestamp”: datetime object,
+“timestamp_str”: “2025-11-14T22:45:00”,
+“commit_sha”: “700e012”,
+“pypi_version”: “0.1.0” or None,
+“has_version”: bool,</p>
+</dd>
+</dl>
+<p>}</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary with parsed components</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span> <span class="o">=</span> <span class="n">parse_metric_filename</span><span class="p">(</span><span class="s2">&quot;2025_11_14_22_45_00__700e012__0.1.0.json&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;commit_sha&#39;</span><span class="p">]</span>
+<span class="go">&#39;700e012&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;pypi_version&#39;</span><span class="p">]</span>
+<span class="go">&#39;0.1.0&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.storage.serialize_metrics">
+<span class="sig-prename descclassname"><span class="pre">umpyre.storage.</span></span><span class="sig-name descname"><span class="pre">serialize_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'json'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/umpyre/storage/formats.html#serialize_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.storage.serialize_metrics" title="Link to this definition"></a></dt>
+<dd><p>Serialize metrics to file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Metric dictionary</p></li>
+<li><p><strong>output_path</strong> – Path to output file</p></li>
+<li><p><strong>format</strong> – Format (‘json’ or ‘csv’)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="schema.html" class="btn btn-neutral float-left" title="umpyre.schema" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="storage/formats.html" class="btn btn-neutral float-right" title="umpyre.storage.formats" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

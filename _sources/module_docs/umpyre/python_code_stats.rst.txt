@@ -1,0 +1,4 @@
+umpyre.python_code_stats
+========================
+.. automodule:: umpyre.python_code_stats
+   :members:

@@ -1,0 +1,4 @@
+umpyre.collectors.wily_collector
+================================
+.. automodule:: umpyre.collectors.wily_collector
+   :members:

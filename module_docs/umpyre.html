@@ -1,0 +1,788 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>umpyre &mdash; umpyre 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=92734c54"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="umpyre.cli" href="umpyre/cli.html" />
+    <link rel="prev" title="Welcome to umpyre’s documentation!" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            umpyre
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">umpyre</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.CollectorRegistry"><code class="docutils literal notranslate"><span class="pre">CollectorRegistry</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.CollectorRegistry.get"><code class="docutils literal notranslate"><span class="pre">CollectorRegistry.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.CollectorRegistry.list_collectors"><code class="docutils literal notranslate"><span class="pre">CollectorRegistry.list_collectors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.CollectorRegistry.register"><code class="docutils literal notranslate"><span class="pre">CollectorRegistry.register()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.Config.collector_config"><code class="docutils literal notranslate"><span class="pre">Config.collector_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.Config.from_dict"><code class="docutils literal notranslate"><span class="pre">Config.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.Config.from_file"><code class="docutils literal notranslate"><span class="pre">Config.from_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.Config.get"><code class="docutils literal notranslate"><span class="pre">Config.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.Config.is_collector_enabled"><code class="docutils literal notranslate"><span class="pre">Config.is_collector_enabled()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.Config.retention_strategy"><code class="docutils literal notranslate"><span class="pre">Config.retention_strategy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.Config.storage_branch"><code class="docutils literal notranslate"><span class="pre">Config.storage_branch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.Config.storage_formats"><code class="docutils literal notranslate"><span class="pre">Config.storage_formats</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.Config.to_dict"><code class="docutils literal notranslate"><span class="pre">Config.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.CoverageCollector"><code class="docutils literal notranslate"><span class="pre">CoverageCollector</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.CoverageCollector.collect"><code class="docutils literal notranslate"><span class="pre">CoverageCollector.collect()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.GitBranchStorage"><code class="docutils literal notranslate"><span class="pre">GitBranchStorage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.GitBranchStorage.store_metrics"><code class="docutils literal notranslate"><span class="pre">GitBranchStorage.store_metrics()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.MetricCollector"><code class="docutils literal notranslate"><span class="pre">MetricCollector</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.MetricCollector.collect"><code class="docutils literal notranslate"><span class="pre">MetricCollector.collect()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.MetricCollector.refresh"><code class="docutils literal notranslate"><span class="pre">MetricCollector.refresh()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.MetricCollector.to_dict"><code class="docutils literal notranslate"><span class="pre">MetricCollector.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.MetricSchema"><code class="docutils literal notranslate"><span class="pre">MetricSchema</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.MetricSchema.create_metric_data"><code class="docutils literal notranslate"><span class="pre">MetricSchema.create_metric_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.MetricSchema.current_version"><code class="docutils literal notranslate"><span class="pre">MetricSchema.current_version()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.MetricSchema.migrate"><code class="docutils literal notranslate"><span class="pre">MetricSchema.migrate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.MetricSchema.validate"><code class="docutils literal notranslate"><span class="pre">MetricSchema.validate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.UmpyreCollector"><code class="docutils literal notranslate"><span class="pre">UmpyreCollector</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.UmpyreCollector.collect"><code class="docutils literal notranslate"><span class="pre">UmpyreCollector.collect()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.WilyCollector"><code class="docutils literal notranslate"><span class="pre">WilyCollector</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.WilyCollector.collect"><code class="docutils literal notranslate"><span class="pre">WilyCollector.collect()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.WorkflowStatusCollector"><code class="docutils literal notranslate"><span class="pre">WorkflowStatusCollector</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#umpyre.WorkflowStatusCollector.collect"><code class="docutils literal notranslate"><span class="pre">WorkflowStatusCollector.collect()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.deserialize_metrics"><code class="docutils literal notranslate"><span class="pre">deserialize_metrics()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.modules_info_df"><code class="docutils literal notranslate"><span class="pre">modules_info_df()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.modules_info_df_stats"><code class="docutils literal notranslate"><span class="pre">modules_info_df_stats()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.modules_info_gen"><code class="docutils literal notranslate"><span class="pre">modules_info_gen()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.serialize_metrics"><code class="docutils literal notranslate"><span class="pre">serialize_metrics()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#umpyre.stats_of"><code class="docutils literal notranslate"><span class="pre">stats_of()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/cli.html">umpyre.cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/collectors.html">umpyre.collectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/collectors/base.html">umpyre.collectors.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/collectors/coverage_collector.html">umpyre.collectors.coverage_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/collectors/umpyre_collector.html">umpyre.collectors.umpyre_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/collectors/wily_collector.html">umpyre.collectors.wily_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/collectors/workflow_status.html">umpyre.collectors.workflow_status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/config.html">umpyre.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/python_code_stats.html">umpyre.python_code_stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/schema.html">umpyre.schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/storage.html">umpyre.storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/storage/formats.html">umpyre.storage.formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/storage/git_branch.html">umpyre.storage.git_branch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umpyre/storage/query_utils.html">umpyre.storage.query_utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">umpyre</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">umpyre</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/module_docs/umpyre.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-umpyre">
+<span id="umpyre"></span><h1>umpyre<a class="headerlink" href="#module-umpyre" title="Link to this heading"></a></h1>
+<p>Umpyre - Code analysis and quality metrics tracking.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="umpyre.CollectorRegistry">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">CollectorRegistry</span></span><a class="reference internal" href="../_modules/umpyre/collectors/base.html#CollectorRegistry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.CollectorRegistry" title="Link to this definition"></a></dt>
+<dd><p>Registry for managing available collectors.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.CollectorRegistry.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="umpyre/collectors/base.html#umpyre.collectors.base.MetricCollector" title="umpyre.collectors.base.MetricCollector"><span class="pre">MetricCollector</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/umpyre/collectors/base.html#CollectorRegistry.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.CollectorRegistry.get" title="Link to this definition"></a></dt>
+<dd><p>Get collector class by name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.CollectorRegistry.list_collectors">
+<span class="sig-name descname"><span class="pre">list_collectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/umpyre/collectors/base.html#CollectorRegistry.list_collectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.CollectorRegistry.list_collectors" title="Link to this definition"></a></dt>
+<dd><p>List all registered collector names.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.CollectorRegistry.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collector_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="umpyre/collectors/base.html#umpyre.collectors.base.MetricCollector" title="umpyre.collectors.base.MetricCollector"><span class="pre">MetricCollector</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/collectors/base.html#CollectorRegistry.register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.CollectorRegistry.register" title="Link to this definition"></a></dt>
+<dd><p>Register a collector class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Collector identifier</p></li>
+<li><p><strong>collector_class</strong> – MetricCollector subclass</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="umpyre.Config">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.Config" title="Link to this definition"></a></dt>
+<dd><p>Configuration manager for umpyre metrics collection.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.Config.collector_config">
+<span class="sig-name descname"><span class="pre">collector_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collector_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/umpyre/config.html#Config.collector_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.Config.collector_config" title="Link to this definition"></a></dt>
+<dd><p>Get configuration for a specific collector.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.Config.from_dict">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="umpyre/config.html#umpyre.config.Config" title="umpyre.config.Config"><span class="pre">Config</span></a></span></span><a class="reference internal" href="../_modules/umpyre/config.html#Config.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.Config.from_dict" title="Link to this definition"></a></dt>
+<dd><p>Create config from dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.Config.from_file">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="umpyre/config.html#umpyre.config.Config" title="umpyre.config.Config"><span class="pre">Config</span></a></span></span><a class="reference internal" href="../_modules/umpyre/config.html#Config.from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.Config.from_file" title="Link to this definition"></a></dt>
+<dd><p>Load config from YAML file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.Config.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/umpyre/config.html#Config.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.Config.get" title="Link to this definition"></a></dt>
+<dd><p>Get nested config value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*keys</strong> – Nested keys (e.g., ‘collectors’, ‘wily’, ‘enabled’)</p></li>
+<li><p><strong>default</strong> – Default value if key not found</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Config value or default</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">config_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;collectors&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;wily&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;enabled&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}}})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;collectors&#39;</span><span class="p">,</span> <span class="s1">&#39;wily&#39;</span><span class="p">,</span> <span class="s1">&#39;enabled&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;collectors&#39;</span><span class="p">,</span> <span class="s1">&#39;missing&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;default_value&#39;</span><span class="p">)</span>
+<span class="go">&#39;default_value&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.Config.is_collector_enabled">
+<span class="sig-name descname"><span class="pre">is_collector_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collector_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/umpyre/config.html#Config.is_collector_enabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.Config.is_collector_enabled" title="Link to this definition"></a></dt>
+<dd><p>Check if a collector is enabled.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="umpyre.Config.retention_strategy">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">retention_strategy</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#umpyre.Config.retention_strategy" title="Link to this definition"></a></dt>
+<dd><p>Get data retention strategy.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="umpyre.Config.storage_branch">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">storage_branch</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#umpyre.Config.storage_branch" title="Link to this definition"></a></dt>
+<dd><p>Get the storage branch name.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="umpyre.Config.storage_formats">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">storage_formats</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#umpyre.Config.storage_formats" title="Link to this definition"></a></dt>
+<dd><p>Get enabled storage formats.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.Config.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/umpyre/config.html#Config.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.Config.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Export config as dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="umpyre.CoverageCollector">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">CoverageCollector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pytest-cov'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coverage_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/collectors/coverage_collector.html#CoverageCollector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.CoverageCollector" title="Link to this definition"></a></dt>
+<dd><p>Collect test coverage metrics from coverage reports.</p>
+<p>Supports:
+- coverage.py JSON reports
+- coverage.py XML reports (Cobertura format)</p>
+<p>Tracks:
+- Line coverage percentage
+- Branch coverage percentage (if available)
+- Statements covered/total</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># This requires coverage report files</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Skip in doctest as it requires actual test runs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kc">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.CoverageCollector.collect">
+<span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/umpyre/collectors/coverage_collector.html#CoverageCollector.collect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.CoverageCollector.collect" title="Link to this definition"></a></dt>
+<dd><p>Collect coverage metrics from report files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>line_coverage: Line coverage percentage</p></li>
+<li><p>branch_coverage: Branch coverage percentage (may be 0 if not tracked)</p></li>
+<li><p>statements_covered: Number of statements covered</p></li>
+<li><p>statements_total: Total number of statements</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="umpyre.GitBranchStorage">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">GitBranchStorage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'origin'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/storage/git_branch.html#GitBranchStorage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.GitBranchStorage" title="Link to this definition"></a></dt>
+<dd><p>Store metrics in a separate git branch.</p>
+<p>This provides versioned, branch-based storage without polluting
+the main branch or requiring external artifacts.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">storage</span> <span class="o">=</span> <span class="n">GitBranchStorage</span><span class="p">(</span><span class="n">repo_path</span><span class="o">=</span><span class="s2">&quot;/path/to/repo&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lines&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;functions&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">storage</span><span class="o">.</span><span class="n">store_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="s2">&quot;abc123&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;code-metrics&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.GitBranchStorage.store_metrics">
+<span class="sig-name descname"><span class="pre">store_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit_sha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'code-metrics'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/storage/git_branch.html#GitBranchStorage.store_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.GitBranchStorage.store_metrics" title="Link to this definition"></a></dt>
+<dd><p>Store metrics to git branch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metrics</strong> – Metric dictionary to store</p></li>
+<li><p><strong>commit_sha</strong> – Git commit SHA</p></li>
+<li><p><strong>branch</strong> – Target branch name</p></li>
+<li><p><strong>formats</strong> – List of formats (‘json’, ‘csv’)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="umpyre.MetricCollector">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">MetricCollector</span></span><a class="reference internal" href="../_modules/umpyre/collectors/base.html#MetricCollector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.MetricCollector" title="Link to this definition"></a></dt>
+<dd><p>Abstract base for metric collectors using Mapping interface.</p>
+<p>Collectors implement the Mapping protocol to provide dict-like access
+to collected metrics, enabling flexible composition and iteration.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">SimpleCollector</span><span class="p">(</span><span class="n">MetricCollector</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="nf">collect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;lines&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;functions&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">collector</span> <span class="o">=</span> <span class="n">SimpleCollector</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">collector</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">]</span>
+<span class="go">100</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">collector</span><span class="p">)</span>
+<span class="go">[&#39;lines&#39;, &#39;functions&#39;]</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.MetricCollector.collect">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/umpyre/collectors/base.html#MetricCollector.collect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.MetricCollector.collect" title="Link to this definition"></a></dt>
+<dd><p>Collect metrics and return as dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary of metric names to values</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.MetricCollector.refresh">
+<span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/collectors/base.html#MetricCollector.refresh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.MetricCollector.refresh" title="Link to this definition"></a></dt>
+<dd><p>Force re-collection of metrics.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.MetricCollector.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/umpyre/collectors/base.html#MetricCollector.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.MetricCollector.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Export all metrics as dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="umpyre.MetricSchema">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">MetricSchema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'1.0'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/schema.html#MetricSchema"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.MetricSchema" title="Link to this definition"></a></dt>
+<dd><p>Versioned schema for metrics storage with migration support.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.MetricSchema.create_metric_data">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">create_metric_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit_sha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit_message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/umpyre/schema.html#MetricSchema.create_metric_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.MetricSchema.create_metric_data" title="Link to this definition"></a></dt>
+<dd><p>Create a standardized metric data structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>commit_sha</strong> – Git commit SHA</p></li>
+<li><p><strong>metrics</strong> – Dictionary of collected metrics</p></li>
+<li><p><strong>commit_message</strong> – Optional commit message</p></li>
+<li><p><strong>python_version</strong> – Optional Python version string</p></li>
+<li><p><strong>workflow_status</strong> – Optional workflow status dict</p></li>
+<li><p><strong>collection_duration</strong> – Optional collection time in seconds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Standardized metric dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.MetricSchema.current_version">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">current_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/umpyre/schema.html#MetricSchema.current_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.MetricSchema.current_version" title="Link to this definition"></a></dt>
+<dd><p>Return the current schema version.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.MetricSchema.migrate">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">migrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/umpyre/schema.html#MetricSchema.migrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.MetricSchema.migrate" title="Link to this definition"></a></dt>
+<dd><p>Migrate data from old schema version to current version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Metric data in old format</p></li>
+<li><p><strong>from_version</strong> – Version of the input data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Migrated data in current schema format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.MetricSchema.validate">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/umpyre/schema.html#MetricSchema.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.MetricSchema.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate that data conforms to schema.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – Metric data to validate</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if valid, raises ValueError otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="umpyre.UmpyreCollector">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">UmpyreCollector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_dirs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/collectors/umpyre_collector.html#UmpyreCollector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.UmpyreCollector" title="Link to this definition"></a></dt>
+<dd><p>Collect code statistics using AST parsing (no code execution).</p>
+<p>Provides metrics like:
+- Number of functions and classes
+- Lines of code (total, empty, comments, docs)
+- Code ratios (comment/empty/function lines)
+- Mean lines per function</p>
+<p>Uses AST parsing instead of dynamic imports for safety.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a simple Python file for testing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmpdir</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">test_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;test.py&quot;</span>
+<span class="gp">... </span>    <span class="n">test_file</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;def hello():</span>
+<span class="gp">... </span><span class="s1">    &quot;&quot;&quot;Say hello.&quot;&quot;&quot;</span>
+<span class="gp">... </span><span class="s1">    return &quot;hello&quot;</span>
+<span class="gp">...</span>
+<span class="gp">... </span><span class="s1">class Greeter:</span>
+<span class="gp">... </span><span class="s1">    &quot;&quot;&quot;A greeter.&quot;&quot;&quot;</span>
+<span class="gp">... </span><span class="s1">    pass</span>
+<span class="gp">... </span><span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">collector</span> <span class="o">=</span> <span class="n">UmpyreCollector</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">metrics</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;num_functions&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;num_classes&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.UmpyreCollector.collect">
+<span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/umpyre/collectors/umpyre_collector.html#UmpyreCollector.collect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.UmpyreCollector.collect" title="Link to this definition"></a></dt>
+<dd><p>Collect code statistics from root directory using AST parsing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>num_functions: Total number of functions</p></li>
+<li><p>num_classes: Total number of classes</p></li>
+<li><p>total_lines: Total lines of code</p></li>
+<li><p>empty_lines: Number of empty lines</p></li>
+<li><p>comment_lines: Number of comment lines</p></li>
+<li><p>docs_lines: Number of documentation lines</p></li>
+<li><p>function_lines: Lines in functions</p></li>
+<li><p>empty_lines_ratio: Ratio of empty lines</p></li>
+<li><p>comment_lines_ratio: Ratio of comment lines</p></li>
+<li><p>function_lines_ratio: Ratio of function lines</p></li>
+<li><p>mean_lines_per_function: Average lines per function</p></li>
+<li><p>files_analyzed: Number of files successfully analyzed</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with aggregated metrics</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="umpyre.WilyCollector">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">WilyCollector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_revisions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operators</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/collectors/wily_collector.html#WilyCollector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.WilyCollector" title="Link to this definition"></a></dt>
+<dd><p>Collect complexity metrics using wily.</p>
+<p>Tracks:
+- Cyclomatic complexity (average)
+- Maintainability index
+- Total lines of code
+- Files analyzed</p>
+<p>Note: Limited to recent commits (max_revisions) for performance.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># This requires wily to be installed and a git repo</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Skip in doctest as it requires git setup</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kc">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.WilyCollector.collect">
+<span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/umpyre/collectors/wily_collector.html#WilyCollector.collect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.WilyCollector.collect" title="Link to this definition"></a></dt>
+<dd><p>Collect complexity metrics using wily.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>cyclomatic_avg: Average cyclomatic complexity</p></li>
+<li><p>maintainability_index: Maintainability index score</p></li>
+<li><p>total_loc: Total lines of code</p></li>
+<li><p>files_analyzed: Number of files analyzed</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="umpyre.WorkflowStatusCollector">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">WorkflowStatusCollector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookback_runs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workflow_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/collectors/workflow_status.html#WorkflowStatusCollector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.WorkflowStatusCollector" title="Link to this definition"></a></dt>
+<dd><p>Collect GitHub workflow status using GitHub API.</p>
+<p>Tracks:
+- Last workflow run status (success/failure)
+- Last successful run timestamp
+- Recent failure count
+- Workflow run URL</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Mock test (requires actual GitHub API)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;GITHUB_TOKEN&#39;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">collector</span> <span class="o">=</span> <span class="n">WorkflowStatusCollector</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">repo</span><span class="o">=</span><span class="s2">&quot;thorwhalen/astate&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">token</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;GITHUB_TOKEN&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span>    <span class="n">metrics</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="s1">&#39;last_run_status&#39;</span> <span class="ow">in</span> <span class="n">metrics</span>
+<span class="gp">... </span><span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="kc">True</span>  <span class="c1"># Skip if no token</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="umpyre.WorkflowStatusCollector.collect">
+<span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/umpyre/collectors/workflow_status.html#WorkflowStatusCollector.collect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.WorkflowStatusCollector.collect" title="Link to this definition"></a></dt>
+<dd><p>Collect workflow status from GitHub API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>last_run_status: ‘success’, ‘failure’, or ‘other’</p></li>
+<li><p>last_success_timestamp: ISO timestamp or None</p></li>
+<li><p>recent_failure_count: Number of failures in lookback window</p></li>
+<li><p>run_url: URL of last run</p></li>
+<li><p>total_runs_analyzed: Number of runs examined</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.deserialize_metrics">
+<span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">deserialize_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'json'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/umpyre/storage/formats.html#deserialize_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.deserialize_metrics" title="Link to this definition"></a></dt>
+<dd><p>Deserialize metrics from file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> – Path to input file</p></li>
+<li><p><strong>format</strong> – Format (‘json’ or ‘csv’)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Metric dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.modules_info_df">
+<span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">modules_info_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath_filt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/python_code_stats.html#modules_info_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.modules_info_df" title="Link to this definition"></a></dt>
+<dd><p>A pandas DataFrame of stats of the root (package or directory thereof).
+:param root: module or directory path
+:param filepath_filt: filepath filter function or regular expression
+:param index_field: function or field string that should be used for the indexing of modules
+:param on_error: What to do when an error occurs when extracting information from a module.</p>
+<blockquote>
+<div><p>Values are ‘ignore’, ‘print’, or ‘raise’</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A DataFrame whose rows contain information for each module</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">urllib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">modules_info_df</span><span class="p">(</span><span class="n">urllib</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span>
+<span class="go">                    lines  empty_lines  ...  num_of_functions  num_of_classes</span>
+<span class="go">urllib.error           78           18  ...                 0               3</span>
+<span class="go">urllib.request       2774          410  ...                23              28</span>
+<span class="go">urllib.__init__         1            1  ...                 0               0</span>
+<span class="go">urllib.response        81           24  ...                 0               4</span>
+<span class="go">urllib.robotparser    274           36  ...                 0               4</span>
+<span class="go">urllib.parse         1166          199  ...                46              16</span>
+
+<span class="go">[6 rows x 7 columns]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.modules_info_df_stats">
+<span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">modules_info_df_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath_filt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/python_code_stats.html#modules_info_df_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.modules_info_df_stats" title="Link to this definition"></a></dt>
+<dd><p>A pandas Series of statistics over all modules of some root (package or directory thereof).
+:param root: module or directory path
+:param filepath_filt: filepath filter function or regular expression
+:param index_field: function or field string that should be used for the indexing of modules
+:param on_error: What to do when an error occurs when extracting information from a module.</p>
+<blockquote>
+<div><p>Values are ‘ignore’, ‘print’, or ‘raise’</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A Series whose rows containing statistics</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">modules_info_df_stats</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span>
+<span class="go">lines                      1301.000000</span>
+<span class="go">empty_lines                 178.000000</span>
+<span class="go">comment_lines                50.000000</span>
+<span class="go">docs_lines                  218.000000</span>
+<span class="go">function_lines              585.000000</span>
+<span class="go">num_of_functions             14.000000</span>
+<span class="go">num_of_classes                3.000000</span>
+<span class="go">empty_lines_ratio             0.136818</span>
+<span class="go">comment_lines_ratio           0.038432</span>
+<span class="go">function_lines_ratio          0.449654</span>
+<span class="go">mean_lines_per_function      41.785714</span>
+<span class="go">dtype: float64</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">modules_info_df_stats</span><span class="p">(</span><span class="s1">&#39;collections.abc&#39;</span><span class="p">)</span>
+<span class="go">lines                      1276.000000</span>
+<span class="go">empty_lines                 190.000000</span>
+<span class="go">comment_lines                73.000000</span>
+<span class="go">docs_lines                  133.000000</span>
+<span class="go">function_lines              138.000000</span>
+<span class="go">num_of_functions              1.000000</span>
+<span class="go">num_of_classes               34.000000</span>
+<span class="go">empty_lines_ratio             0.148903</span>
+<span class="go">comment_lines_ratio           0.057210</span>
+<span class="go">function_lines_ratio          0.108150</span>
+<span class="go">mean_lines_per_function     138.000000</span>
+<span class="go">dtype: float64</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.modules_info_gen">
+<span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">modules_info_gen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath_filt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/python_code_stats.html#modules_info_gen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.modules_info_gen" title="Link to this definition"></a></dt>
+<dd><p>Yields statistics (as dicts) of modules under the root module or directory of a python package.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root</strong> – module instance, dot path, or directory path</p></li>
+<li><p><strong>filepath_filt</strong> – filepath filter function or regular expression</p></li>
+<li><p><strong>on_error</strong> – What to do when an error occurs when extracting information from a module.
+Values are ‘ignore’, ‘print’, ‘raise’, or ‘yield’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of dicts</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.serialize_metrics">
+<span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">serialize_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'json'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/storage/formats.html#serialize_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.serialize_metrics" title="Link to this definition"></a></dt>
+<dd><p>Serialize metrics to file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Metric dictionary</p></li>
+<li><p><strong>output_path</strong> – Path to output file</p></li>
+<li><p><strong>format</strong> – Format (‘json’ or ‘csv’)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="umpyre.stats_of">
+<span class="sig-prename descclassname"><span class="pre">umpyre.</span></span><span class="sig-name descname"><span class="pre">stats_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modules</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath_filt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/umpyre/python_code_stats.html#stats_of"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#umpyre.stats_of" title="Link to this definition"></a></dt>
+<dd><p>A dataframe of stats of the input modules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modules</strong> – list of importable names</p></li>
+<li><p><strong>root</strong> – module or directory path</p></li>
+<li><p><strong>filepath_filt</strong> – filepath filter function or regular expression</p></li>
+<li><p><strong>index_field</strong> – function or field string that should be used for the indexing of modules</p></li>
+<li><p><strong>on_error</strong> – What to do when an error occurs when extracting information from a module.
+Values are ‘ignore’, ‘print’, or ‘raise’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">stats_of</span><span class="p">([</span><span class="s1">&#39;urllib&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="s1">&#39;collections&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">issuperset</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s1">&#39;empty_lines_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;comment_lines_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;function_lines_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;mean_lines_per_function&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stats_of</span><span class="p">([</span><span class="s1">&#39;urllib&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="s1">&#39;collections&#39;</span><span class="p">])</span>
+<span class="go">                              urllib         json  collections</span>
+<span class="go">empty_lines_ratio           0.157293     0.136503     0.148090</span>
+<span class="go">comment_lines_ratio         0.075217     0.038344     0.061574</span>
+<span class="go">function_lines_ratio        0.212391     0.448620     0.107560</span>
+<span class="go">mean_lines_per_function    13.463768    41.785714   138.000000</span>
+<span class="go">lines                    4374.000000  1304.000000  1283.000000</span>
+<span class="go">empty_lines               688.000000   178.000000   190.000000</span>
+<span class="go">comment_lines             329.000000    50.000000    79.000000</span>
+<span class="go">docs_lines                425.000000   218.000000   133.000000</span>
+<span class="go">function_lines            929.000000   585.000000   138.000000</span>
+<span class="go">num_of_functions           69.000000    14.000000     1.000000</span>
+<span class="go">num_of_classes             55.000000     3.000000    34.000000</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to umpyre’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="umpyre/cli.html" class="btn btn-neutral float-right" title="umpyre.cli" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

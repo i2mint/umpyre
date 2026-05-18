@@ -1,0 +1,484 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>umpyre.python_code_stats &mdash; umpyre 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=92734c54"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            umpyre
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre.html">umpyre</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/cli.html">umpyre.cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/collectors.html">umpyre.collectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/collectors/base.html">umpyre.collectors.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/collectors/coverage_collector.html">umpyre.collectors.coverage_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/collectors/umpyre_collector.html">umpyre.collectors.umpyre_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/collectors/wily_collector.html">umpyre.collectors.wily_collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/collectors/workflow_status.html">umpyre.collectors.workflow_status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/config.html">umpyre.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/python_code_stats.html">umpyre.python_code_stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/schema.html">umpyre.schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/storage.html">umpyre.storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/storage/formats.html">umpyre.storage.formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/storage/git_branch.html">umpyre.storage.git_branch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/umpyre/storage/query_utils.html">umpyre.storage.query_utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">umpyre</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">umpyre.python_code_stats</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for umpyre.python_code_stats</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Get stats about packages. Your own, or other&#39;s.</span>
+<span class="sd">Things like...</span>
+<span class="sd">(Note that these will probably not work as doctests, since results are sensisitive to other slight system differences</span>
+<span class="sd">(such as python version etc.))</span>
+
+<span class="sd">&gt;&gt;&gt; import collections</span>
+<span class="sd">&gt;&gt;&gt; modules_info_df(collections)  #doctest: +SKIP</span>
+<span class="sd">                      lines  empty_lines  ...  num_of_functions  num_of_classes</span>
+<span class="sd">collections.__init__   1280          189  ...                 1               9</span>
+<span class="sd">collections.abc           3            1  ...                 0              25</span>
+<span class="sd">&lt;BLANKLINE&gt;</span>
+<span class="sd">[2 rows x 7 columns]</span>
+<span class="sd">&gt;&gt;&gt; modules_info_df_stats(collections.abc)   #doctest: +SKIP</span>
+<span class="sd">lines                      1283.000000</span>
+<span class="sd">empty_lines                 190.000000</span>
+<span class="sd">comment_lines                79.000000</span>
+<span class="sd">docs_lines                  133.000000</span>
+<span class="sd">function_lines              138.000000</span>
+<span class="sd">num_of_functions              1.000000</span>
+<span class="sd">num_of_classes               34.000000</span>
+<span class="sd">empty_lines_ratio             0.148090</span>
+<span class="sd">comment_lines_ratio           0.061574</span>
+<span class="sd">function_lines_ratio          0.107560</span>
+<span class="sd">mean_lines_per_function     138.000000</span>
+<span class="sd">dtype: float64</span>
+<span class="sd">&gt;&gt;&gt; stats_of([&#39;urllib&#39;, &#39;json&#39;, &#39;collections&#39;])   #doctest: +SKIP</span>
+<span class="sd">                              urllib         json  collections</span>
+<span class="sd">empty_lines_ratio           0.157293     0.136503     0.148090</span>
+<span class="sd">comment_lines_ratio         0.075217     0.038344     0.061574</span>
+<span class="sd">function_lines_ratio        0.212391     0.448620     0.107560</span>
+<span class="sd">mean_lines_per_function    13.463768    41.785714   138.000000</span>
+<span class="sd">lines                    4374.000000  1304.000000  1283.000000</span>
+<span class="sd">empty_lines               688.000000   178.000000   190.000000</span>
+<span class="sd">comment_lines             329.000000    50.000000    79.000000</span>
+<span class="sd">docs_lines                425.000000   218.000000   133.000000</span>
+<span class="sd">function_lines            929.000000   585.000000   138.000000</span>
+<span class="sd">num_of_functions           69.000000    14.000000     1.000000</span>
+<span class="sd">num_of_classes             55.000000     3.000000    34.000000</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">types</span><span class="w"> </span><span class="kn">import</span> <span class="n">FunctionType</span><span class="p">,</span> <span class="n">ModuleType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">inspect</span><span class="w"> </span><span class="kn">import</span> <span class="n">getsource</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="n">filt_iter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol.sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">Attrs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol.filesys</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileStringReader</span>
+
+<span class="n">psep</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span>
+
+<span class="n">DFLT_ON_ERROR</span> <span class="o">=</span> <span class="s2">&quot;ignore&quot;</span>  <span class="c1"># could be &#39;print&#39;, &#39;ignore&#39;, or &#39;raise&#39;</span>
+
+<span class="n">empty_line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\s*$&quot;</span><span class="p">)</span>
+<span class="n">comment_line_p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\s+#.+$&quot;</span><span class="p">)</span>
+<span class="n">line_p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">|</span><span class="se">\r</span><span class="s2">|</span><span class="se">\n\r</span><span class="s2">|</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">only_py_ext</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">path</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.py&quot;</span><span class="p">)</span>
+<span class="n">no_test_folder</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">path</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">psep</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">lines</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">line_p</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_num_lines_of_function_code</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">FunctionType</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">FunctionType</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">getsource</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span> <span class="o">-</span> <span class="nb">len</span><span class="p">((</span><span class="n">obj</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_root_dir_and_name</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The parent path and leaf name for the given root</span>
+<span class="sd">    :param root: module instance, dot path, or directory path</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span>
+            <span class="n">root</span>
+        <span class="p">)</span>  <span class="c1"># assume it&#39;s a dot path string of a module and try to import it</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">ModuleType</span><span class="p">):</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">psep</span><span class="p">):</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">root</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">root</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+
+
+<span class="c1"># TODO: Must be a standard lib for this!</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_path_to_module_str</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">root_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The dot-path module string for a path (given the root_path, assumed to be on the python path)</span>
+<span class="sd">    :param path: The path to the module.</span>
+<span class="sd">    :param root_path: The path that&#39;s assumed to be on the python path</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.py&quot;</span><span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">root_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">psep</span><span class="p">):</span>
+        <span class="n">root_path</span> <span class="o">=</span> <span class="n">root_path</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">root_path</span><span class="p">,</span> <span class="n">root_package</span> <span class="o">=</span> <span class="n">_root_dir_and_name</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
+    <span class="n">len_root</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">path_parts</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="n">len_root</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">psep</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">path_parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;__init__.py&quot;</span><span class="p">:</span>
+        <span class="n">path_parts</span> <span class="o">=</span> <span class="n">path_parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_parts</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_objs</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">_path_to_module_str</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+    <span class="n">module_store</span> <span class="o">=</span> <span class="n">Attrs</span><span class="o">.</span><span class="n">module_from_path</span><span class="p">(</span>
+        <span class="n">k</span><span class="p">,</span> <span class="n">key_filt</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">obj_filt</span><span class="p">(</span>
+        <span class="n">obj</span><span class="p">,</span>
+    <span class="p">):</span>  <span class="c1"># to make sure we only analyze objects defined in module itself, not imported</span>
+        <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;__module__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">obj_module</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj_module</span> <span class="o">==</span> <span class="n">name</span>
+
+    <span class="n">objs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">obj_filt</span><span class="p">,</span> <span class="p">(</span><span class="n">vv</span><span class="o">.</span><span class="n">_source</span> <span class="k">for</span> <span class="n">vv</span> <span class="ow">in</span> <span class="n">module_store</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+    <span class="k">return</span> <span class="n">objs</span>
+
+
+<div class="viewcode-block" id="modules_info_gen">
+<a class="viewcode-back" href="../../module_docs/umpyre/python_code_stats.html#umpyre.modules_info_gen">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">modules_info_gen</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filepath_filt</span><span class="o">=</span><span class="n">only_py_ext</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="n">DFLT_ON_ERROR</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Yields statistics (as dicts) of modules under the root module or directory of a python package.</span>
+
+<span class="sd">    :param root: module instance, dot path, or directory path</span>
+<span class="sd">    :param filepath_filt: filepath filter function or regular expression</span>
+<span class="sd">    :param on_error: What to do when an error occurs when extracting information from a module.</span>
+<span class="sd">        Values are &#39;ignore&#39;, &#39;print&#39;, &#39;raise&#39;, or &#39;yield&#39;</span>
+<span class="sd">    :return: A generator of dicts</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gives us statistics given the root module or directory of a python package&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filepath_filt</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">filt_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">filepath_filt</span><span class="p">)</span>
+        <span class="n">filepath_filt</span> <span class="o">=</span> <span class="n">filt_pattern</span><span class="o">.</span><span class="n">match</span>
+
+    <span class="n">parent_dir</span><span class="p">,</span> <span class="n">dirname</span> <span class="o">=</span> <span class="n">_root_dir_and_name</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parent_dir</span><span class="p">,</span> <span class="n">dirname</span><span class="p">)</span>
+
+    <span class="nd">@filt_iter</span><span class="p">(</span><span class="n">filt</span><span class="o">=</span><span class="n">filepath_filt</span><span class="p">)</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">PyCodeReader</span><span class="p">(</span><span class="n">FileStringReader</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="n">pycode</span> <span class="o">=</span> <span class="n">PyCodeReader</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">code_str</span> <span class="ow">in</span> <span class="n">pycode</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">_path_to_module_str</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+            <span class="n">module_store</span> <span class="o">=</span> <span class="n">Attrs</span><span class="o">.</span><span class="n">module_from_path</span><span class="p">(</span>
+                <span class="n">filepath</span><span class="p">,</span> <span class="n">key_filt</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span>
+            <span class="p">)</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">obj_filt</span><span class="p">(</span>
+                <span class="n">obj</span><span class="p">,</span>
+            <span class="p">):</span>  <span class="c1"># to make sure we only analyze objects defined in module itself, not imported</span>
+                <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;__module__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">obj_module</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">obj_module</span> <span class="o">==</span> <span class="n">name</span>
+
+            <span class="n">objs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">obj_filt</span><span class="p">,</span> <span class="p">(</span><span class="n">vv</span><span class="o">.</span><span class="n">_source</span> <span class="k">for</span> <span class="n">vv</span> <span class="ow">in</span> <span class="n">module_store</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+            <span class="k">yield</span> <span class="n">_code_stats_dict_for_file_and_objects</span><span class="p">(</span><span class="n">code_str</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">objs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">on_error</span> <span class="o">==</span> <span class="s2">&quot;print&quot;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Problem with </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)[:</span><span class="mi">50</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">on_error</span> <span class="o">==</span> <span class="s2">&quot;ignore&quot;</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="n">on_error</span> <span class="o">==</span> <span class="s2">&quot;yield&quot;</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="p">{</span><span class="s2">&quot;filepath&quot;</span><span class="p">:</span> <span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="n">e</span><span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_code_stats_dict_for_file_and_objects</span><span class="p">(</span><span class="n">code_str</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">objs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;filepath&quot;</span><span class="p">:</span> <span class="n">filepath</span><span class="p">,</span>
+        <span class="s2">&quot;lines&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">(</span><span class="n">code_str</span><span class="p">)),</span>
+        <span class="s2">&quot;empty_lines&quot;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">empty_line</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">(</span><span class="n">code_str</span><span class="p">)),</span>
+        <span class="s2">&quot;comment_lines&quot;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span>
+            <span class="nb">bool</span><span class="p">(</span><span class="n">comment_line_p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">(</span><span class="n">code_str</span><span class="p">)</span>
+        <span class="p">),</span>
+        <span class="s2">&quot;docs_lines&quot;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">))</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">),</span>
+        <span class="s2">&quot;function_lines&quot;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span>
+            <span class="n">_num_lines_of_function_code</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">FunctionType</span><span class="p">)</span>
+        <span class="p">),</span>
+        <span class="s2">&quot;num_of_functions&quot;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">FunctionType</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">),</span>
+        <span class="s2">&quot;num_of_classes&quot;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">),</span>
+    <span class="p">}</span>
+
+
+<div class="viewcode-block" id="modules_info_df">
+<a class="viewcode-back" href="../../module_docs/umpyre/python_code_stats.html#umpyre.modules_info_df">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">modules_info_df</span><span class="p">(</span>
+    <span class="n">root</span><span class="p">,</span> <span class="n">filepath_filt</span><span class="o">=</span><span class="n">only_py_ext</span><span class="p">,</span> <span class="n">index_field</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="n">DFLT_ON_ERROR</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A pandas DataFrame of stats of the root (package or directory thereof).</span>
+<span class="sd">    :param root: module or directory path</span>
+<span class="sd">    :param filepath_filt: filepath filter function or regular expression</span>
+<span class="sd">    :param index_field: function or field string that should be used for the indexing of modules</span>
+<span class="sd">    :param on_error: What to do when an error occurs when extracting information from a module.</span>
+<span class="sd">        Values are &#39;ignore&#39;, &#39;print&#39;, or &#39;raise&#39;</span>
+<span class="sd">    :return: A DataFrame whose rows contain information for each module</span>
+
+<span class="sd">    &gt;&gt;&gt; import urllib</span>
+<span class="sd">    &gt;&gt;&gt; df = modules_info_df(urllib)</span>
+<span class="sd">    &gt;&gt;&gt; df  #doctest: +SKIP</span>
+<span class="sd">                        lines  empty_lines  ...  num_of_functions  num_of_classes</span>
+<span class="sd">    urllib.error           78           18  ...                 0               3</span>
+<span class="sd">    urllib.request       2774          410  ...                23              28</span>
+<span class="sd">    urllib.__init__         1            1  ...                 0               0</span>
+<span class="sd">    urllib.response        81           24  ...                 0               4</span>
+<span class="sd">    urllib.robotparser    274           36  ...                 0               4</span>
+<span class="sd">    urllib.parse         1166          199  ...                46              16</span>
+<span class="sd">    &lt;BLANKLINE&gt;</span>
+<span class="sd">    [6 rows x 7 columns]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">modules_info_gen</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filepath_filt</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="n">on_error</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">index_field</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dirpath</span><span class="p">,</span> <span class="n">dirname</span> <span class="o">=</span> <span class="n">_root_dir_and_name</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">dirname</span><span class="p">)</span>
+        <span class="n">index_field</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">_path_to_module_str</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;filepath&quot;</span><span class="p">),</span> <span class="n">root</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index_field</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">index_field</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">callable</span><span class="p">(</span><span class="n">index_field</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">index_field</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">d</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">d</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="modules_info_df_stats">
+<a class="viewcode-back" href="../../module_docs/umpyre/python_code_stats.html#umpyre.modules_info_df_stats">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">modules_info_df_stats</span><span class="p">(</span>
+    <span class="n">root</span><span class="p">,</span> <span class="n">filepath_filt</span><span class="o">=</span><span class="n">only_py_ext</span><span class="p">,</span> <span class="n">index_field</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="n">DFLT_ON_ERROR</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A pandas Series of statistics over all modules of some root (package or directory thereof).</span>
+<span class="sd">    :param root: module or directory path</span>
+<span class="sd">    :param filepath_filt: filepath filter function or regular expression</span>
+<span class="sd">    :param index_field: function or field string that should be used for the indexing of modules</span>
+<span class="sd">    :param on_error: What to do when an error occurs when extracting information from a module.</span>
+<span class="sd">        Values are &#39;ignore&#39;, &#39;print&#39;, or &#39;raise&#39;</span>
+<span class="sd">    :return: A Series whose rows containing statistics</span>
+
+<span class="sd">    &gt;&gt;&gt; import json</span>
+<span class="sd">    &gt;&gt;&gt; df = modules_info_df_stats(json)</span>
+<span class="sd">    &gt;&gt;&gt; df  #doctest: +SKIP</span>
+<span class="sd">    lines                      1301.000000</span>
+<span class="sd">    empty_lines                 178.000000</span>
+<span class="sd">    comment_lines                50.000000</span>
+<span class="sd">    docs_lines                  218.000000</span>
+<span class="sd">    function_lines              585.000000</span>
+<span class="sd">    num_of_functions             14.000000</span>
+<span class="sd">    num_of_classes                3.000000</span>
+<span class="sd">    empty_lines_ratio             0.136818</span>
+<span class="sd">    comment_lines_ratio           0.038432</span>
+<span class="sd">    function_lines_ratio          0.449654</span>
+<span class="sd">    mean_lines_per_function      41.785714</span>
+<span class="sd">    dtype: float64</span>
+<span class="sd">    &gt;&gt;&gt; modules_info_df_stats(&#39;collections.abc&#39;)  #doctest: +SKIP</span>
+<span class="sd">    lines                      1276.000000</span>
+<span class="sd">    empty_lines                 190.000000</span>
+<span class="sd">    comment_lines                73.000000</span>
+<span class="sd">    docs_lines                  133.000000</span>
+<span class="sd">    function_lines              138.000000</span>
+<span class="sd">    num_of_functions              1.000000</span>
+<span class="sd">    num_of_classes               34.000000</span>
+<span class="sd">    empty_lines_ratio             0.148903</span>
+<span class="sd">    comment_lines_ratio           0.057210</span>
+<span class="sd">    function_lines_ratio          0.108150</span>
+<span class="sd">    mean_lines_per_function     138.000000</span>
+<span class="sd">    dtype: float64</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">modules_info_df</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filepath_filt</span><span class="p">,</span> <span class="n">index_field</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="n">on_error</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;empty_lines&quot;</span><span class="p">,</span> <span class="s2">&quot;comment_lines&quot;</span><span class="p">,</span> <span class="s2">&quot;doc_lines&quot;</span><span class="p">,</span> <span class="s2">&quot;function_lines&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="p">{</span><span class="n">col</span><span class="p">,</span> <span class="s2">&quot;lines&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+            <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">_ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">{</span><span class="s2">&quot;num_of_functions&quot;</span><span class="p">,</span> <span class="s2">&quot;function_lines&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;mean_lines_per_function&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;function_lines&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;num_of_functions&quot;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+
+<div class="viewcode-block" id="stats_of">
+<a class="viewcode-back" href="../../module_docs/umpyre/python_code_stats.html#umpyre.stats_of">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">stats_of</span><span class="p">(</span>
+    <span class="n">modules</span><span class="p">,</span>
+    <span class="n">filepath_filt</span><span class="o">=</span><span class="n">only_py_ext</span><span class="p">,</span>
+    <span class="n">index_field</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">on_error</span><span class="o">=</span><span class="n">DFLT_ON_ERROR</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A dataframe of stats of the input modules.</span>
+
+<span class="sd">    :param modules: list of importable names</span>
+<span class="sd">    :param root: module or directory path</span>
+<span class="sd">    :param filepath_filt: filepath filter function or regular expression</span>
+<span class="sd">    :param index_field: function or field string that should be used for the indexing of modules</span>
+<span class="sd">    :param on_error: What to do when an error occurs when extracting information from a module.</span>
+<span class="sd">        Values are &#39;ignore&#39;, &#39;print&#39;, or &#39;raise&#39;</span>
+<span class="sd">    :return:</span>
+
+<span class="sd">    &gt;&gt;&gt; df = stats_of([&#39;urllib&#39;, &#39;json&#39;, &#39;collections&#39;])  #doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; assert set(df.index.values).issuperset(  #doctest: +SKIP</span>
+<span class="sd">    ...     {&#39;empty_lines_ratio&#39;, &#39;comment_lines_ratio&#39;, &#39;function_lines_ratio&#39;, &#39;mean_lines_per_function&#39;})</span>
+<span class="sd">    &gt;&gt;&gt; stats_of([&#39;urllib&#39;, &#39;json&#39;, &#39;collections&#39;])  #doctest: +SKIP</span>
+<span class="sd">                                  urllib         json  collections</span>
+<span class="sd">    empty_lines_ratio           0.157293     0.136503     0.148090</span>
+<span class="sd">    comment_lines_ratio         0.075217     0.038344     0.061574</span>
+<span class="sd">    function_lines_ratio        0.212391     0.448620     0.107560</span>
+<span class="sd">    mean_lines_per_function    13.463768    41.785714   138.000000</span>
+<span class="sd">    lines                    4374.000000  1304.000000  1283.000000</span>
+<span class="sd">    empty_lines               688.000000   178.000000   190.000000</span>
+<span class="sd">    comment_lines             329.000000    50.000000    79.000000</span>
+<span class="sd">    docs_lines                425.000000   218.000000   133.000000</span>
+<span class="sd">    function_lines            929.000000   585.000000   138.000000</span>
+<span class="sd">    num_of_functions           69.000000    14.000000     1.000000</span>
+<span class="sd">    num_of_classes             55.000000     3.000000    34.000000</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">stats_func</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+        <span class="n">modules_info_df_stats</span><span class="p">,</span>
+        <span class="n">filepath_filt</span><span class="o">=</span><span class="n">filepath_filt</span><span class="p">,</span>
+        <span class="n">index_field</span><span class="o">=</span><span class="n">index_field</span><span class="p">,</span>
+        <span class="n">on_error</span><span class="o">=</span><span class="n">on_error</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modules</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">modules</span> <span class="o">=</span> <span class="p">[</span><span class="n">modules</span><span class="p">]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">stats_func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">modules</span>
+    <span class="n">put_at_the_end</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;lines&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;num&quot;</span><span class="p">)]</span>
+    <span class="n">put_at_the_front</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">put_at_the_end</span><span class="p">]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">put_at_the_front</span> <span class="o">+</span> <span class="n">put_at_the_end</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">dol.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleNotFoundErrorNiceMessage</span>
+
+    <span class="k">with</span> <span class="n">ModuleNotFoundErrorNiceMessage</span><span class="p">():</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">argh</span>
+
+        <span class="n">argh</span><span class="o">.</span><span class="n">dispatch_commands</span><span class="p">([</span><span class="n">modules_info_df</span><span class="p">,</span> <span class="n">modules_info_df_stats</span><span class="p">,</span> <span class="n">stats_of</span><span class="p">])</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
