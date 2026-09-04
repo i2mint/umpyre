@@ -129,9 +129,9 @@ history_dir = Path("history")
 
 # Parse filename
 info = parse_metric_filename("2025_11_14_22_45_00__700e012__0.1.0.json")
-print(info['commit_sha'])    # '700e012'
-print(info['pypi_version'])  # '0.1.0'
-print(info['timestamp'])     # datetime object
+print(info["commit_sha"])  # '700e012'
+print(info["pypi_version"])  # '0.1.0'
+print(info["timestamp"])  # datetime object
 
 # Find by commit
 metrics = find_metrics_by_commit(history_dir, "700e012")
@@ -303,7 +303,7 @@ import collections
 modules_info_df(collections)
 
 # Compare multiple packages
-stats_of(['urllib', 'json', 'collections'])
+stats_of(["urllib", "json", "collections"])
 ```
 
 See original README examples above for detailed usage.

@@ -59,12 +59,12 @@ def cmd_collect(args):
         return 0
     except Exception as e:
         print(f"❌ Error during metrics collection: {e}")
-        
+
         # In CI mode, log but don't fail
-        if os.getenv('CI') or os.getenv('GITHUB_ACTIONS'):
+        if os.getenv("CI") or os.getenv("GITHUB_ACTIONS"):
             print("⚠️  Running in CI - treating as non-fatal")
             return 0
-        
+
         return 1  # Fail in local development
 ```
 
@@ -136,10 +136,7 @@ def collect(self) -> dict:
         # ... collect metrics ...
         return metrics
     except Exception as e:
-        return {
-            "num_functions": 0,
-            "error": str(e)
-        }
+        return {"num_functions": 0, "error": str(e)}
 ```
 
 This ensures one broken collector doesn't fail the entire collection.

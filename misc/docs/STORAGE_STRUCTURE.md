@@ -128,10 +128,11 @@ ls -t history/*__0.1.0.json | head -1
 import re
 from pathlib import Path
 
+
 def parse_metric_filename(filename: str) -> dict:
     """
     Parse metric filename into components.
-    
+
     Example: "2025_11_14_22_45_00__700e012__0.1.0.json"
     Returns: {
         "timestamp": "2025-11-14T22:45:00",
@@ -139,27 +140,32 @@ def parse_metric_filename(filename: str) -> dict:
         "pypi_version": "0.1.0",
     }
     """
-    pattern = r'(\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2})__(\w{7})__(.+)\.json'
+    pattern = r"(\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2})__(\w{7})__(.+)\.json"
     match = re.match(pattern, filename)
-    
+
     if not match:
         raise ValueError(f"Invalid filename format: {filename}")
-    
+
     timestamp_str, sha, version = match.groups()
-    
+
     # Convert timestamp to ISO format
-    timestamp = timestamp_str.replace('_', '-', 2).replace('_', ':', 2).replace('_', 'T', 1)
-    
+    timestamp = (
+        timestamp_str.replace("_", "-", 2).replace("_", ":", 2).replace("_", "T", 1)
+    )
+
     return {
         "timestamp": timestamp,
         "commit_sha": sha,
         "pypi_version": None if version == "none" else version,
     }
 
+
 # Usage
 for file in Path("history").glob("*.json"):
     info = parse_metric_filename(file.name)
-    print(f"Commit {info['commit_sha']} at {info['timestamp']} (v{info['pypi_version']})")
+    print(
+        f"Commit {info['commit_sha']} at {info['timestamp']} (v{info['pypi_version']})"
+    )
 ```
 
 ## Metrics Schema

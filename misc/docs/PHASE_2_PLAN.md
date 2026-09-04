@@ -27,12 +27,13 @@ Generate visual charts showing metric trends over time.
 ```python
 # umpyre/visualization/plots.py
 
+
 class PlotGenerator:
     """Generate time-series plots from metrics history."""
-    
+
     def __init__(self, metrics_branch: str = "code-metrics"):
         self.branch = metrics_branch
-    
+
     def generate_coverage_plot(self) -> Path:
         """Generate coverage trend plot."""
         # Parse history/*.json files
@@ -40,11 +41,11 @@ class PlotGenerator:
         # Plot with matplotlib/plotly
         # Save as PNG/SVG
         pass
-    
+
     def generate_maintainability_plot(self) -> Path:
         """Generate maintainability trend plot."""
         pass
-    
+
     def generate_all_plots(self) -> dict[str, Path]:
         """Generate all standard plots."""
         pass
@@ -132,21 +133,22 @@ Version: 0.1.0
 ```python
 # umpyre/visualization/readme_generator.py
 
+
 class ReadmeGenerator:
     """Generate METRICS.md from metrics history."""
-    
+
     def generate_summary_table(self) -> str:
         """Create latest metrics table."""
         pass
-    
+
     def generate_trend_section(self) -> str:
         """Embed plot images."""
         pass
-    
+
     def generate_badges(self) -> str:
         """Create shields.io badges."""
         pass
-    
+
     def generate_full_readme(self) -> str:
         """Generate complete METRICS.md."""
         pass
@@ -179,18 +181,14 @@ Aggregate metrics across multiple repositories to provide organization-wide insi
 ```python
 # umpyre/collectors/aggregation_collector.py
 
+
 class AggregationCollector(MetricCollector):
     """Aggregate metrics across multiple repositories."""
-    
-    def __init__(
-        self,
-        org: str,
-        repos: list[str],
-        github_token: Optional[str] = None
-    ):
+
+    def __init__(self, org: str, repos: list[str], github_token: Optional[str] = None):
         """
         Initialize aggregator.
-        
+
         Args:
             org: GitHub organization name
             repos: List of repository names
@@ -199,11 +197,11 @@ class AggregationCollector(MetricCollector):
         self.org = org
         self.repos = repos
         self.token = github_token
-    
+
     def collect(self) -> dict:
         """
         Aggregate metrics from multiple repos.
-        
+
         Returns:
             Aggregated metrics dictionary
         """
@@ -211,7 +209,7 @@ class AggregationCollector(MetricCollector):
         #   1. Clone code-metrics branch
         #   2. Read latest metrics.json
         #   3. Aggregate
-        
+
         return {
             "total_repos": len(self.repos),
             "avg_coverage": 82.5,
@@ -267,16 +265,17 @@ Create interactive HTML dashboard with organization-wide metrics.
 ```python
 # umpyre/visualization/dashboard.py
 
+
 class DashboardGenerator:
     """Generate interactive HTML dashboard."""
-    
+
     def generate_html(self, aggregated_metrics: dict) -> str:
         """
         Generate dashboard HTML.
-        
+
         Args:
             aggregated_metrics: Output from AggregationCollector
-            
+
         Returns:
             HTML string
         """

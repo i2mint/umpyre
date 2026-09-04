@@ -32,30 +32,33 @@ Enforce quality standards by validating metrics against configurable thresholds.
 ```python
 # umpyre/validation/thresholds.py
 
+
 @dataclass
 class Threshold:
     """Threshold definition."""
+
     metric_path: str  # e.g., "metrics.coverage.line_coverage"
-    operator: str     # ">=", "<=", "==", "!=", ">", "<"
+    operator: str  # ">=", "<=", "==", "!=", ">", "<"
     value: float
-    action: str       # "warn", "fail", "notify", "comment"
+    action: str  # "warn", "fail", "notify", "comment"
     message: Optional[str] = None
+
 
 class ThresholdValidator:
     """Validate metrics against thresholds."""
-    
+
     def __init__(self, thresholds: list[Threshold]):
         self.thresholds = thresholds
-    
+
     def validate(self, metrics: dict) -> list[ThresholdViolation]:
         """
         Validate metrics against all thresholds.
-        
+
         Returns:
             List of violations
         """
         violations = []
-        
+
         for threshold in self.thresholds:
             value = self._extract_metric(metrics, threshold.metric_path)
             if not self._check_threshold(value, threshold):
@@ -66,9 +69,9 @@ class ThresholdValidator:
                         expected_value=threshold.value,
                     )
                 )
-        
+
         return violations
-    
+
     def _check_threshold(self, value: float, threshold: Threshold) -> bool:
         """Check if value passes threshold."""
         ops = {
@@ -119,17 +122,18 @@ thresholds:
 ```python
 # umpyre/validators.py
 
+
 def check_docstring_ratio(metrics: dict) -> tuple[bool, str]:
     """
     Custom validator: check if docstring ratio is acceptable.
-    
+
     Returns:
         (passed, message)
     """
     docs = metrics["metrics"]["umpyre_stats"]["docs_lines"]
     total = metrics["metrics"]["umpyre_stats"]["total_lines"]
     ratio = docs / total if total > 0 else 0
-    
+
     if ratio < 0.1:
         return False, f"Docstring ratio {ratio:.1%} is below 10%"
     return True, "Docstring ratio acceptable"
@@ -158,13 +162,14 @@ python -m umpyre.cli validate --violations-only
 ```python
 # umpyre/collectors/bandit_collector.py
 
+
 class BanditCollector(MetricCollector):
     """Collect security metrics using Bandit."""
-    
+
     def collect(self) -> dict:
         """
         Run bandit security scan.
-        
+
         Returns:
             {
                 "total_issues": 12,
@@ -206,13 +211,14 @@ collectors:
 ```python
 # umpyre/collectors/interrogate_collector.py
 
+
 class InterrogateCollector(MetricCollector):
     """Collect docstring coverage using interrogate."""
-    
+
     def collect(self) -> dict:
         """
         Run interrogate to check docstring coverage.
-        
+
         Returns:
             {
                 "coverage": 78.5,
@@ -237,13 +243,14 @@ class InterrogateCollector(MetricCollector):
 ```python
 # umpyre/collectors/mypy_collector.py
 
+
 class MyPyCollector(MetricCollector):
     """Collect type checking results using mypy."""
-    
+
     def collect(self) -> dict:
         """
         Run mypy type checker.
-        
+
         Returns:
             {
                 "total_errors": 15,
@@ -273,13 +280,14 @@ class MyPyCollector(MetricCollector):
 ```python
 # umpyre/collectors/pylint_collector.py
 
+
 class PylintCollector(MetricCollector):
     """Collect code quality score using Pylint."""
-    
+
     def collect(self) -> dict:
         """
         Run pylint code analysis.
-        
+
         Returns:
             {
                 "score": 8.5,  # Out of 10
@@ -314,13 +322,14 @@ Manage metrics history efficiently (pruning, compression, rotation).
 ```python
 # umpyre/storage/pruning.py
 
+
 class MetricsPruner:
     """Prune old metrics to save space."""
-    
+
     def prune(self, branch: str = "code-metrics"):
         """
         Prune metrics history based on retention policy.
-        
+
         Strategy:
         - Keep all metrics < 30 days old
         - Keep weekly snapshots for 30-90 days
@@ -353,17 +362,16 @@ storage:
 ```python
 # umpyre/storage/compression.py
 
+
 class MetricsCompressor:
     """Compress old metrics files."""
-    
+
     def compress_old_files(
-        self,
-        branch: str = "code-metrics",
-        older_than_days: int = 90
+        self, branch: str = "code-metrics", older_than_days: int = 90
     ):
         """
         Compress metrics older than N days.
-        
+
         Changes:
         - 2024_01_15_10_30_00__abc1234__0.1.0.json
         → 2024_01_15_10_30_00__abc1234__0.1.0.json.gz
@@ -383,14 +391,11 @@ class MetricsCompressor:
 ```python
 # umpyre/storage/rotation.py
 
+
 class MetricsRotator:
     """Rotate out very old metrics."""
-    
-    def rotate(
-        self,
-        branch: str = "code-metrics",
-        max_age_days: int = 365
-    ):
+
+    def rotate(self, branch: str = "code-metrics", max_age_days: int = 365):
         """Delete metrics older than max_age_days."""
         # Parse timestamps
         # Delete files older than threshold
@@ -418,47 +423,48 @@ Handle schema version changes gracefully with automatic migrations.
 ```python
 # umpyre/schema.py (enhanced)
 
+
 class MetricSchema:
     """Versioned schema with migration support."""
-    
+
     version: str = "1.1"  # Bump version
-    
+
     @classmethod
     def migrate(cls, data: dict, from_version: str) -> dict:
         """
         Migrate data from old schema to current.
-        
+
         Migration chain:
         1.0 → 1.1 → 1.2 → ...
         """
         if from_version == cls.current_version():
             return data
-        
+
         # Migration registry
         migrations = {
             "1.0": cls._migrate_1_0_to_1_1,
             "1.1": cls._migrate_1_1_to_1_2,
         }
-        
+
         # Apply migrations in sequence
         current_version = from_version
         current_data = data
-        
+
         while current_version != cls.current_version():
             if current_version not in migrations:
                 raise ValueError(f"No migration path from {current_version}")
-            
+
             migrator = migrations[current_version]
             current_data = migrator(current_data)
             current_version = cls._next_version(current_version)
-        
+
         return current_data
-    
+
     @classmethod
     def _migrate_1_0_to_1_1(cls, data: dict) -> dict:
         """
         Migrate from schema 1.0 to 1.1.
-        
+
         Changes in 1.1:
         - Added pypi_version field
         - Added collection_duration_seconds
@@ -468,10 +474,10 @@ class MetricSchema:
             for collector_name, metrics in data["metrics"].items():
                 if "pypi_version" not in metrics:
                     metrics["pypi_version"] = None
-        
+
         data["schema_version"] = "1.1"
         return data
-    
+
     @classmethod
     def _migrate_1_1_to_1_2(cls, data: dict) -> dict:
         """Future migration example."""
@@ -484,22 +490,23 @@ class MetricSchema:
 ```python
 # umpyre/storage/formats.py (enhanced)
 
+
 def load_metrics(filepath: Path) -> dict:
     """
     Load metrics with automatic schema migration.
-    
+
     If old schema detected, automatically migrates to current.
     """
     with open(filepath) as f:
         data = json.load(f)
-    
+
     schema_version = data.get("schema_version", "1.0")
     current_version = MetricSchema.current_version()
-    
+
     if schema_version != current_version:
         print(f"Migrating from schema {schema_version} to {current_version}")
         data = MetricSchema.migrate(data, from_version=schema_version)
-    
+
     return data
 ```
 
