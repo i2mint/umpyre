@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>umpyre.python_code_stats &mdash; umpyre 0.1.6 documentation</title>
+  <title>umpyre.python_code_stats &mdash; umpyre 0.1.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6e0256f3"></script>
+      <script src="../../_static/documentation_options.js?v=ca7ad2ea"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -122,7 +122,7 @@ Things like…
 <span class="go">function_lines_ratio          0.107560</span>
 <span class="go">mean_lines_per_function     138.000000</span>
 <span class="go">dtype: float64</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">stats_of</span><span class="p">([</span><span class="s1">&#39;urllib&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="s1">&#39;collections&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stats_of</span><span class="p">([</span><span class="s1">'urllib'</span><span class="p">,</span> <span class="s1">'json'</span><span class="p">,</span> <span class="s1">'collections'</span><span class="p">])</span>
 <span class="go">                              urllib         json  collections</span>
 <span class="go">empty_lines_ratio           0.157293     0.136503     0.148090</span>
 <span class="go">comment_lines_ratio         0.075217     0.038344     0.061574</span>
@@ -200,7 +200,7 @@ Things like…
 <span class="go">function_lines_ratio          0.449654</span>
 <span class="go">mean_lines_per_function      41.785714</span>
 <span class="go">dtype: float64</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">modules_info_df_stats</span><span class="p">(</span><span class="s1">&#39;collections.abc&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">modules_info_df_stats</span><span class="p">(</span><span class="s1">'collections.abc'</span><span class="p">)</span>
 <span class="go">lines                      1276.000000</span>
 <span class="go">empty_lines                 190.000000</span>
 <span class="go">comment_lines                73.000000</span>
@@ -255,10 +255,10 @@ Values are ‘ignore’, ‘print’, or ‘raise’</p></li>
 <dd class="field-even"><p></p>
 </dd>
 </dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">stats_of</span><span class="p">([</span><span class="s1">&#39;urllib&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="s1">&#39;collections&#39;</span><span class="p">])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">stats_of</span><span class="p">([</span><span class="s1">'urllib'</span><span class="p">,</span> <span class="s1">'json'</span><span class="p">,</span> <span class="s1">'collections'</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">issuperset</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="p">{</span><span class="s1">&#39;empty_lines_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;comment_lines_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;function_lines_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;mean_lines_per_function&#39;</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">stats_of</span><span class="p">([</span><span class="s1">&#39;urllib&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="s1">&#39;collections&#39;</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s1">'empty_lines_ratio'</span><span class="p">,</span> <span class="s1">'comment_lines_ratio'</span><span class="p">,</span> <span class="s1">'function_lines_ratio'</span><span class="p">,</span> <span class="s1">'mean_lines_per_function'</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stats_of</span><span class="p">([</span><span class="s1">'urllib'</span><span class="p">,</span> <span class="s1">'json'</span><span class="p">,</span> <span class="s1">'collections'</span><span class="p">])</span>
 <span class="go">                              urllib         json  collections</span>
 <span class="go">empty_lines_ratio           0.157293     0.136503     0.148090</span>
 <span class="go">comment_lines_ratio         0.075217     0.038344     0.061574</span>
@@ -288,7 +288,7 @@ Values are ‘ignore’, ‘print’, or ‘raise’</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

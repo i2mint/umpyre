@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>umpyre.collectors.workflow_status &mdash; umpyre 0.1.6 documentation</title>
+  <title>umpyre.collectors.workflow_status &mdash; umpyre 0.1.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=6e0256f3"></script>
+      <script src="../../../_static/documentation_options.js?v=ca7ad2ea"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -111,13 +111,13 @@
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Mock test (requires actual GitHub API)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;GITHUB_TOKEN&#39;</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">'GITHUB_TOKEN'</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">collector</span> <span class="o">=</span> <span class="n">WorkflowStatusCollector</span><span class="p">(</span>
-<span class="gp">... </span>        <span class="n">repo</span><span class="o">=</span><span class="s2">&quot;thorwhalen/astate&quot;</span><span class="p">,</span>
-<span class="gp">... </span>        <span class="n">token</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;GITHUB_TOKEN&#39;</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">repo</span><span class="o">=</span><span class="s2">"thorwhalen/astate"</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">token</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">'GITHUB_TOKEN'</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="p">)</span>
 <span class="gp">... </span>    <span class="n">metrics</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
-<span class="gp">... </span>    <span class="s1">&#39;last_run_status&#39;</span> <span class="ow">in</span> <span class="n">metrics</span>
+<span class="gp">... </span>    <span class="s1">'last_run_status'</span> <span class="ow">in</span> <span class="n">metrics</span>
 <span class="gp">... </span><span class="k">else</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="kc">True</span>  <span class="c1"># Skip if no token</span>
 <span class="go">True</span>
@@ -159,7 +159,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

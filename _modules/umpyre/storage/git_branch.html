@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>umpyre.storage.git_branch &mdash; umpyre 0.1.6 documentation</title>
+  <title>umpyre.storage.git_branch &mdash; umpyre 0.1.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=6e0256f3"></script>
+      <script src="../../../_static/documentation_options.js?v=ca7ad2ea"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -88,7 +88,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for umpyre.storage.git_branch</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Git branch-based storage operations.&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""Git branch-based storage operations."""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
@@ -102,31 +102,31 @@
 <div class="viewcode-block" id="GitBranchStorage">
 <a class="viewcode-back" href="../../../module_docs/umpyre/storage/git_branch.html#umpyre.GitBranchStorage">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">GitBranchStorage</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Store metrics in a separate git branch.</span>
 
 <span class="sd">    This provides versioned, branch-based storage without polluting</span>
 <span class="sd">    the main branch or requiring external artifacts.</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; storage = GitBranchStorage(repo_path=&quot;/path/to/repo&quot;)  #doctest: +SKIP</span>
-<span class="sd">        &gt;&gt;&gt; metrics = {&quot;lines&quot;: 100, &quot;functions&quot;: 10}  #doctest: +SKIP</span>
-<span class="sd">        &gt;&gt;&gt; storage.store_metrics(metrics, &quot;abc123&quot;, branch=&quot;code-metrics&quot;)  #doctest: +SKIP</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; storage = GitBranchStorage(repo_path="/path/to/repo")  #doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; metrics = {"lines": 100, "functions": 10}  #doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; storage.store_metrics(metrics, "abc123", branch="code-metrics")  #doctest: +SKIP</span>
+<span class="sd">    """</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">remote</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;origin&quot;</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">remote</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"origin"</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Initialize storage.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            repo_path: Path to git repository</span>
 <span class="sd">            remote: Git remote name</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">repo_path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">remote</span> <span class="o">=</span> <span class="n">remote</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span> <span class="o">/</span> <span class="s2">&quot;.git&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Not a git repository: </span><span class="si">{</span><span class="n">repo_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span> <span class="o">/</span> <span class="s2">".git"</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Not a git repository: </span><span class="si">{</span><span class="n">repo_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <div class="viewcode-block" id="GitBranchStorage.store_metrics">
 <a class="viewcode-back" href="../../../module_docs/umpyre/storage/git_branch.html#umpyre.GitBranchStorage.store_metrics">[docs]</a>
@@ -134,19 +134,19 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">metrics</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
         <span class="n">commit_sha</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;code-metrics&quot;</span><span class="p">,</span>
+        <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"code-metrics"</span><span class="p">,</span>
         <span class="n">formats</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Store metrics to git branch.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            metrics: Metric dictionary to store</span>
 <span class="sd">            commit_sha: Git commit SHA</span>
 <span class="sd">            branch: Target branch name</span>
-<span class="sd">            formats: List of formats (&#39;json&#39;, &#39;csv&#39;)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">formats</span> <span class="o">=</span> <span class="n">formats</span> <span class="ow">or</span> <span class="p">[</span><span class="s2">&quot;json&quot;</span><span class="p">,</span> <span class="s2">&quot;csv&quot;</span><span class="p">]</span>
+<span class="sd">            formats: List of formats ('json', 'csv')</span>
+<span class="sd">        """</span>
+        <span class="n">formats</span> <span class="o">=</span> <span class="n">formats</span> <span class="ow">or</span> <span class="p">[</span><span class="s2">"json"</span><span class="p">,</span> <span class="s2">"csv"</span><span class="p">]</span>
 
         <span class="c1"># Create temporary directory for branch checkout</span>
         <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmpdir</span><span class="p">:</span>
@@ -157,43 +157,43 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_checkout_branch</span><span class="p">(</span><span class="n">branch</span><span class="p">,</span> <span class="n">tmpdir</span><span class="p">)</span>
 
             <span class="c1"># Create history directory (flat structure)</span>
-            <span class="n">history_dir</span> <span class="o">=</span> <span class="n">tmpdir</span> <span class="o">/</span> <span class="s2">&quot;history&quot;</span>
+            <span class="n">history_dir</span> <span class="o">=</span> <span class="n">tmpdir</span> <span class="o">/</span> <span class="s2">"history"</span>
             <span class="n">history_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
             <span class="c1"># Build filename: YYYY_MM_DD_HH_MM_SS__shahash__version.json</span>
-            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y_%m_</span><span class="si">%d</span><span class="s2">_%H_%M_%S&quot;</span><span class="p">)</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y_%m_</span><span class="si">%d</span><span class="s2">_%H_%M_%S"</span><span class="p">)</span>
             <span class="n">commit_short</span> <span class="o">=</span> <span class="n">commit_sha</span><span class="p">[:</span><span class="mi">7</span><span class="p">]</span>
 
-            <span class="c1"># Extract pypi_version if available (use &#39;none&#39; if not found)</span>
+            <span class="c1"># Extract pypi_version if available (use 'none' if not found)</span>
             <span class="n">pypi_version</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;metrics&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;umpyre_stats&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pypi_version&quot;</span><span class="p">)</span>
-                <span class="ow">or</span> <span class="s2">&quot;none&quot;</span>
+                <span class="n">metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"metrics"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"umpyre_stats"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"pypi_version"</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="s2">"none"</span>
             <span class="p">)</span>
 
             <span class="c1"># Filename format: timestamp__sha__version (parseable, chronological)</span>
-            <span class="n">filename_base</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">__</span><span class="si">{</span><span class="n">commit_short</span><span class="si">}</span><span class="s2">__</span><span class="si">{</span><span class="n">pypi_version</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">filename_base</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">__</span><span class="si">{</span><span class="n">commit_short</span><span class="si">}</span><span class="s2">__</span><span class="si">{</span><span class="n">pypi_version</span><span class="si">}</span><span class="s2">"</span>
 
             <span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="n">formats</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">"json"</span><span class="p">:</span>
                     <span class="c1"># Latest snapshot</span>
-                    <span class="n">serialize_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">tmpdir</span> <span class="o">/</span> <span class="s2">&quot;metrics.json&quot;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
+                    <span class="n">serialize_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">tmpdir</span> <span class="o">/</span> <span class="s2">"metrics.json"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"json"</span><span class="p">)</span>
 
                     <span class="c1"># Historical record (flat structure, parseable filename)</span>
-                    <span class="n">history_file</span> <span class="o">=</span> <span class="n">history_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename_base</span><span class="si">}</span><span class="s2">.json&quot;</span>
-                    <span class="n">serialize_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">history_file</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
+                    <span class="n">history_file</span> <span class="o">=</span> <span class="n">history_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">filename_base</span><span class="si">}</span><span class="s2">.json"</span>
+                    <span class="n">serialize_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">history_file</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"json"</span><span class="p">)</span>
 
-                <span class="k">elif</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">&quot;csv&quot;</span><span class="p">:</span>
-                    <span class="n">serialize_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">tmpdir</span> <span class="o">/</span> <span class="s2">&quot;metrics.csv&quot;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;csv&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">"csv"</span><span class="p">:</span>
+                    <span class="n">serialize_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">tmpdir</span> <span class="o">/</span> <span class="s2">"metrics.csv"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"csv"</span><span class="p">)</span>
 
             <span class="c1"># Commit and push</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_commit_and_push</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">,</span> <span class="n">branch</span><span class="p">,</span> <span class="n">commit_sha</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_fetch_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetch metrics branch from remote.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Fetch metrics branch from remote."""</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-                <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;fetch&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"fetch"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span>
                 <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">,</span>
                 <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># May not exist yet</span>
@@ -203,10 +203,10 @@
             <span class="k">pass</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_checkout_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checkout metrics branch to temporary directory.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Checkout metrics branch to temporary directory."""</span>
         <span class="c1"># Check if branch exists locally</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-            <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;rev-parse&quot;</span><span class="p">,</span> <span class="s2">&quot;--verify&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"rev-parse"</span><span class="p">,</span> <span class="s2">"--verify"</span><span class="p">,</span> <span class="n">branch</span><span class="p">],</span>
             <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">,</span>
             <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -216,12 +216,12 @@
             <span class="c1"># Branch exists - clone it</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
                 <span class="p">[</span>
-                    <span class="s2">&quot;git&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;clone&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;--branch&quot;</span><span class="p">,</span>
+                    <span class="s2">"git"</span><span class="p">,</span>
+                    <span class="s2">"clone"</span><span class="p">,</span>
+                    <span class="s2">"--branch"</span><span class="p">,</span>
                     <span class="n">branch</span><span class="p">,</span>
-                    <span class="s2">&quot;--depth&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+                    <span class="s2">"--depth"</span><span class="p">,</span>
+                    <span class="s2">"1"</span><span class="p">,</span>
                     <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">),</span>
                     <span class="nb">str</span><span class="p">(</span><span class="n">target_dir</span><span class="p">),</span>
                 <span class="p">],</span>
@@ -230,38 +230,38 @@
                 <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Branch doesn&#39;t exist - create new</span>
+            <span class="c1"># Branch doesn't exist - create new</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-                <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;clone&quot;</span><span class="p">,</span> <span class="s2">&quot;--depth&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">target_dir</span><span class="p">)],</span>
+                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"clone"</span><span class="p">,</span> <span class="s2">"--depth"</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">target_dir</span><span class="p">)],</span>
                 <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-                <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;checkout&quot;</span><span class="p">,</span> <span class="s2">&quot;--orphan&quot;</span><span class="p">,</span> <span class="n">branch</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"checkout"</span><span class="p">,</span> <span class="s2">"--orphan"</span><span class="p">,</span> <span class="n">branch</span><span class="p">],</span>
                 <span class="n">cwd</span><span class="o">=</span><span class="n">target_dir</span><span class="p">,</span>
                 <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="c1"># Remove all files from new orphan branch</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-                <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-rf&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"rm"</span><span class="p">,</span> <span class="s2">"-rf"</span><span class="p">,</span> <span class="s2">"."</span><span class="p">],</span>
                 <span class="n">cwd</span><span class="o">=</span><span class="n">target_dir</span><span class="p">,</span>
                 <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_commit_and_push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">commit_sha</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Commit changes and push to remote.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Commit changes and push to remote."""</span>
         <span class="c1"># Configure git</span>
         <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-            <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="s2">&quot;user.name&quot;</span><span class="p">,</span> <span class="s2">&quot;umpyre-bot&quot;</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"config"</span><span class="p">,</span> <span class="s2">"user.name"</span><span class="p">,</span> <span class="s2">"umpyre-bot"</span><span class="p">],</span>
             <span class="n">cwd</span><span class="o">=</span><span class="n">work_dir</span><span class="p">,</span>
             <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-            <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="s2">&quot;user.email&quot;</span><span class="p">,</span> <span class="s2">&quot;umpyre@automated&quot;</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"config"</span><span class="p">,</span> <span class="s2">"user.email"</span><span class="p">,</span> <span class="s2">"umpyre@automated"</span><span class="p">],</span>
             <span class="n">cwd</span><span class="o">=</span><span class="n">work_dir</span><span class="p">,</span>
             <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -269,7 +269,7 @@
 
         <span class="c1"># Add all files</span>
         <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-            <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"add"</span><span class="p">,</span> <span class="s2">"."</span><span class="p">],</span>
             <span class="n">cwd</span><span class="o">=</span><span class="n">work_dir</span><span class="p">,</span>
             <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -277,7 +277,7 @@
 
         <span class="c1"># Check if there are changes</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-            <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;diff&quot;</span><span class="p">,</span> <span class="s2">&quot;--cached&quot;</span><span class="p">,</span> <span class="s2">&quot;--quiet&quot;</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"diff"</span><span class="p">,</span> <span class="s2">"--cached"</span><span class="p">,</span> <span class="s2">"--quiet"</span><span class="p">],</span>
             <span class="n">cwd</span><span class="o">=</span><span class="n">work_dir</span><span class="p">,</span>
             <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -285,9 +285,9 @@
 
         <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="c1"># There are changes - commit them</span>
-            <span class="n">commit_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Update metrics for </span><span class="si">{</span><span class="n">commit_sha</span><span class="p">[:</span><span class="mi">7</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">commit_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"Update metrics for </span><span class="si">{</span><span class="n">commit_sha</span><span class="p">[:</span><span class="mi">7</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-                <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;commit&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="n">commit_message</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"commit"</span><span class="p">,</span> <span class="s2">"-m"</span><span class="p">,</span> <span class="n">commit_message</span><span class="p">],</span>
                 <span class="n">cwd</span><span class="o">=</span><span class="n">work_dir</span><span class="p">,</span>
                 <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -297,7 +297,7 @@
             <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-                        <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;push&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="p">,</span> <span class="n">branch</span><span class="p">],</span>
+                        <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"push"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="p">,</span> <span class="n">branch</span><span class="p">],</span>
                         <span class="n">cwd</span><span class="o">=</span><span class="n">work_dir</span><span class="p">,</span>
                         <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                         <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -308,7 +308,7 @@
                     <span class="k">if</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
                         <span class="c1"># Pull and try again</span>
                         <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-                            <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;pull&quot;</span><span class="p">,</span> <span class="s2">&quot;--rebase&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="p">,</span> <span class="n">branch</span><span class="p">],</span>
+                            <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"pull"</span><span class="p">,</span> <span class="s2">"--rebase"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="p">,</span> <span class="n">branch</span><span class="p">],</span>
                             <span class="n">cwd</span><span class="o">=</span><span class="n">work_dir</span><span class="p">,</span>
                             <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                             <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -321,7 +321,7 @@
 <div class="viewcode-block" id="GitBranchStorageError">
 <a class="viewcode-back" href="../../../module_docs/umpyre/storage/git_branch.html#umpyre.GitBranchStorageError">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">GitBranchStorageError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when git branch storage operations fail.&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">"""Raised when git branch storage operations fail."""</span></div>
 
 </pre></div>
 
@@ -332,7 +332,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

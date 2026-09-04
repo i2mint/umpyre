@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>umpyre.collectors.umpyre_collector &mdash; umpyre 0.1.6 documentation</title>
+  <title>umpyre.collectors.umpyre_collector &mdash; umpyre 0.1.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=6e0256f3"></script>
+      <script src="../../../_static/documentation_options.js?v=ca7ad2ea"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -88,7 +88,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for umpyre.collectors.umpyre_collector</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Collector using AST-based code analysis (safe, no code execution).&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""Collector using AST-based code analysis (safe, no code execution)."""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
@@ -102,7 +102,7 @@
 <div class="viewcode-block" id="UmpyreCollector">
 <a class="viewcode-back" href="../../../module_docs/umpyre/collectors/umpyre_collector.html#umpyre.UmpyreCollector">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">UmpyreCollector</span><span class="p">(</span><span class="n">MetricCollector</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Collect code statistics using AST parsing (no code execution).</span>
 
 <span class="sd">    Provides metrics like:</span>
@@ -118,37 +118,37 @@
 <span class="sd">        &gt;&gt;&gt; from pathlib import Path</span>
 <span class="sd">        &gt;&gt;&gt; # Create a simple Python file for testing</span>
 <span class="sd">        &gt;&gt;&gt; with tempfile.TemporaryDirectory() as tmpdir:</span>
-<span class="sd">        ...     test_file = Path(tmpdir) / &quot;test.py&quot;</span>
-<span class="sd">        ...     test_file.write_text(&#39;&#39;&#39;def hello():</span>
-<span class="sd">        ...     \&quot;\&quot;\&quot;Say hello.\&quot;\&quot;\&quot;</span>
-<span class="sd">        ...     return &quot;hello&quot;</span>
+<span class="sd">        ...     test_file = Path(tmpdir) / "test.py"</span>
+<span class="sd">        ...     test_file.write_text('''def hello():</span>
+<span class="sd">        ...     \"\"\"Say hello.\"\"\"</span>
+<span class="sd">        ...     return "hello"</span>
 <span class="sd">        ...</span>
 <span class="sd">        ... class Greeter:</span>
-<span class="sd">        ...     \&quot;\&quot;\&quot;A greeter.\&quot;\&quot;\&quot;</span>
+<span class="sd">        ...     \"\"\"A greeter.\"\"\"</span>
 <span class="sd">        ...     pass</span>
-<span class="sd">        ... &#39;&#39;&#39;)  # doctest: +SKIP</span>
+<span class="sd">        ... ''')  # doctest: +SKIP</span>
 <span class="sd">        ...     collector = UmpyreCollector(tmpdir)</span>
 <span class="sd">        ...     metrics = collector.collect()</span>
-<span class="sd">        ...     metrics[&#39;num_functions&#39;] &gt;= 1 and metrics[&#39;num_classes&#39;] &gt;= 1</span>
+<span class="sd">        ...     metrics['num_functions'] &gt;= 1 and metrics['num_classes'] &gt;= 1</span>
 <span class="sd">        True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">root_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">exclude_dirs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Initialize collector.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            root_path: Root directory to analyze (defaults to current directory)</span>
-<span class="sd">            exclude_dirs: List of directory names to exclude (e.g., [&#39;tests&#39;, &#39;examples&#39;])</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">            exclude_dirs: List of directory names to exclude (e.g., ['tests', 'examples'])</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">root_path</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exclude_dirs</span> <span class="o">=</span> <span class="n">exclude_dirs</span> <span class="ow">or</span> <span class="p">[]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_analyze_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Analyze a single Python file using AST (no code execution).</span>
 
 <span class="sd">        Args:</span>
@@ -156,12 +156,12 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Dictionary with file metrics</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
-            <span class="n">lines</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
             <span class="n">tree</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">filepath</span><span class="p">))</span>
 
             <span class="c1"># Count functions and classes</span>
@@ -174,49 +174,49 @@
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">FunctionDef</span><span class="p">):</span>
                     <span class="n">num_functions</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="c1"># Count lines in function (end_lineno - lineno)</span>
-                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&quot;end_lineno&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">end_lineno</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">"end_lineno"</span><span class="p">)</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">end_lineno</span><span class="p">:</span>
                         <span class="n">function_lines</span> <span class="o">+=</span> <span class="n">node</span><span class="o">.</span><span class="n">end_lineno</span> <span class="o">-</span> <span class="n">node</span><span class="o">.</span><span class="n">lineno</span> <span class="o">+</span> <span class="mi">1</span>
                     <span class="c1"># Extract docstring lines</span>
                     <span class="n">docstring</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">get_docstring</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">docstring</span><span class="p">:</span>
-                        <span class="n">docs_lines</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">docstring</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
+                        <span class="n">docs_lines</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">docstring</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">))</span>
 
                 <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">ClassDef</span><span class="p">):</span>
                     <span class="n">num_classes</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="c1"># Extract class docstring</span>
                     <span class="n">docstring</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">get_docstring</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">docstring</span><span class="p">:</span>
-                        <span class="n">docs_lines</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">docstring</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
+                        <span class="n">docs_lines</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">docstring</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">))</span>
 
             <span class="c1"># Count empty and comment lines</span>
             <span class="n">empty_lines</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-            <span class="n">comment_lines</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">))</span>
+            <span class="n">comment_lines</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"#"</span><span class="p">))</span>
 
             <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;num_functions&quot;</span><span class="p">:</span> <span class="n">num_functions</span><span class="p">,</span>
-                <span class="s2">&quot;num_classes&quot;</span><span class="p">:</span> <span class="n">num_classes</span><span class="p">,</span>
-                <span class="s2">&quot;total_lines&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">),</span>
-                <span class="s2">&quot;empty_lines&quot;</span><span class="p">:</span> <span class="n">empty_lines</span><span class="p">,</span>
-                <span class="s2">&quot;comment_lines&quot;</span><span class="p">:</span> <span class="n">comment_lines</span><span class="p">,</span>
-                <span class="s2">&quot;docs_lines&quot;</span><span class="p">:</span> <span class="n">docs_lines</span><span class="p">,</span>
-                <span class="s2">&quot;function_lines&quot;</span><span class="p">:</span> <span class="n">function_lines</span><span class="p">,</span>
+                <span class="s2">"num_functions"</span><span class="p">:</span> <span class="n">num_functions</span><span class="p">,</span>
+                <span class="s2">"num_classes"</span><span class="p">:</span> <span class="n">num_classes</span><span class="p">,</span>
+                <span class="s2">"total_lines"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">),</span>
+                <span class="s2">"empty_lines"</span><span class="p">:</span> <span class="n">empty_lines</span><span class="p">,</span>
+                <span class="s2">"comment_lines"</span><span class="p">:</span> <span class="n">comment_lines</span><span class="p">,</span>
+                <span class="s2">"docs_lines"</span><span class="p">:</span> <span class="n">docs_lines</span><span class="p">,</span>
+                <span class="s2">"function_lines"</span><span class="p">:</span> <span class="n">function_lines</span><span class="p">,</span>
             <span class="p">}</span>
 
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="c1"># Return zeros on error but track the file</span>
             <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;num_functions&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;num_classes&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;total_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;empty_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;comment_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;docs_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;function_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
+                <span class="s2">"num_functions"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"num_classes"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"total_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"empty_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"comment_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"docs_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"function_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"error"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
             <span class="p">}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_should_analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Check if file should be analyzed.</span>
 
 <span class="sd">        Args:</span>
@@ -224,7 +224,7 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            True if file should be analyzed</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Skip excluded directories</span>
         <span class="k">for</span> <span class="n">exclude_dir</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exclude_dirs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">exclude_dir</span> <span class="ow">in</span> <span class="n">file_path</span><span class="o">.</span><span class="n">parts</span><span class="p">:</span>
@@ -233,25 +233,25 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_extract_pypi_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Extract PyPI version from package files.</span>
 
 <span class="sd">        Checks in order:</span>
-<span class="sd">        1. pyproject.toml (version = &quot;x.y.z&quot;)</span>
+<span class="sd">        1. pyproject.toml (version = "x.y.z")</span>
 <span class="sd">        2. setup.py (__version__ or version=)</span>
 <span class="sd">        3. __init__.py (__version__)</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Version string or None if not found</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Try pyproject.toml first</span>
-        <span class="n">pyproject</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_path</span> <span class="o">/</span> <span class="s2">&quot;pyproject.toml&quot;</span>
+        <span class="n">pyproject</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_path</span> <span class="o">/</span> <span class="s2">"pyproject.toml"</span>
         <span class="k">if</span> <span class="n">pyproject</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">content</span> <span class="o">=</span> <span class="n">pyproject</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
-                <span class="c1"># Look for version = &quot;x.y.z&quot; in [project] or [tool.poetry] section</span>
+                <span class="c1"># Look for version = "x.y.z" in [project] or [tool.poetry] section</span>
                 <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
-                    <span class="sa">r</span><span class="s1">&#39;version\s*=\s*[&quot;</span><span class="se">\&#39;</span><span class="s1">]([\d\.]+(?:[-\w\.]*)?)[&quot;</span><span class="se">\&#39;</span><span class="s1">]&#39;</span><span class="p">,</span> <span class="n">content</span>
+                    <span class="sa">r</span><span class="s1">'version\s*=\s*["</span><span class="se">\'</span><span class="s1">]([\d\.]+(?:[-\w\.]*)?)["</span><span class="se">\'</span><span class="s1">]'</span><span class="p">,</span> <span class="n">content</span>
                 <span class="p">)</span>
                 <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -259,13 +259,13 @@
                 <span class="k">pass</span>
 
         <span class="c1"># Try setup.py</span>
-        <span class="n">setup_py</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_path</span> <span class="o">/</span> <span class="s2">&quot;setup.py&quot;</span>
+        <span class="n">setup_py</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_path</span> <span class="o">/</span> <span class="s2">"setup.py"</span>
         <span class="k">if</span> <span class="n">setup_py</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">content</span> <span class="o">=</span> <span class="n">setup_py</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
-                <span class="c1"># Look for __version__ = &quot;x.y.z&quot; or version=&quot;x.y.z&quot;</span>
+                <span class="c1"># Look for __version__ = "x.y.z" or version="x.y.z"</span>
                 <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
-                    <span class="sa">r</span><span class="s1">&#39;(?:__version__|version)\s*=\s*[&quot;</span><span class="se">\&#39;</span><span class="s1">]([\d\.]+(?:[-\w\.]*)?)[&quot;</span><span class="se">\&#39;</span><span class="s1">]&#39;</span><span class="p">,</span>
+                    <span class="sa">r</span><span class="s1">'(?:__version__|version)\s*=\s*["</span><span class="se">\'</span><span class="s1">]([\d\.]+(?:[-\w\.]*)?)["</span><span class="se">\'</span><span class="s1">]'</span><span class="p">,</span>
                     <span class="n">content</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
@@ -275,13 +275,13 @@
 
         <span class="c1"># Try package __init__.py</span>
         <span class="c1"># Look for {root_path}/{package_name}/__init__.py</span>
-        <span class="k">for</span> <span class="n">init_file</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_path</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">init_file</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_path</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">"__init__.py"</span><span class="p">):</span>
             <span class="c1"># Only check top-level package (max 1 level deep)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">init_file</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_path</span><span class="p">)</span><span class="o">.</span><span class="n">parts</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">content</span> <span class="o">=</span> <span class="n">init_file</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
                     <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
-                        <span class="sa">r</span><span class="s1">&#39;__version__\s*=\s*[&quot;</span><span class="se">\&#39;</span><span class="s1">]([\d\.]+(?:[-\w\.]*)?)[&quot;</span><span class="se">\&#39;</span><span class="s1">]&#39;</span><span class="p">,</span> <span class="n">content</span>
+                        <span class="sa">r</span><span class="s1">'__version__\s*=\s*["</span><span class="se">\'</span><span class="s1">]([\d\.]+(?:[-\w\.]*)?)["</span><span class="se">\'</span><span class="s1">]'</span><span class="p">,</span> <span class="n">content</span>
                     <span class="p">)</span>
                     <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
                         <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -293,7 +293,7 @@
 <div class="viewcode-block" id="UmpyreCollector.collect">
 <a class="viewcode-back" href="../../../module_docs/umpyre/collectors/umpyre_collector.html#umpyre.UmpyreCollector.collect">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">collect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Collect code statistics from root directory using AST parsing.</span>
 
 <span class="sd">        Returns:</span>
@@ -310,18 +310,18 @@
 <span class="sd">            - function_lines_ratio: Ratio of function lines</span>
 <span class="sd">            - mean_lines_per_function: Average lines per function</span>
 <span class="sd">            - files_analyzed: Number of files successfully analyzed</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_path</span><span class="p">)</span>
 
         <span class="c1"># Aggregate metrics across all files</span>
         <span class="n">total_metrics</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;num_functions&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;num_classes&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;total_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;empty_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;comment_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;docs_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;function_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"num_functions"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"num_classes"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"total_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"empty_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"comment_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"docs_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"function_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
         <span class="p">}</span>
 
         <span class="n">files_analyzed</span> <span class="o">=</span> <span class="mi">0</span>
@@ -329,14 +329,14 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># Walk through all Python files</span>
-            <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">&quot;*.py&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">"*.py"</span><span class="p">):</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_analyze</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
                     <span class="k">continue</span>
 
                 <span class="n">file_metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_analyze_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
 
-                <span class="k">if</span> <span class="s2">&quot;error&quot;</span> <span class="ow">in</span> <span class="n">file_metrics</span><span class="p">:</span>
-                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filepath</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">file_metrics</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s2">"error"</span> <span class="ow">in</span> <span class="n">file_metrics</span><span class="p">:</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">filepath</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">file_metrics</span><span class="p">[</span><span class="s1">'error'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                     <span class="k">continue</span>
 
                 <span class="n">files_analyzed</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -346,63 +346,63 @@
                     <span class="n">total_metrics</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">file_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
             <span class="c1"># Calculate ratios</span>
-            <span class="n">total_lines</span> <span class="o">=</span> <span class="n">total_metrics</span><span class="p">[</span><span class="s2">&quot;total_lines&quot;</span><span class="p">]</span>
+            <span class="n">total_lines</span> <span class="o">=</span> <span class="n">total_metrics</span><span class="p">[</span><span class="s2">"total_lines"</span><span class="p">]</span>
 
             <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="o">**</span><span class="n">total_metrics</span><span class="p">,</span>
-                <span class="s2">&quot;empty_lines_ratio&quot;</span><span class="p">:</span> <span class="p">(</span>
-                    <span class="n">total_metrics</span><span class="p">[</span><span class="s2">&quot;empty_lines&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_lines</span>
+                <span class="s2">"empty_lines_ratio"</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="n">total_metrics</span><span class="p">[</span><span class="s2">"empty_lines"</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_lines</span>
                     <span class="k">if</span> <span class="n">total_lines</span> <span class="o">&gt;</span> <span class="mi">0</span>
                     <span class="k">else</span> <span class="mf">0.0</span>
                 <span class="p">),</span>
-                <span class="s2">&quot;comment_lines_ratio&quot;</span><span class="p">:</span> <span class="p">(</span>
-                    <span class="n">total_metrics</span><span class="p">[</span><span class="s2">&quot;comment_lines&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_lines</span>
+                <span class="s2">"comment_lines_ratio"</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="n">total_metrics</span><span class="p">[</span><span class="s2">"comment_lines"</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_lines</span>
                     <span class="k">if</span> <span class="n">total_lines</span> <span class="o">&gt;</span> <span class="mi">0</span>
                     <span class="k">else</span> <span class="mf">0.0</span>
                 <span class="p">),</span>
-                <span class="s2">&quot;function_lines_ratio&quot;</span><span class="p">:</span> <span class="p">(</span>
-                    <span class="n">total_metrics</span><span class="p">[</span><span class="s2">&quot;function_lines&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_lines</span>
+                <span class="s2">"function_lines_ratio"</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="n">total_metrics</span><span class="p">[</span><span class="s2">"function_lines"</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_lines</span>
                     <span class="k">if</span> <span class="n">total_lines</span> <span class="o">&gt;</span> <span class="mi">0</span>
                     <span class="k">else</span> <span class="mf">0.0</span>
                 <span class="p">),</span>
-                <span class="s2">&quot;mean_lines_per_function&quot;</span><span class="p">:</span> <span class="p">(</span>
-                    <span class="n">total_metrics</span><span class="p">[</span><span class="s2">&quot;function_lines&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_metrics</span><span class="p">[</span><span class="s2">&quot;num_functions&quot;</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="n">total_metrics</span><span class="p">[</span><span class="s2">&quot;num_functions&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                <span class="s2">"mean_lines_per_function"</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="n">total_metrics</span><span class="p">[</span><span class="s2">"function_lines"</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_metrics</span><span class="p">[</span><span class="s2">"num_functions"</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">total_metrics</span><span class="p">[</span><span class="s2">"num_functions"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
                     <span class="k">else</span> <span class="mf">0.0</span>
                 <span class="p">),</span>
-                <span class="s2">&quot;files_analyzed&quot;</span><span class="p">:</span> <span class="n">files_analyzed</span><span class="p">,</span>
-                <span class="s2">&quot;pypi_version&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_pypi_version</span><span class="p">(),</span>
+                <span class="s2">"files_analyzed"</span><span class="p">:</span> <span class="n">files_analyzed</span><span class="p">,</span>
+                <span class="s2">"pypi_version"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_pypi_version</span><span class="p">(),</span>
             <span class="p">}</span>
 
             <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
-                <span class="n">result</span><span class="p">[</span><span class="s2">&quot;errors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>  <span class="c1"># Keep first 10 errors</span>
-                <span class="n">result</span><span class="p">[</span><span class="s2">&quot;total_errors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+                <span class="n">result</span><span class="p">[</span><span class="s2">"errors"</span><span class="p">]</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>  <span class="c1"># Keep first 10 errors</span>
+                <span class="n">result</span><span class="p">[</span><span class="s2">"total_errors"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
 
             <span class="k">return</span> <span class="n">result</span>
 
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="c1"># Return empty metrics on catastrophic error</span>
             <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;num_functions&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;num_classes&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;total_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;empty_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;comment_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;docs_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;function_lines&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;empty_lines_ratio&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-                <span class="s2">&quot;comment_lines_ratio&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-                <span class="s2">&quot;function_lines_ratio&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-                <span class="s2">&quot;mean_lines_per_function&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-                <span class="s2">&quot;files_analyzed&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
+                <span class="s2">"num_functions"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"num_classes"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"total_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"empty_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"comment_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"docs_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"function_lines"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"empty_lines_ratio"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s2">"comment_lines_ratio"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s2">"function_lines_ratio"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s2">"mean_lines_per_function"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s2">"files_analyzed"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"error"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
             <span class="p">}</span></div>
 </div>
 
 
 
 <span class="c1"># Register collector</span>
-<span class="n">registry</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;umpyre_stats&quot;</span><span class="p">,</span> <span class="n">UmpyreCollector</span><span class="p">)</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">"umpyre_stats"</span><span class="p">,</span> <span class="n">UmpyreCollector</span><span class="p">)</span>
 </pre></div>
 
            </div>
@@ -412,7 +412,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
