@@ -341,12 +341,3 @@ def stats_of(
     put_at_the_front = [x for x in df.index if x not in put_at_the_end]
     df = df.loc[put_at_the_front + put_at_the_end]
     return df
-
-
-if __name__ == "__main__":
-    from dol.util import ModuleNotFoundErrorNiceMessage
-
-    with ModuleNotFoundErrorNiceMessage():
-        import argh
-
-        argh.dispatch_commands([modules_info_df, modules_info_df_stats, stats_of])
