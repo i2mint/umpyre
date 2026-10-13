@@ -1,0 +1,26 @@
+# umpyre
+
+> Code analysis and quality metrics tracking system for CI/CD
+
+
+## Pages in this subsection
+
+- [umpyre](umpyre.html.md): Umpyre - Code analysis and quality metrics tracking.
+- [umpyre.cli](umpyre.cli.html.md): Command-line interface for umpyre.
+- [umpyre.collectors](umpyre.collectors.html.md): Collectors package - metric collection implementations.
+- [umpyre.collectors.base](umpyre.collectors.base.html.md): Base collector class with Mapping interface.
+- [umpyre.collectors.coverage_collector](umpyre.collectors.coverage_collector.html.md): Collector for test coverage metrics.
+- [umpyre.collectors.umpyre_collector](umpyre.collectors.umpyre_collector.html.md): Collector using AST-based code analysis (safe, no code execution).
+- [umpyre.collectors.wily_collector](umpyre.collectors.wily_collector.html.md): Collector for complexity metrics using wily.
+- [umpyre.collectors.workflow_status](umpyre.collectors.workflow_status.html.md): Collector for GitHub workflow status using GitHub API.
+- [umpyre.config](umpyre.config.html.md): Configuration loading and validation for umpyre.
+- [umpyre.python_code_stats](umpyre.python_code_stats.html.md): Get stats about packages. Your own, or other’s.
+- [umpyre.schema](umpyre.schema.html.md): Versioned schema for metrics storage and migration support.
+- [umpyre.storage](umpyre.storage.html.md): Storage operations for metrics.
+- [umpyre.storage.formats](umpyre.storage.formats.html.md): JSON and CSV serialization for metrics.
+- [umpyre.storage.git_branch](umpyre.storage.git_branch.html.md): Git branch-based storage operations.
+- [umpyre.storage.query_utils](umpyre.storage.query_utils.html.md): Helper utilities for working with umpyre metrics storage.
+
+## Optional
+
+- [Top-level llms.txt](../llms.txt): Complete documentation index.

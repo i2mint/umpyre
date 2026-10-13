@@ -1,0 +1,40 @@
+umpyre.storage
+==============
+
+.. automodule:: umpyre.storage
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      serialize_metrics
+      deserialize_metrics
+      parse_metric_filename
+      find_metrics_by_commit
+      find_metrics_by_version
+      get_latest_metric_for_version
+      get_all_versions
+      filter_by_date_range
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      GitBranchStorage
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      GitBranchStorageError
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   formats
+   git_branch
+   query_utils

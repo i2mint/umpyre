@@ -1,0 +1,12 @@
+umpyre.collectors.wily\_collector
+=================================
+
+.. automodule:: umpyre.collectors.wily_collector
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      WilyCollector
+   

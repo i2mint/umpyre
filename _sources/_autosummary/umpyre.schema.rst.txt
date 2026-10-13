@@ -1,0 +1,12 @@
+umpyre.schema
+=============
+
+.. automodule:: umpyre.schema
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      MetricSchema
+   

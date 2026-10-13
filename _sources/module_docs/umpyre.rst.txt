@@ -1,4 +1,0 @@
-umpyre
-======
-.. automodule:: umpyre
-   :members:

@@ -1,0 +1,12 @@
+umpyre.collectors.coverage\_collector
+=====================================
+
+.. automodule:: umpyre.collectors.coverage_collector
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CoverageCollector
+   

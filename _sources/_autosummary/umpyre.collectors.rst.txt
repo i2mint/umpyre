@@ -1,0 +1,28 @@
+umpyre.collectors
+=================
+
+.. automodule:: umpyre.collectors
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      MetricCollector
+      CollectorRegistry
+      UmpyreCollector
+      WorkflowStatusCollector
+      WilyCollector
+      CoverageCollector
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   base
+   coverage_collector
+   umpyre_collector
+   wily_collector
+   workflow_status

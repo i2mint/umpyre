@@ -1,0 +1,14 @@
+umpyre.cli
+==========
+
+.. automodule:: umpyre.cli
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      cmd_collect
+      cmd_validate
+      main
+   

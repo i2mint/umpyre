@@ -1,4 +1,0 @@
-umpyre.cli
-==========
-.. automodule:: umpyre.cli
-   :members:

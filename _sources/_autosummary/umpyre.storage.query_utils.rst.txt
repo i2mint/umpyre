@@ -1,0 +1,17 @@
+umpyre.storage.query\_utils
+===========================
+
+.. automodule:: umpyre.storage.query_utils
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      filter_by_date_range
+      find_metrics_by_commit
+      find_metrics_by_version
+      get_all_versions
+      get_latest_metric_for_version
+      parse_metric_filename
+   

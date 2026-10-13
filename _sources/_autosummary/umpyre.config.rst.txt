@@ -1,0 +1,18 @@
+umpyre.config
+=============
+
+.. automodule:: umpyre.config
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Config
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      ConfigError
+   

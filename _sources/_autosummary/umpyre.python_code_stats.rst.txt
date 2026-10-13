@@ -1,0 +1,19 @@
+umpyre.python\_code\_stats
+==========================
+
+.. automodule:: umpyre.python_code_stats
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_objs
+      lines
+      modules_info_df
+      modules_info_df_stats
+      modules_info_gen
+      no_test_folder
+      only_py_ext
+      stats_of
+   

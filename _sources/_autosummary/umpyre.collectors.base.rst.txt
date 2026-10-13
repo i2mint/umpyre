@@ -1,0 +1,13 @@
+umpyre.collectors.base
+======================
+
+.. automodule:: umpyre.collectors.base
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CollectorRegistry
+      MetricCollector
+   

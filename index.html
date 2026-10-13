@@ -1,243 +1,768 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to umpyre’s documentation! &mdash; umpyre 0.1.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
 
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt" type="text/markdown">
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt">
+    <title>umpyre &#8212; umpyre</title>
   
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=ca7ad2ea"></script>
-      <script src="_static/doctools.js?v=fd6eb6e6"></script>
-      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="_static/toggleprompt.js?v=d7ede5d2"></script>
-      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/js/theme.js"></script>
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/epythet.css?v=67b58a3e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=18bd87630a240e9c25be"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be" />
+
+    <script src="_static/documentation_options.js?v=22607128"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=fd10adb8"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="umpyre" href="module_docs/umpyre.html" /> 
-</head>
+    <link rel="next" title="API reference" href="api.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.8" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
 
-          
-          
-          <a href="#" class="icon icon-home">
-            umpyre
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre.html">umpyre</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/cli.html">umpyre.cli</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/collectors.html">umpyre.collectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/collectors/base.html">umpyre.collectors.base</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/collectors/coverage_collector.html">umpyre.collectors.coverage_collector</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/collectors/umpyre_collector.html">umpyre.collectors.umpyre_collector</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/collectors/wily_collector.html">umpyre.collectors.wily_collector</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/collectors/workflow_status.html">umpyre.collectors.workflow_status</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/config.html">umpyre.config</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/python_code_stats.html">umpyre.python_code_stats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/schema.html">umpyre.schema</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/storage.html">umpyre.storage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/storage/formats.html">umpyre.storage.formats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/storage/git_branch.html">umpyre.storage.git_branch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/storage/query_utils.html">umpyre.storage.query_utils</a></li>
-</ul>
 
-        </div>
-      </div>
-    </nav>
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">umpyre</a>
-      </nav>
+  
+    
+  
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Welcome to umpyre’s documentation!</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">umpyre</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API reference
+  </a>
+</li>
+
   </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="welcome-to-umpyre-s-documentation">
-<h1>Welcome to umpyre’s documentation!<a class="headerlink" href="#welcome-to-umpyre-s-documentation" title="Link to this heading"></a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre.html">umpyre</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.CollectorRegistry"><code class="docutils literal notranslate"><span class="pre">CollectorRegistry</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.CoverageCollector"><code class="docutils literal notranslate"><span class="pre">CoverageCollector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.GitBranchStorage"><code class="docutils literal notranslate"><span class="pre">GitBranchStorage</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.MetricCollector"><code class="docutils literal notranslate"><span class="pre">MetricCollector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.MetricSchema"><code class="docutils literal notranslate"><span class="pre">MetricSchema</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.UmpyreCollector"><code class="docutils literal notranslate"><span class="pre">UmpyreCollector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.WilyCollector"><code class="docutils literal notranslate"><span class="pre">WilyCollector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.WorkflowStatusCollector"><code class="docutils literal notranslate"><span class="pre">WorkflowStatusCollector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.deserialize_metrics"><code class="docutils literal notranslate"><span class="pre">deserialize_metrics()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.modules_info_df"><code class="docutils literal notranslate"><span class="pre">modules_info_df()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.modules_info_df_stats"><code class="docutils literal notranslate"><span class="pre">modules_info_df_stats()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.modules_info_gen"><code class="docutils literal notranslate"><span class="pre">modules_info_gen()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.serialize_metrics"><code class="docutils literal notranslate"><span class="pre">serialize_metrics()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre.html#umpyre.stats_of"><code class="docutils literal notranslate"><span class="pre">stats_of()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/cli.html">umpyre.cli</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/cli.html#umpyre.cli.cmd_collect"><code class="docutils literal notranslate"><span class="pre">cmd_collect()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/cli.html#umpyre.cli.cmd_validate"><code class="docutils literal notranslate"><span class="pre">cmd_validate()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/cli.html#umpyre.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/collectors.html">umpyre.collectors</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/collectors.html#umpyre.collectors.CollectorRegistry"><code class="docutils literal notranslate"><span class="pre">CollectorRegistry</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/collectors.html#umpyre.collectors.CoverageCollector"><code class="docutils literal notranslate"><span class="pre">CoverageCollector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/collectors.html#umpyre.collectors.MetricCollector"><code class="docutils literal notranslate"><span class="pre">MetricCollector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/collectors.html#umpyre.collectors.UmpyreCollector"><code class="docutils literal notranslate"><span class="pre">UmpyreCollector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/collectors.html#umpyre.collectors.WilyCollector"><code class="docutils literal notranslate"><span class="pre">WilyCollector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/collectors.html#umpyre.collectors.WorkflowStatusCollector"><code class="docutils literal notranslate"><span class="pre">WorkflowStatusCollector</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/collectors/base.html">umpyre.collectors.base</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/collectors/base.html#umpyre.collectors.base.CollectorRegistry"><code class="docutils literal notranslate"><span class="pre">CollectorRegistry</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/collectors/base.html#umpyre.collectors.base.MetricCollector"><code class="docutils literal notranslate"><span class="pre">MetricCollector</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/collectors/coverage_collector.html">umpyre.collectors.coverage_collector</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/collectors/coverage_collector.html#umpyre.collectors.coverage_collector.CoverageCollector"><code class="docutils literal notranslate"><span class="pre">CoverageCollector</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/collectors/umpyre_collector.html">umpyre.collectors.umpyre_collector</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/collectors/umpyre_collector.html#umpyre.collectors.umpyre_collector.UmpyreCollector"><code class="docutils literal notranslate"><span class="pre">UmpyreCollector</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/collectors/wily_collector.html">umpyre.collectors.wily_collector</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/collectors/wily_collector.html#umpyre.collectors.wily_collector.WilyCollector"><code class="docutils literal notranslate"><span class="pre">WilyCollector</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/collectors/workflow_status.html">umpyre.collectors.workflow_status</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/collectors/workflow_status.html#umpyre.collectors.workflow_status.WorkflowStatusCollector"><code class="docutils literal notranslate"><span class="pre">WorkflowStatusCollector</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/config.html">umpyre.config</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/config.html#umpyre.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/config.html#umpyre.config.ConfigError"><code class="docutils literal notranslate"><span class="pre">ConfigError</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/python_code_stats.html">umpyre.python_code_stats</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/python_code_stats.html#umpyre.python_code_stats.modules_info_df"><code class="docutils literal notranslate"><span class="pre">modules_info_df()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/python_code_stats.html#umpyre.python_code_stats.modules_info_df_stats"><code class="docutils literal notranslate"><span class="pre">modules_info_df_stats()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/python_code_stats.html#umpyre.python_code_stats.modules_info_gen"><code class="docutils literal notranslate"><span class="pre">modules_info_gen()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/python_code_stats.html#umpyre.python_code_stats.stats_of"><code class="docutils literal notranslate"><span class="pre">stats_of()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/schema.html">umpyre.schema</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/schema.html#umpyre.schema.MetricSchema"><code class="docutils literal notranslate"><span class="pre">MetricSchema</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/storage.html">umpyre.storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage.html#umpyre.storage.GitBranchStorage"><code class="docutils literal notranslate"><span class="pre">GitBranchStorage</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage.html#umpyre.storage.GitBranchStorageError"><code class="docutils literal notranslate"><span class="pre">GitBranchStorageError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage.html#umpyre.storage.deserialize_metrics"><code class="docutils literal notranslate"><span class="pre">deserialize_metrics()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage.html#umpyre.storage.filter_by_date_range"><code class="docutils literal notranslate"><span class="pre">filter_by_date_range()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage.html#umpyre.storage.find_metrics_by_commit"><code class="docutils literal notranslate"><span class="pre">find_metrics_by_commit()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage.html#umpyre.storage.find_metrics_by_version"><code class="docutils literal notranslate"><span class="pre">find_metrics_by_version()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage.html#umpyre.storage.get_all_versions"><code class="docutils literal notranslate"><span class="pre">get_all_versions()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage.html#umpyre.storage.get_latest_metric_for_version"><code class="docutils literal notranslate"><span class="pre">get_latest_metric_for_version()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage.html#umpyre.storage.parse_metric_filename"><code class="docutils literal notranslate"><span class="pre">parse_metric_filename()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage.html#umpyre.storage.serialize_metrics"><code class="docutils literal notranslate"><span class="pre">serialize_metrics()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/storage/formats.html">umpyre.storage.formats</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage/formats.html#umpyre.storage.formats.deserialize_metrics"><code class="docutils literal notranslate"><span class="pre">deserialize_metrics()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage/formats.html#umpyre.storage.formats.serialize_metrics"><code class="docutils literal notranslate"><span class="pre">serialize_metrics()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/storage/git_branch.html">umpyre.storage.git_branch</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage/git_branch.html#umpyre.storage.git_branch.GitBranchStorage"><code class="docutils literal notranslate"><span class="pre">GitBranchStorage</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage/git_branch.html#umpyre.storage.git_branch.GitBranchStorageError"><code class="docutils literal notranslate"><span class="pre">GitBranchStorageError</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/umpyre/storage/query_utils.html">umpyre.storage.query_utils</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage/query_utils.html#umpyre.storage.query_utils.filter_by_date_range"><code class="docutils literal notranslate"><span class="pre">filter_by_date_range()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage/query_utils.html#umpyre.storage.query_utils.find_metrics_by_commit"><code class="docutils literal notranslate"><span class="pre">find_metrics_by_commit()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage/query_utils.html#umpyre.storage.query_utils.find_metrics_by_version"><code class="docutils literal notranslate"><span class="pre">find_metrics_by_version()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage/query_utils.html#umpyre.storage.query_utils.get_all_versions"><code class="docutils literal notranslate"><span class="pre">get_all_versions()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage/query_utils.html#umpyre.storage.query_utils.get_latest_metric_for_version"><code class="docutils literal notranslate"><span class="pre">get_latest_metric_for_version()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/umpyre/storage/query_utils.html#umpyre.storage.query_utils.parse_metric_filename"><code class="docutils literal notranslate"><span class="pre">parse_metric_filename()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</div>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-<p>Release: 0.1.7</p>
-<p>Last change: Sep 04, 2026</p>
-</section>
-
-
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="module_docs/umpyre.html" class="btn btn-neutral float-right" title="umpyre" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+</nav></div>
+      
     </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p></p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
         </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+      
+      
+        <div class="navbar-item">
 
-</body>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/i2mint/umpyre" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/i2mint/umpyre" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <!-- generated by epythet -->
+<section id="umpyre">
+<h1>umpyre<a class="headerlink" href="#umpyre" title="Link to this heading">#</a></h1>
+<p>Code analysis and quality metrics tracking system for CI/CD pipelines.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">umpyre</span></code> provides automated code metrics collection and tracking for Python projects, designed to integrate seamlessly with GitHub Actions CI/CD pipelines. Track code quality trends over time with minimal overhead.</p>
+<p><strong>Key Features:</strong></p>
+<ul class="simple">
+<li><p>🎯 <strong>Pluggable collectors</strong>: Workflow status, complexity (wily), coverage, code statistics</p></li>
+<li><p>📊 <strong>Git-based storage</strong>: Metrics stored in separate branch, no external dependencies</p></li>
+<li><p>⚙️ <strong>Config-driven</strong>: Customize via YAML configuration</p></li>
+<li><p>🚀 <strong>Fast &amp; lightweight</strong>: Limited history tracking for speed</p></li>
+<li><p>🔌 <strong>GitHub Action</strong>: Drop-in integration for existing workflows</p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>umpyre
+</pre></div>
+</div>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
+<section id="create-configuration">
+<h3>1. Create Configuration<a class="headerlink" href="#create-configuration" title="Link to this heading">#</a></h3>
+<p>Create <code class="docutils literal notranslate"><span class="pre">.github/umpyre-config.yml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">schema_version</span><span class="p">:</span><span class="w"> </span><span class="s">"1.0"</span>
+
+<span class="nt">collectors</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">workflow_status</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">lookback_runs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="nt">coverage</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest-cov</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="nt">umpyre_stats</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">exclude_dirs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">tests</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">examples</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">scrap</span><span class="p p-Indicator">]</span>
+
+<span class="nt">storage</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">code-metrics</span>
+<span class="w">  </span><span class="nt">formats</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">json</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">csv</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+</section>
+<section id="add-to-github-actions">
+<h3>2. Add to GitHub Actions<a class="headerlink" href="#add-to-github-actions" title="Link to this heading">#</a></h3>
+<p>In your <code class="docutils literal notranslate"><span class="pre">.github/workflows/ci.yml</span></code> (after successful PyPI publish):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Track Code Metrics</span>
+<span class="w">  </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">success()</span><span class="w">  </span><span class="c1"># Only track metrics after successful publish</span>
+<span class="w">  </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">i2mint/umpyre/actions/track-metrics@master</span>
+<span class="w">  </span><span class="nt">continue-on-error</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span><span class="c1"># Never fails CI - see FAILURE_PROTECTION.md</span>
+<span class="w">  </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">github-token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
+<span class="w">    </span><span class="nt">config-path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.github/umpyre-config.yml</span><span class="w">  </span><span class="c1"># Optional: defaults to this path</span>
+</pre></div>
+</div>
+<p><strong>Important</strong>: Metrics collection has <strong>triple-layer failure protection</strong> and will never break your CI pipeline. See <a class="reference internal" href="#FAILURE_PROTECTION.md"><span class="xref myst">FAILURE_PROTECTION.md</span></a> for details.</p>
+</section>
+<section id="view-metrics">
+<h3>3. View Metrics<a class="headerlink" href="#view-metrics" title="Link to this heading">#</a></h3>
+<p>Metrics are stored in the <code class="docutils literal notranslate"><span class="pre">code-metrics</span></code> branch:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">metrics.json</span></code> - Latest snapshot</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">metrics.csv</span></code> - Flat format for analysis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">history/</span></code> - Flat historical records (filename format: <code class="docutils literal notranslate"><span class="pre">YYYY_MM_DD_HH_MM_SS__commit__version.json</span></code>)</p></li>
+</ul>
+<p>See <a class="reference internal" href="#STORAGE_STRUCTURE.md"><span class="xref myst">STORAGE_STRUCTURE.md</span></a> for full details on storage design and querying.</p>
+</section>
+</section>
+<section id="cli-usage">
+<h2>CLI Usage<a class="headerlink" href="#cli-usage" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Collect and store metrics</span>
+python<span class="w"> </span>-m<span class="w"> </span>umpyre.cli<span class="w"> </span>collect
+
+<span class="c1"># Collect with custom config</span>
+python<span class="w"> </span>-m<span class="w"> </span>umpyre.cli<span class="w"> </span>collect<span class="w"> </span>--config<span class="w"> </span>my-config.yml
+
+<span class="c1"># Dry run (don't store)</span>
+python<span class="w"> </span>-m<span class="w"> </span>umpyre.cli<span class="w"> </span>collect<span class="w"> </span>--no-store
+
+<span class="c1"># Validate against thresholds (coming soon)</span>
+python<span class="w"> </span>-m<span class="w"> </span>umpyre.cli<span class="w"> </span>validate
+</pre></div>
+</div>
+</section>
+<section id="querying-stored-metrics">
+<h2>Querying Stored Metrics<a class="headerlink" href="#querying-stored-metrics" title="Link to this heading">#</a></h2>
+<p>Metrics are stored in a flat structure with parseable filenames: <code class="docutils literal notranslate"><span class="pre">YYYY_MM_DD_HH_MM_SS__shahash__version.json</span></code></p>
+<section id="shell-queries">
+<h3>Shell Queries<a class="headerlink" href="#shell-queries" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Switch to metrics branch</span>
+git<span class="w"> </span>checkout<span class="w"> </span>code-metrics
+
+<span class="c1"># Get all metrics from November 14</span>
+ls<span class="w"> </span>history/2025_11_14_*
+
+<span class="c1"># Find metrics for specific commit</span>
+ls<span class="w"> </span>history/*__700e012__*
+
+<span class="c1"># Find all v0.1.0 metrics</span>
+ls<span class="w"> </span>history/*__0.1.0.json
+
+<span class="c1"># Get latest 10 metrics</span>
+ls<span class="w"> </span>-t<span class="w"> </span>history/<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-10
+
+<span class="c1"># Exclude metrics without version</span>
+ls<span class="w"> </span>history/<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s2">"__none.json"</span>
+</pre></div>
+</div>
+</section>
+<section id="python-queries">
+<h3>Python Queries<a class="headerlink" href="#python-queries" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">umpyre.storage</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">parse_metric_filename</span><span class="p">,</span>
+    <span class="n">find_metrics_by_commit</span><span class="p">,</span>
+    <span class="n">find_metrics_by_version</span><span class="p">,</span>
+    <span class="n">get_latest_metric_for_version</span><span class="p">,</span>
+    <span class="n">get_all_versions</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">history_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"history"</span><span class="p">)</span>
+
+<span class="c1"># Parse filename</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">parse_metric_filename</span><span class="p">(</span><span class="s2">"2025_11_14_22_45_00__700e012__0.1.0.json"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">"commit_sha"</span><span class="p">])</span>  <span class="c1"># '700e012'</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">"pypi_version"</span><span class="p">])</span>  <span class="c1"># '0.1.0'</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">"timestamp"</span><span class="p">])</span>  <span class="c1"># datetime object</span>
+
+<span class="c1"># Find by commit</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">find_metrics_by_commit</span><span class="p">(</span><span class="n">history_dir</span><span class="p">,</span> <span class="s2">"700e012"</span><span class="p">)</span>
+
+<span class="c1"># Find all metrics for a version</span>
+<span class="n">all_v0_1_0</span> <span class="o">=</span> <span class="n">find_metrics_by_version</span><span class="p">(</span><span class="n">history_dir</span><span class="p">,</span> <span class="s2">"0.1.0"</span><span class="p">)</span>
+
+<span class="c1"># Get latest metric for a version</span>
+<span class="n">latest</span> <span class="o">=</span> <span class="n">get_latest_metric_for_version</span><span class="p">(</span><span class="n">history_dir</span><span class="p">,</span> <span class="s2">"0.1.0"</span><span class="p">)</span>
+
+<span class="c1"># List all versions</span>
+<span class="n">versions</span> <span class="o">=</span> <span class="n">get_all_versions</span><span class="p">(</span><span class="n">history_dir</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">versions</span><span class="p">)</span>  <span class="c1"># ['0.1.0', '0.1.1', '0.2.0']</span>
+</pre></div>
+</div>
+<p>See <code class="docutils literal notranslate"><span class="pre">STORAGE_STRUCTURE.md</span></code> for detailed storage design documentation.</p>
+</section>
+</section>
+<section id="available-collectors">
+<h2>Available Collectors<a class="headerlink" href="#available-collectors" title="Link to this heading">#</a></h2>
+<section id="workflowstatuscollector">
+<h3>WorkflowStatusCollector<a class="headerlink" href="#workflowstatuscollector" title="Link to this heading">#</a></h3>
+<p>Tracks GitHub CI/CD health via API:</p>
+<ul class="simple">
+<li><p>Last run status (success/failure)</p></li>
+<li><p>Recent failure count</p></li>
+<li><p>Last successful run timestamp</p></li>
+</ul>
+</section>
+<section id="coveragecollector">
+<h3>CoverageCollector<a class="headerlink" href="#coveragecollector" title="Link to this heading">#</a></h3>
+<p>Extracts test coverage from pytest-cov or coverage.py:</p>
+<ul class="simple">
+<li><p>Line coverage %</p></li>
+<li><p>Branch coverage %</p></li>
+<li><p>Supports JSON and XML formats</p></li>
+</ul>
+</section>
+<section id="wilycollector">
+<h3>WilyCollector<a class="headerlink" href="#wilycollector" title="Link to this heading">#</a></h3>
+<p>Complexity metrics using wily (requires installation):</p>
+<ul class="simple">
+<li><p>Cyclomatic complexity</p></li>
+<li><p>Maintainability index</p></li>
+<li><p>Limited to recent commits for speed</p></li>
+</ul>
+</section>
+<section id="umpyrecollector">
+<h3>UmpyreCollector<a class="headerlink" href="#umpyrecollector" title="Link to this heading">#</a></h3>
+<p>Code statistics using built-in analyzer:</p>
+<ul class="simple">
+<li><p>Function/class counts</p></li>
+<li><p>Line metrics (total, empty, comments, docs)</p></li>
+<li><p>Code ratios and averages</p></li>
+</ul>
+</section>
+</section>
+<section id="configuration-reference">
+<h2>Configuration Reference<a class="headerlink" href="#configuration-reference" title="Link to this heading">#</a></h2>
+<p>See <code class="docutils literal notranslate"><span class="pre">.github/umpyre-config.yml</span></code> for full options:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">schema_version</span><span class="p">:</span><span class="w"> </span><span class="s">"1.0"</span><span class="w">  </span><span class="c1"># Required</span>
+
+<span class="nt">collectors</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">workflow_status</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">lookback_runs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w">  </span><span class="c1"># Number of recent runs to analyze</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="nt">wily</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">max_revisions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">  </span><span class="c1"># Limit for performance</span>
+<span class="w">    </span><span class="nt">operators</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">cyclomatic</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">maintainability</span><span class="p p-Indicator">]</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="nt">coverage</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest-cov</span><span class="w">  </span><span class="c1"># or 'coverage'</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="nt">umpyre_stats</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">exclude_dirs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">tests</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">examples</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">scrap</span><span class="p p-Indicator">]</span>
+
+<span class="nt">storage</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">code-metrics</span><span class="w">  </span><span class="c1"># Branch name for metrics</span>
+<span class="w">  </span><span class="nt">formats</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">json</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">csv</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># Output formats</span>
+<span class="w">  </span><span class="nt">retention</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">strategy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span><span class="w">  </span><span class="c1"># or: last_n_days, last_n_commits</span>
+
+<span class="nt">visualization</span><span class="p">:</span><span class="w">  </span><span class="c1"># Coming in Phase 2</span>
+<span class="w">  </span><span class="nt">generate_plots</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">generate_readme</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">plot_metrics</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">maintainability</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">coverage</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">loc</span><span class="p p-Indicator">]</span>
+
+<span class="nt">thresholds</span><span class="p">:</span><span class="w">  </span><span class="c1"># Coming in Phase 3</span>
+<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="nt">aggregation</span><span class="p">:</span><span class="w">  </span><span class="c1"># Coming in Phase 2</span>
+<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+</section>
+<section id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>umpyre/
+├── collectors/          # Metric collectors (pluggable)
+│   ├── base.py         # Abstract Collector with Mapping interface
+│   ├── workflow_status.py
+│   ├── wily_collector.py
+│   ├── coverage_collector.py
+│   └── umpyre_collector.py
+├── storage/            # Persistence layer
+│   ├── git_branch.py  # Git-based storage
+│   └── formats.py     # JSON/CSV serialization
+├── config.py           # YAML config loading
+├── schema.py           # Versioned metric schema
+└── cli.py              # Command-line interface
+</pre></div>
+</div>
+</section>
+<section id="metric-schema-v1-0">
+<h2>Metric Schema (v1.0)<a class="headerlink" href="#metric-schema-v1-0" title="Link to this heading">#</a></h2>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"schema_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-01-15T10:30:00Z"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"commit_sha"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abc123..."</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"commit_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fix bug in parser"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"python_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.10"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"workflow_status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"last_run_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"recent_failure_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"complexity"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"cyclomatic_avg"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.2</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"maintainability_index"</span><span class="p">:</span><span class="w"> </span><span class="mf">75.3</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"coverage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"line_coverage"</span><span class="p">:</span><span class="w"> </span><span class="mf">87.5</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"branch_coverage"</span><span class="p">:</span><span class="w"> </span><span class="mf">82.1</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"code_stats"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"num_functions"</span><span class="p">:</span><span class="w"> </span><span class="mi">342</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"num_classes"</span><span class="p">:</span><span class="w"> </span><span class="mi">28</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"collection_duration_seconds"</span><span class="p">:</span><span class="w"> </span><span class="mf">12.3</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="roadmap">
+<h2>Roadmap<a class="headerlink" href="#roadmap" title="Link to this heading">#</a></h2>
+<p><strong>Phase 1 (✅ Complete)</strong>: Core tracking system</p>
+<ul class="simple">
+<li><p>Config-driven collectors</p></li>
+<li><p>Git branch storage</p></li>
+<li><p>CLI and GitHub Action</p></li>
+</ul>
+<p><strong>Phase 2 (Planned)</strong>: Visualization &amp; Aggregation</p>
+<ul class="simple">
+<li><p>Plot generation (matplotlib/plotly)</p></li>
+<li><p>Auto-generated README with charts</p></li>
+<li><p>Cross-repository aggregation</p></li>
+<li><p>Organization-wide dashboards</p></li>
+</ul>
+<p><strong>Phase 3 (Planned)</strong>: Advanced Features</p>
+<ul class="simple">
+<li><p>Security metrics (bandit)</p></li>
+<li><p>Docstring coverage (interrogate)</p></li>
+<li><p>Threshold validation with custom validators</p></li>
+<li><p>Data pruning and compression</p></li>
+<li><p>Schema migration utilities</p></li>
+</ul>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">#</a></h2>
+<p>Contributions welcome! See <code class="docutils literal notranslate"><span class="pre">misc/CHANGELOG.md</span></code> for recent changes.</p>
+</section>
+<section id="original-code-statistics-feature">
+<h2>Original Code Statistics Feature<a class="headerlink" href="#original-code-statistics-feature" title="Link to this heading">#</a></h2>
+<p>Get stats about packages (existing functionality preserved):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">umpyre</span><span class="w"> </span><span class="kn">import</span> <span class="n">modules_info_df</span><span class="p">,</span> <span class="n">stats_of</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
+
+<span class="c1"># Analyze a single package</span>
+<span class="n">modules_info_df</span><span class="p">(</span><span class="n">collections</span><span class="p">)</span>
+
+<span class="c1"># Compare multiple packages</span>
+<span class="n">stats_of</span><span class="p">([</span><span class="s2">"urllib"</span><span class="p">,</span> <span class="s2">"json"</span><span class="p">,</span> <span class="s2">"collections"</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>See original README examples above for detailed usage.</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading">#</a></h2>
+<p>Apache-2.0</p>
+<p class="epythet-aggregates">This documentation as a single file: <a href="umpyre.md">umpyre.md</a> (Markdown, for agents).</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-10-13 05:56 UTC from <a href="https://github.com/i2mint/umpyre/commit/17a3adc806e228a04eaa16fd4bf895293d44d80e">17a3adc</a> (master) · umpyre 0.1.8 · <a href="about-this-build.html">about this build</a></p>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="api.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">API reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-configuration">1. Create Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-to-github-actions">2. Add to GitHub Actions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#view-metrics">3. View Metrics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cli-usage">CLI Usage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#querying-stored-metrics">Querying Stored Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shell-queries">Shell Queries</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-queries">Python Queries</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#available-collectors">Available Collectors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#workflowstatuscollector">WorkflowStatusCollector</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coveragecollector">CoverageCollector</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wilycollector">WilyCollector</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#umpyrecollector">UmpyreCollector</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-reference">Configuration Reference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architecture">Architecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metric-schema-v1-0">Metric Schema (v1.0)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#roadmap">Roadmap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributing">Contributing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#original-code-statistics-feature">Original Code Statistics Feature</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#license">License</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/index.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.23.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
 </html>

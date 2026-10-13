@@ -1,0 +1,44 @@
+﻿umpyre
+======
+
+.. automodule:: umpyre
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      modules_info_gen
+      modules_info_df
+      modules_info_df_stats
+      stats_of
+      get_objs
+      serialize_metrics
+      deserialize_metrics
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Config
+      MetricSchema
+      MetricCollector
+      CollectorRegistry
+      UmpyreCollector
+      WorkflowStatusCollector
+      WilyCollector
+      CoverageCollector
+      GitBranchStorage
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   cli
+   collectors
+   config
+   python_code_stats
+   schema
+   storage

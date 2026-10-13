@@ -1,0 +1,33 @@
+# umpyre
+
+> Code analysis and quality metrics tracking system for CI/CD
+
+
+## Pages
+
+- [umpyre](index.html.md): Code analysis and quality metrics tracking system for CI/CD pipelines.
+- [API reference](api.html.md): | &#96;umpyre&#96;   | Umpyre - Code analysis and quality metrics tracking.   |
+- [umpyre](_autosummary/umpyre.html.md): Umpyre - Code analysis and quality metrics tracking.
+- [umpyre.cli](_autosummary/umpyre.cli.html.md): Command-line interface for umpyre.
+- [umpyre.collectors](_autosummary/umpyre.collectors.html.md): Collectors package - metric collection implementations.
+- [umpyre.collectors.base](_autosummary/umpyre.collectors.base.html.md): Base collector class with Mapping interface.
+- [umpyre.collectors.coverage_collector](_autosummary/umpyre.collectors.coverage_collector.html.md): Collector for test coverage metrics.
+- [umpyre.collectors.umpyre_collector](_autosummary/umpyre.collectors.umpyre_collector.html.md): Collector using AST-based code analysis (safe, no code execution).
+- [umpyre.collectors.wily_collector](_autosummary/umpyre.collectors.wily_collector.html.md): Collector for complexity metrics using wily.
+- [umpyre.collectors.workflow_status](_autosummary/umpyre.collectors.workflow_status.html.md): Collector for GitHub workflow status using GitHub API.
+- [umpyre.config](_autosummary/umpyre.config.html.md): Configuration loading and validation for umpyre.
+- [umpyre.python_code_stats](_autosummary/umpyre.python_code_stats.html.md): Get stats about packages. Your own, or other’s.
+- [umpyre.schema](_autosummary/umpyre.schema.html.md): Versioned schema for metrics storage and migration support.
+- [umpyre.storage](_autosummary/umpyre.storage.html.md): Storage operations for metrics.
+- [umpyre.storage.formats](_autosummary/umpyre.storage.formats.html.md): JSON and CSV serialization for metrics.
+- [umpyre.storage.git_branch](_autosummary/umpyre.storage.git_branch.html.md): Git branch-based storage operations.
+- [umpyre.storage.query_utils](_autosummary/umpyre.storage.query_utils.html.md): Helper utilities for working with umpyre metrics storage.
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-10-13 05:56 UTC&#42;&#42; from commit &lt;a href="https://github.com/i2m...
+
+## Optional
+
+- [umpyre.md](umpyre.md): Complete documentation in a single file.
+
+## Build
+
+- [build_info.json](build_info.json): build provenance (commit, version, tool versions, whether the docs match the package)

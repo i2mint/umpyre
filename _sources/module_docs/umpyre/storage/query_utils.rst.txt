@@ -1,4 +1,0 @@
-umpyre.storage.query_utils
-==========================
-.. automodule:: umpyre.storage.query_utils
-   :members:

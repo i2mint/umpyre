@@ -1,0 +1,18 @@
+umpyre.storage.git\_branch
+==========================
+
+.. automodule:: umpyre.storage.git_branch
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      GitBranchStorage
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      GitBranchStorageError
+   

@@ -1,0 +1,12 @@
+umpyre.collectors.workflow\_status
+==================================
+
+.. automodule:: umpyre.collectors.workflow_status
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      WorkflowStatusCollector
+   

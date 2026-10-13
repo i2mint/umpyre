@@ -1,0 +1,12 @@
+umpyre.collectors.umpyre\_collector
+===================================
+
+.. automodule:: umpyre.collectors.umpyre_collector
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      UmpyreCollector
+   
