@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be" />
 
-    <script src="../../../_static/documentation_options.js?v=8618f531"></script>
+    <script src="../../../_static/documentation_options.js?v=bafade30"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -410,7 +410,7 @@ window.runMermaid = runMermaid;</script>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.9" />
+  <meta name="docsearch:version" content="0.1.10" />
   
     
     <script src="../../../_static/searchtools.js"></script>
@@ -747,7 +747,8 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">        Initialize storage.</span>
 
 <span class="sd">        Metrics are pushed to the URL of ``remote`` in ``repo_path`` (e.g. GitHub),</span>
-<span class="sd">        not to ``repo_path`` itself.</span>
+<span class="sd">        not to ``repo_path`` itself. A separate ``remote.&lt;name&gt;.pushurl`` is honoured</span>
+<span class="sd">        for the push; as in git, it must name the same repository as the fetch URL.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            repo_path: Path to git repository</span>
@@ -788,8 +789,8 @@ window.runMermaid = runMermaid;</script>
             <span class="n">tmpdir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">)</span>
 
             <span class="c1"># Fetch and checkout metrics branch</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_branch</span><span class="p">(</span><span class="n">branch</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_checkout_branch</span><span class="p">(</span><span class="n">branch</span><span class="p">,</span> <span class="n">tmpdir</span><span class="p">)</span>
+            <span class="n">source_ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_branch</span><span class="p">(</span><span class="n">branch</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_checkout_branch</span><span class="p">(</span><span class="n">branch</span><span class="p">,</span> <span class="n">tmpdir</span><span class="p">,</span> <span class="n">source_ref</span><span class="o">=</span><span class="n">source_ref</span><span class="p">)</span>
 
             <span class="c1"># Create history directory (flat structure)</span>
             <span class="n">history_dir</span> <span class="o">=</span> <span class="n">tmpdir</span> <span class="o">/</span> <span class="s2">"history"</span>
@@ -824,10 +825,11 @@ window.runMermaid = runMermaid;</script>
             <span class="bp">self</span><span class="o">.</span><span class="n">_commit_and_push</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">,</span> <span class="n">branch</span><span class="p">,</span> <span class="n">commit_sha</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_remote_url</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""URL of the real remote of ``repo_path``, or ``None`` if it has none."""</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_remote_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">push</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""URL of the real remote of ``repo_path`` (the one pushed to when ``push``,</span>
+<span class="sd">        which ``remote.&lt;name&gt;.pushurl`` may make differ), or ``None`` if it has none."""</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-            <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"remote"</span><span class="p">,</span> <span class="s2">"get-url"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"remote"</span><span class="p">,</span> <span class="s2">"get-url"</span><span class="p">,</span> <span class="o">*</span><span class="p">([</span><span class="s2">"--push"</span><span class="p">]</span> <span class="k">if</span> <span class="n">push</span> <span class="k">else</span> <span class="p">[]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="p">],</span>
             <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">,</span>
             <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -849,7 +851,10 @@ window.runMermaid = runMermaid;</script>
                 <span class="sa">f</span><span class="s2">"http.</span><span class="si">{</span><span class="n">parts</span><span class="o">.</span><span class="n">scheme</span><span class="si">}</span><span class="s2">://</span><span class="si">{</span><span class="n">parts</span><span class="o">.</span><span class="n">netloc</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">'@'</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">/.extraheader"</span>
             <span class="p">)</span>
             <span class="n">credentials</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="sa">f</span><span class="s2">"x-access-token:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
-            <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"GIT_CONFIG_COUNT"</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"GIT_CONFIG_COUNT"</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>  <span class="c1"># git would refuse it anyway; ours replaces it</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="c1"># actions/checkout leaves its own Authorization header in the repo config,</span>
             <span class="c1"># and GitHub rejects two (HTTP 400): an empty value clears earlier ones.</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
@@ -860,73 +865,94 @@ window.runMermaid = runMermaid;</script>
             <span class="n">env</span><span class="p">[</span><span class="s2">"GIT_CONFIG_COUNT"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">env</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_fetch_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Fetch metrics branch from remote."""</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_fetch_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Fetch the metrics branch from the remote into its remote-tracking ref.</span>
+
+<span class="sd">        Returns that ref (the remote's branch is the truth, and a local branch that is</span>
+<span class="sd">        checked out or has diverged does not get in the way), or ``None`` when the</span>
+<span class="sd">        remote has no such branch. If the fetch fails and the remote may have the</span>
+<span class="sd">        branch (or cannot be asked), this raises rather than orphan a branch the</span>
+<span class="sd">        remote would then reject on every later run.</span>
+<span class="sd">        """</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remote_url</span><span class="p">()</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_git_env</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">tracking_ref</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"refs/remotes/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"fetch"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"fetch"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"+refs/heads/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">tracking_ref</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span>
                 <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">,</span>
                 <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># May not exist yet</span>
                 <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-                <span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_git_env</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_remote_url</span><span class="p">()),</span>
+                <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
             <span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">tracking_ref</span>
         <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">TimeoutExpired</span><span class="p">:</span>
             <span class="k">pass</span>
+        <span class="k">if</span> <span class="n">url</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remote_lacks_branch</span><span class="p">(</span><span class="n">branch</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">GitBranchStorageError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"Could not fetch the metrics branch </span><span class="si">{</span><span class="n">branch</span><span class="si">!r}</span><span class="s2"> from the remote "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="si">!r}</span><span class="s2">, and it may exist there; not creating it from "</span>
+                <span class="s2">"scratch. Check the remote and the credentials."</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_checkout_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Checkout metrics branch to temporary directory."""</span>
-        <span class="c1"># Check if branch exists locally</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-            <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"rev-parse"</span><span class="p">,</span> <span class="s2">"--verify"</span><span class="p">,</span> <span class="n">branch</span><span class="p">],</span>
-            <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">,</span>
-            <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="c1"># Branch exists - clone it</span>
-            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-                <span class="p">[</span>
-                    <span class="s2">"git"</span><span class="p">,</span>
-                    <span class="s2">"clone"</span><span class="p">,</span>
-                    <span class="s2">"--branch"</span><span class="p">,</span>
-                    <span class="n">branch</span><span class="p">,</span>
-                    <span class="s2">"--depth"</span><span class="p">,</span>
-                    <span class="s2">"1"</span><span class="p">,</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">),</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">target_dir</span><span class="p">),</span>
-                <span class="p">],</span>
-                <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Branch doesn't exist - create new</span>
-            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"clone"</span><span class="p">,</span> <span class="s2">"--depth"</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">target_dir</span><span class="p">)],</span>
-                <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"checkout"</span><span class="p">,</span> <span class="s2">"--orphan"</span><span class="p">,</span> <span class="n">branch</span><span class="p">],</span>
-                <span class="n">cwd</span><span class="o">=</span><span class="n">target_dir</span><span class="p">,</span>
-                <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="c1"># Remove all files from new orphan branch</span>
-            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"rm"</span><span class="p">,</span> <span class="s2">"-rf"</span><span class="p">,</span> <span class="s2">"."</span><span class="p">],</span>
-                <span class="n">cwd</span><span class="o">=</span><span class="n">target_dir</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_remote_lacks_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Whether the remote answered, and has no branch ``branch``."""</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="c1"># the full ref: a bare name also matches refs/heads/any/prefix/branch</span>
+                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"ls-remote"</span><span class="p">,</span> <span class="s2">"--exit-code"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"refs/heads/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span>
+                <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">,</span>
                 <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+                <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
             <span class="p">)</span>
+        <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">TimeoutExpired</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">2</span>  <span class="c1"># 2: reachable, no matching ref</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_checkout_branch</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_ref</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Check the metrics branch out into ``target_dir``: from ``source_ref`` (the</span>
+<span class="sd">        freshly fetched remote branch), else from a local branch of that name, else as</span>
+<span class="sd">        a new orphan branch."""</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">git</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">target_dir</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">],</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">source_ref</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">local</span> <span class="o">=</span> <span class="n">git</span><span class="p">(</span><span class="s2">"rev-parse"</span><span class="p">,</span> <span class="s2">"--verify"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"refs/heads/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">)</span>
+            <span class="n">source_ref</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"refs/heads/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">local</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"init"</span><span class="p">,</span> <span class="s2">"-q"</span><span class="p">],</span> <span class="n">cwd</span><span class="o">=</span><span class="n">target_dir</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="c1"># as in a clone, `origin` is the local workspace (until pointed at the real one)</span>
+        <span class="n">git</span><span class="p">(</span><span class="s2">"remote"</span><span class="p">,</span> <span class="s2">"add"</span><span class="p">,</span> <span class="s2">"origin"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">source_ref</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># a new, history-less branch</span>
+            <span class="n">git</span><span class="p">(</span><span class="s2">"symbolic-ref"</span><span class="p">,</span> <span class="s2">"HEAD"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"refs/heads/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">args</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="p">(</span><span class="s2">"fetch"</span><span class="p">,</span> <span class="s2">"-q"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">),</span> <span class="sa">f</span><span class="s2">"+</span><span class="si">{</span><span class="n">source_ref</span><span class="si">}</span><span class="s2">:refs/heads/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"checkout"</span><span class="p">,</span> <span class="s2">"-q"</span><span class="p">,</span> <span class="n">branch</span><span class="p">),</span>
+        <span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">git</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">GitBranchStorageError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"git </span><span class="si">{</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> failed: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">errors</span><span class="o">=</span><span class="s1">'replace'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+                <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_commit_and_push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">commit_sha</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""Commit changes and push to remote."""</span>
         <span class="c1"># The clone's origin is the local workspace; point it at the real remote.</span>
         <span class="n">remote_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remote_url</span><span class="p">()</span>
+        <span class="n">push_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remote_url</span><span class="p">(</span><span class="n">push</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">remote_url</span><span class="p">:</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
                 <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"remote"</span><span class="p">,</span> <span class="s2">"set-url"</span><span class="p">,</span> <span class="s2">"origin"</span><span class="p">,</span> <span class="n">remote_url</span><span class="p">],</span>
@@ -934,7 +960,15 @@ window.runMermaid = runMermaid;</script>
                 <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_git_env</span><span class="p">(</span><span class="n">remote_url</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">push_url</span> <span class="ow">and</span> <span class="n">push_url</span> <span class="o">!=</span> <span class="n">remote_url</span><span class="p">:</span>  <span class="c1"># a separate remote.&lt;name&gt;.pushurl</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"remote"</span><span class="p">,</span> <span class="s2">"set-url"</span><span class="p">,</span> <span class="s2">"--push"</span><span class="p">,</span> <span class="s2">"origin"</span><span class="p">,</span> <span class="n">push_url</span><span class="p">],</span>
+                <span class="n">cwd</span><span class="o">=</span><span class="n">work_dir</span><span class="p">,</span>
+                <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_git_env</span><span class="p">(</span><span class="n">remote_url</span><span class="p">)</span>  <span class="c1"># fetch/pull</span>
+        <span class="n">push_env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_git_env</span><span class="p">(</span><span class="n">push_url</span><span class="p">)</span>
 
         <span class="c1"># Configure git</span>
         <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
@@ -985,7 +1019,7 @@ window.runMermaid = runMermaid;</script>
                         <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                         <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                         <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
-                        <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
+                        <span class="n">env</span><span class="o">=</span><span class="n">push_env</span><span class="p">,</span>
                     <span class="p">)</span>
                     <span class="k">break</span>
                 <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>

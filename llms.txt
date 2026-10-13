@@ -22,7 +22,7 @@
 - [umpyre.storage.formats](_autosummary/umpyre.storage.formats.html.md): JSON and CSV serialization for metrics.
 - [umpyre.storage.git_branch](_autosummary/umpyre.storage.git_branch.html.md): Git branch-based storage operations.
 - [umpyre.storage.query_utils](_autosummary/umpyre.storage.query_utils.html.md): Helper utilities for working with umpyre metrics storage.
-- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-10-13 06:57 UTC&#42;&#42; from commit &lt;a href="https://github.com/i2m...
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-10-13 14:49 UTC&#42;&#42; from commit &lt;a href="https://github.com/i2m...
 
 ## Optional
 
