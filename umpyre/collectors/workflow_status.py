@@ -9,6 +9,9 @@ import requests
 from umpyre.collectors.base import MetricCollector, registry
 
 
+DEFAULT_GITHUB_API_URL = "https://api.github.com"
+
+
 class WorkflowStatusCollector(MetricCollector):
     """
     Collect GitHub workflow status using GitHub API.
@@ -121,7 +124,10 @@ class WorkflowStatusCollector(MetricCollector):
         }
 
         # Fetch workflow runs
-        url = f"https://api.github.com/repos/{self.repo}/actions/runs"
+        # The API of the GitHub the token belongs to: GITHUB_API_URL on Actions (on an
+        # Enterprise Server too), github.com's otherwise.
+        api = (os.getenv("GITHUB_API_URL") or DEFAULT_GITHUB_API_URL).rstrip("/")
+        url = f"{api}/repos/{self.repo}/actions/runs"
         params = {
             "per_page": self.lookback_runs,
             "status": "completed",  # Only completed runs

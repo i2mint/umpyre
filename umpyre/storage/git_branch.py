@@ -12,6 +12,20 @@ from urllib.parse import urlsplit
 from umpyre.storage.formats import serialize_metrics
 
 
+# Where a token is sent when GITHUB_SERVER_URL does not say (a local run).
+DEFAULT_GITHUB_SERVER = "https://github.com"
+
+
+def _origin(parts) -> tuple:
+    """(scheme, host, port) of a split URL, host lower-cased and the default port filled in."""
+    try:
+        port = parts.port
+    except ValueError:
+        return (None, None, None)
+    default = {"https": 443, "http": 80}.get(parts.scheme)
+    return (parts.scheme, (parts.hostname or "").lower() or None, port or default)
+
+
 class GitBranchStorage:
     """
     Store metrics in a separate git branch.
@@ -121,16 +135,15 @@ class GitBranchStorage:
         """Environment for git commands that talk to the remote (auth header, if any)."""
         env = dict(os.environ)
         parts = urlsplit(url or "")
-        host = parts.netloc.rsplit("@", 1)[-1]
-        server_host = urlsplit(env.get("GITHUB_SERVER_URL", "")).netloc
-        if (
-            self.token
-            and parts.scheme in ("http", "https")
-            and host
-            and (not server_host or host == server_host)
-        ):
+        # The token goes to the GitHub it was issued by, over the scheme that server
+        # uses, and nowhere else: the Actions server when there is one, else github.com.
+        server = urlsplit(env.get("GITHUB_SERVER_URL") or DEFAULT_GITHUB_SERVER)
+        origin = _origin(parts)
+        if self.token and origin[1] and origin == _origin(server):
             env["GIT_TERMINAL_PROMPT"] = "0"  # fail, don't wait for a password
-            key = f"http.{parts.scheme}://{host}/.extraheader"
+            key = (
+                f"http.{parts.scheme}://{parts.netloc.rsplit('@', 1)[-1]}/.extraheader"
+            )
             credentials = base64.b64encode(f"x-access-token:{self.token}".encode())
             n = int(env.get("GIT_CONFIG_COUNT") or 0)
             # actions/checkout leaves its own Authorization header in the repo config,
