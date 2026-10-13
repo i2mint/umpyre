@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be" />
 
-    <script src="../../../_static/documentation_options.js?v=bafade30"></script>
+    <script src="../../../_static/documentation_options.js?v=1e825a29"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -410,7 +410,7 @@ window.runMermaid = runMermaid;</script>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.10" />
+  <meta name="docsearch:version" content="0.1.11" />
   
     
     <script src="../../../_static/searchtools.js"></script>
@@ -903,7 +903,13 @@ window.runMermaid = runMermaid;</script>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
                 <span class="c1"># the full ref: a bare name also matches refs/heads/any/prefix/branch</span>
-                <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"ls-remote"</span><span class="p">,</span> <span class="s2">"--exit-code"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"refs/heads/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span>
+                <span class="p">[</span>
+                    <span class="s2">"git"</span><span class="p">,</span>
+                    <span class="s2">"ls-remote"</span><span class="p">,</span>
+                    <span class="s2">"--exit-code"</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">"refs/heads/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">],</span>
                 <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">,</span>
                 <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -927,7 +933,9 @@ window.runMermaid = runMermaid;</script>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">source_ref</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">local</span> <span class="o">=</span> <span class="n">git</span><span class="p">(</span><span class="s2">"rev-parse"</span><span class="p">,</span> <span class="s2">"--verify"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"refs/heads/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span><span class="p">)</span>
+            <span class="n">local</span> <span class="o">=</span> <span class="n">git</span><span class="p">(</span>
+                <span class="s2">"rev-parse"</span><span class="p">,</span> <span class="s2">"--verify"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"refs/heads/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_path</span>
+            <span class="p">)</span>
             <span class="n">source_ref</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"refs/heads/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">local</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
             <span class="p">[</span><span class="s2">"git"</span><span class="p">,</span> <span class="s2">"init"</span><span class="p">,</span> <span class="s2">"-q"</span><span class="p">],</span> <span class="n">cwd</span><span class="o">=</span><span class="n">target_dir</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span>

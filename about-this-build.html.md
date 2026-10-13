@@ -2,18 +2,18 @@
 
 # About this build
 
-This documentation was built on **2026-10-13 14:49 UTC** from commit <a href="https://github.com/i2mint/umpyre/commit/e6725b58dfa80d4921bdf43180a1fb9dddecedeb"><code>e6725b5</code></a> on branch <code>master</code>, for **umpyre 0.1.10** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-10-13 14:52 UTC** from commit <a href="https://github.com/i2mint/umpyre/commit/a39040cf7d371b360ef8dab7dc3ed6fa3a14d8d1"><code>a39040c</code></a> on branch <code>master</code>, for **umpyre 0.1.11** (from <code>pyproject.toml</code>).
 
 #### WARNING
 The documentation and the package may be misaligned:
 
-- The documented version (0.1.10) is behind the latest release on PyPI (0.1.11): `pip install umpyre` gives newer code than these docs describe.
+- The documented version (0.1.11) is behind the latest release on PyPI (0.1.12): `pip install umpyre` gives newer code than these docs describe.
 
 ## Source
 
 |                     |                                                                                                                                                      |
 |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/i2mint/umpyre/commit/e6725b58dfa80d4921bdf43180a1fb9dddecedeb"><code>e6725b58dfa80d4921bdf43180a1fb9dddecedeb</code></a> |
+| Commit              | <a href="https://github.com/i2mint/umpyre/commit/a39040cf7d371b360ef8dab7dc3ed6fa3a14d8d1"><code>a39040cf7d371b360ef8dab7dc3ed6fa3a14d8d1</code></a> |
 | Branch              | <code>master</code>                                                                                                                                  |
 | Tags at this commit | none                                                                                                                                                 |
 | Working tree        | clean                                                                                                                                                |
@@ -24,9 +24,9 @@ The documentation and the package may be misaligned:
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>i2mint/umpyre</code>                                                                 |
-| Run          | <a href="https://github.com/i2mint/umpyre/actions/runs/38416370535">38416370535</a>        |
+| Run          | <a href="https://github.com/i2mint/umpyre/actions/runs/38416743757">38416743757</a>        |
 | Ref          | <code>refs/heads/master</code>                                                             |
-| Event commit | <code>e6725b58dfa80d4921bdf43180a1fb9dddecedeb</code> (in the history of the built commit) |
+| Event commit | <code>a39040cf7d371b360ef8dab7dc3ed6fa3a14d8d1</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -51,13 +51,13 @@ The documentation and the package may be misaligned:
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/umpyre/0.1.11/">0.1.11</a>, newer than the documented version (0.1.10).
+Latest release: <a href="https://pypi.org/project/umpyre/0.1.12/">0.1.12</a>, newer than the documented version (0.1.11).
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/i2mint/umpyre && cd umpyre
-git checkout e6725b58dfa80d4921bdf43180a1fb9dddecedeb
+git checkout a39040cf7d371b360ef8dab7dc3ed6fa3a14d8d1
 pip install "epythet==0.2.16"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
