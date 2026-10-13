@@ -106,14 +106,15 @@ def cmd_collect(args):
 
             print(json.dumps(metric_data, indent=2))
         else:
-            storage = GitBranchStorage(repo_path)
+            branch = args.storage_branch or config.storage_branch
+            storage = GitBranchStorage(repo_path, token=os.getenv("GITHUB_TOKEN"))
             storage.store_metrics(
                 metric_data,
                 commit_sha,
-                branch=config.storage_branch,
+                branch=branch,
                 formats=config.storage_formats,
             )
-            print(f"Metrics stored to branch '{config.storage_branch}'")
+            print(f"Metrics pushed to branch '{branch}' of the repository's remote")
 
         print(f"Collection completed in {duration:.2f}s")
         return 0
@@ -201,6 +202,11 @@ def main():
     )
     collect_parser.add_argument(
         "--message", help="Commit message (default: auto-detect from git)"
+    )
+    collect_parser.add_argument(
+        "--storage-branch",
+        help="Branch to store metrics on (default: storage.branch of the config, "
+        "else 'code-metrics')",
     )
     collect_parser.add_argument(
         "--no-store", action="store_true", help="Collect but don't store (dry-run)"
