@@ -1,8 +1,6 @@
 """Tests for config module."""
 
 import pytest
-import tempfile
-from pathlib import Path
 from umpyre.config import Config, ConfigError
 
 
@@ -29,7 +27,7 @@ def test_config_from_dict():
     assert config.storage_formats == ["csv"]
 
 
-def test_config_from_yaml_file():
+def test_config_from_yaml_file(tmp_path):
     """Should load config from YAML file."""
     yaml_content = """
 collectors:
@@ -41,17 +39,14 @@ storage:
   branch: test-metrics
 """
 
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.yml', delete=False) as f:
-        f.write(yaml_content)
-        f.flush()
+    path = tmp_path / "config.yml"
+    path.write_text(yaml_content)
 
-        config = Config.from_file(f.name)
+    config = Config.from_file(path)
 
-        assert config.storage_branch == "test-metrics"
-        assert config.is_collector_enabled("wily") is False
-        assert config.collector_config("wily")["max_revisions"] == 10
-
-        Path(f.name).unlink()
+    assert config.storage_branch == "test-metrics"
+    assert config.is_collector_enabled("wily") is False
+    assert config.collector_config("wily")["max_revisions"] == 10
 
 
 def test_config_deep_merge():
