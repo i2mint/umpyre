@@ -120,10 +120,11 @@ class GitBranchStorage:
             # Commit and push (to the real remote, not to the local workspace)
             self._commit_and_push(tmpdir, branch, commit_sha)
 
-    def _remote_url(self) -> Optional[str]:
-        """URL of the real remote of ``repo_path``, or ``None`` if it has none."""
+    def _remote_url(self, *, push: bool = False) -> Optional[str]:
+        """URL of the real remote of ``repo_path`` (the one pushed to when ``push``,
+        which ``remote.<name>.pushurl`` may make differ), or ``None`` if it has none."""
         result = subprocess.run(
-            ["git", "remote", "get-url", self.remote],
+            ["git", "remote", "get-url", *(["--push"] if push else []), self.remote],
             cwd=self.repo_path,
             capture_output=True,
             text=True,
@@ -145,7 +146,10 @@ class GitBranchStorage:
                 f"http.{parts.scheme}://{parts.netloc.rsplit('@', 1)[-1]}/.extraheader"
             )
             credentials = base64.b64encode(f"x-access-token:{self.token}".encode())
-            n = int(env.get("GIT_CONFIG_COUNT") or 0)
+            try:
+                n = max(int(env.get("GIT_CONFIG_COUNT") or 0), 0)
+            except ValueError:  # git would refuse it anyway; ours replaces it
+                n = 0
             # actions/checkout leaves its own Authorization header in the repo config,
             # and GitHub rejects two (HTTP 400): an empty value clears earlier ones.
             for i, value in enumerate(
@@ -157,18 +161,55 @@ class GitBranchStorage:
         return env
 
     def _fetch_branch(self, branch: str):
-        """Fetch metrics branch from remote."""
+        """Fetch the metrics branch from the remote.
+
+        The remote's branch is the truth: if the plain fetch fails (say the local copy
+        diverged) it is forced. A branch is created from scratch only when the remote
+        is known not to have it; if that cannot be told, this raises rather than
+        orphan a branch the remote would then reject on every later run.
+        """
+        url = self._remote_url()
+        env = self._git_env(url)
+
+        def fetch(refspec):
+            try:
+                return subprocess.run(
+                    ["git", "fetch", self.remote, refspec],
+                    cwd=self.repo_path,
+                    capture_output=True,
+                    text=True,
+                    check=False,  # May not exist yet
+                    timeout=30,
+                    env=env,
+                )
+            except subprocess.TimeoutExpired:
+                return None
+
+        for refspec in (f"{branch}:{branch}", f"+{branch}:{branch}"):
+            result = fetch(refspec)
+            if result is not None and result.returncode == 0:
+                return
+        if url and not self._remote_lacks_branch(branch, env):
+            raise GitBranchStorageError(
+                f"Could not fetch the metrics branch {branch!r} from the remote "
+                f"{self.remote!r}, and it may exist there; not creating it from "
+                "scratch. Check the remote and the credentials."
+            )
+
+    def _remote_lacks_branch(self, branch: str, env: dict) -> bool:
+        """Whether the remote answered, and has no branch ``branch``."""
         try:
-            subprocess.run(
-                ["git", "fetch", self.remote, f"{branch}:{branch}"],
+            result = subprocess.run(
+                ["git", "ls-remote", "--exit-code", "--heads", self.remote, branch],
                 cwd=self.repo_path,
                 capture_output=True,
-                check=False,  # May not exist yet
+                check=False,
                 timeout=30,
-                env=self._git_env(self._remote_url()),
+                env=env,
             )
         except subprocess.TimeoutExpired:
-            pass
+            return False
+        return result.returncode == 2  # 2: reachable, no matching ref
 
     def _checkout_branch(self, branch: str, target_dir: Path):
         """Checkout metrics branch to temporary directory."""
@@ -223,6 +264,7 @@ class GitBranchStorage:
         """Commit changes and push to remote."""
         # The clone's origin is the local workspace; point it at the real remote.
         remote_url = self._remote_url()
+        push_url = self._remote_url(push=True)
         if remote_url:
             subprocess.run(
                 ["git", "remote", "set-url", "origin", remote_url],
@@ -230,7 +272,15 @@ class GitBranchStorage:
                 capture_output=True,
                 check=True,
             )
-        env = self._git_env(remote_url)
+        if push_url and push_url != remote_url:  # a separate remote.<name>.pushurl
+            subprocess.run(
+                ["git", "remote", "set-url", "--push", "origin", push_url],
+                cwd=work_dir,
+                capture_output=True,
+                check=True,
+            )
+        env = self._git_env(remote_url)  # fetch/pull
+        push_env = self._git_env(push_url)
 
         # Configure git
         subprocess.run(
@@ -281,7 +331,7 @@ class GitBranchStorage:
                         capture_output=True,
                         check=True,
                         timeout=60,
-                        env=env,
+                        env=push_env,
                     )
                     break
                 except subprocess.CalledProcessError:

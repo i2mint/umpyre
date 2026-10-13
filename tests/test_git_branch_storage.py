@@ -100,3 +100,56 @@ def test_host_case_and_the_default_port_do_not_matter(monkeypatch):
         assert "GIT_CONFIG_COUNT" in storage._git_env(url), url
     for url in ("https://github.com:8443/o/r", "", None):
         assert storage._git_env(url) == dict(os.environ), url
+
+
+# --- hardening follow-ups (umpyre#9) ---------------------------------------------
+
+
+def test_a_diverged_local_branch_yields_to_the_remote(workspace):
+    work, remote = workspace
+    storage = GitBranchStorage(str(work))
+    storage.store_metrics({"metrics": {"n": 1}}, "a" * 40)
+    _git("fetch", "origin", "code-metrics:code-metrics", cwd=work)
+    # a local-only commit on the metrics branch makes the plain fetch non-fast-forward
+    _git("checkout", "-q", "code-metrics", cwd=work)
+    (work / "local.txt").write_text("x")
+    _git("add", ".", cwd=work)
+    _git("commit", "-qm", "local only", cwd=work)
+    _git("checkout", "-q", "-", cwd=work)
+    storage.store_metrics({"metrics": {"n": 2}}, "b" * 40)
+    log = _git("log", "--format=%s", "code-metrics", cwd=remote).splitlines()
+    assert log == [f"Update metrics for {'b' * 7}", f"Update metrics for {'a' * 7}"]
+
+
+def test_an_unreachable_remote_does_not_orphan_a_branch(workspace, tmp_path):
+    from umpyre.storage import GitBranchStorageError
+
+    work, remote = workspace
+    _git("remote", "set-url", "origin", str(tmp_path / "nowhere.git"), cwd=work)
+    with pytest.raises(GitBranchStorageError):
+        GitBranchStorage(str(work)).store_metrics({"metrics": {}}, "a" * 40)
+    assert subprocess.run(
+        ["git", "rev-parse", "--verify", "code-metrics"], cwd=work, capture_output=True
+    ).returncode != 0
+
+
+def test_a_separate_push_url_is_pushed_to(workspace, tmp_path):
+    work, remote = workspace
+    push_remote = tmp_path / "push.git"
+    _git("clone", "-q", "--bare", str(remote), str(push_remote), cwd=tmp_path)
+    _git("remote", "set-url", "--push", "origin", str(push_remote), cwd=work)
+    GitBranchStorage(str(work)).store_metrics({"metrics": {}}, "a" * 40)
+    assert _git("rev-parse", "--verify", "code-metrics", cwd=push_remote)
+    assert subprocess.run(
+        ["git", "rev-parse", "--verify", "code-metrics"], cwd=remote, capture_output=True
+    ).returncode != 0
+
+
+@pytest.mark.parametrize("count", ["abc", "", "-3", "1.5"])
+def test_a_non_numeric_git_config_count_does_not_crash(monkeypatch, count):
+    monkeypatch.setenv("GIT_CONFIG_COUNT", count)
+    monkeypatch.delenv("GITHUB_SERVER_URL", raising=False)
+    storage = GitBranchStorage.__new__(GitBranchStorage)  # no repo needed
+    storage.token = "t"
+    out = storage._git_env("https://github.com/o/r")
+    assert int(out["GIT_CONFIG_COUNT"]) >= 2
