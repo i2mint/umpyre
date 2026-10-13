@@ -46,7 +46,8 @@ class GitBranchStorage:
         Initialize storage.
 
         Metrics are pushed to the URL of ``remote`` in ``repo_path`` (e.g. GitHub),
-        not to ``repo_path`` itself.
+        not to ``repo_path`` itself. A separate ``remote.<name>.pushurl`` is honoured
+        for the push; as in git, it must name the same repository as the fetch URL.
 
         Args:
             repo_path: Path to git repository
@@ -85,8 +86,8 @@ class GitBranchStorage:
             tmpdir = Path(tmpdir)
 
             # Fetch and checkout metrics branch
-            self._fetch_branch(branch)
-            self._checkout_branch(branch, tmpdir)
+            source_ref = self._fetch_branch(branch)
+            self._checkout_branch(branch, tmpdir, source_ref=source_ref)
 
             # Create history directory (flat structure)
             history_dir = tmpdir / "history"
@@ -160,47 +161,45 @@ class GitBranchStorage:
             env["GIT_CONFIG_COUNT"] = str(n + 2)
         return env
 
-    def _fetch_branch(self, branch: str):
-        """Fetch the metrics branch from the remote.
+    def _fetch_branch(self, branch: str) -> Optional[str]:
+        """Fetch the metrics branch from the remote into its remote-tracking ref.
 
-        The remote's branch is the truth: if the plain fetch fails (say the local copy
-        diverged) it is forced. A branch is created from scratch only when the remote
-        is known not to have it; if that cannot be told, this raises rather than
-        orphan a branch the remote would then reject on every later run.
+        Returns that ref (the remote's branch is the truth, and a local branch that is
+        checked out or has diverged does not get in the way), or ``None`` when the
+        remote has no such branch. If the fetch fails and the remote may have the
+        branch (or cannot be asked), this raises rather than orphan a branch the
+        remote would then reject on every later run.
         """
         url = self._remote_url()
         env = self._git_env(url)
-
-        def fetch(refspec):
-            try:
-                return subprocess.run(
-                    ["git", "fetch", self.remote, refspec],
-                    cwd=self.repo_path,
-                    capture_output=True,
-                    text=True,
-                    check=False,  # May not exist yet
-                    timeout=30,
-                    env=env,
-                )
-            except subprocess.TimeoutExpired:
-                return None
-
-        for refspec in (f"{branch}:{branch}", f"+{branch}:{branch}"):
-            result = fetch(refspec)
-            if result is not None and result.returncode == 0:
-                return
+        tracking_ref = f"refs/remotes/{self.remote}/{branch}"
+        try:
+            result = subprocess.run(
+                ["git", "fetch", self.remote, f"+refs/heads/{branch}:{tracking_ref}"],
+                cwd=self.repo_path,
+                capture_output=True,
+                check=False,  # May not exist yet
+                timeout=30,
+                env=env,
+            )
+            if result.returncode == 0:
+                return tracking_ref
+        except subprocess.TimeoutExpired:
+            pass
         if url and not self._remote_lacks_branch(branch, env):
             raise GitBranchStorageError(
                 f"Could not fetch the metrics branch {branch!r} from the remote "
                 f"{self.remote!r}, and it may exist there; not creating it from "
                 "scratch. Check the remote and the credentials."
             )
+        return None
 
     def _remote_lacks_branch(self, branch: str, env: dict) -> bool:
         """Whether the remote answered, and has no branch ``branch``."""
         try:
             result = subprocess.run(
-                ["git", "ls-remote", "--exit-code", "--heads", self.remote, branch],
+                # the full ref: a bare name also matches refs/heads/any/prefix/branch
+                ["git", "ls-remote", "--exit-code", self.remote, f"refs/heads/{branch}"],
                 cwd=self.repo_path,
                 capture_output=True,
                 check=False,
@@ -211,54 +210,39 @@ class GitBranchStorage:
             return False
         return result.returncode == 2  # 2: reachable, no matching ref
 
-    def _checkout_branch(self, branch: str, target_dir: Path):
-        """Checkout metrics branch to temporary directory."""
-        # Check if branch exists locally
-        result = subprocess.run(
-            ["git", "rev-parse", "--verify", branch],
-            cwd=self.repo_path,
-            capture_output=True,
-            check=False,
-        )
+    def _checkout_branch(
+        self, branch: str, target_dir: Path, *, source_ref: Optional[str] = None
+    ):
+        """Check the metrics branch out into ``target_dir``: from ``source_ref`` (the
+        freshly fetched remote branch), else from a local branch of that name, else as
+        a new orphan branch."""
 
-        if result.returncode == 0:
-            # Branch exists - clone it
-            subprocess.run(
-                [
-                    "git",
-                    "clone",
-                    "--branch",
-                    branch,
-                    "--depth",
-                    "1",
-                    str(self.repo_path),
-                    str(target_dir),
-                ],
-                capture_output=True,
-                check=True,
-                timeout=60,
+        def git(*args, cwd=target_dir):
+            return subprocess.run(
+                ["git", *args], cwd=cwd, capture_output=True, check=False, timeout=60
             )
-        else:
-            # Branch doesn't exist - create new
-            subprocess.run(
-                ["git", "clone", "--depth", "1", str(self.repo_path), str(target_dir)],
-                capture_output=True,
-                check=True,
-                timeout=60,
-            )
-            subprocess.run(
-                ["git", "checkout", "--orphan", branch],
-                cwd=target_dir,
-                capture_output=True,
-                check=True,
-            )
-            # Remove all files from new orphan branch
-            subprocess.run(
-                ["git", "rm", "-rf", "."],
-                cwd=target_dir,
-                capture_output=True,
-                check=False,
-            )
+
+        if source_ref is None:
+            local = git("rev-parse", "--verify", f"refs/heads/{branch}", cwd=self.repo_path)
+            source_ref = f"refs/heads/{branch}" if local.returncode == 0 else None
+        subprocess.run(
+            ["git", "init", "-q"], cwd=target_dir, capture_output=True, check=True
+        )
+        # as in a clone, `origin` is the local workspace (until pointed at the real one)
+        git("remote", "add", "origin", str(self.repo_path))
+        if source_ref is None:
+            # a new, history-less branch
+            git("symbolic-ref", "HEAD", f"refs/heads/{branch}")
+            return
+        for args in (
+            ("fetch", "-q", str(self.repo_path), f"+{source_ref}:refs/heads/{branch}"),
+            ("checkout", "-q", branch),
+        ):
+            result = git(*args)
+            if result.returncode != 0:
+                raise GitBranchStorageError(
+                    f"git {args[0]} failed: {result.stderr.decode(errors='replace')}"
+                )
 
     def _commit_and_push(self, work_dir: Path, branch: str, commit_sha: str):
         """Commit changes and push to remote."""
