@@ -12,6 +12,10 @@ from urllib.parse import urlsplit
 from umpyre.storage.formats import serialize_metrics
 
 
+# Where a token is sent when GITHUB_SERVER_URL does not say (a local run).
+DEFAULT_GITHUB_SERVER = "https://github.com"
+
+
 class GitBranchStorage:
     """
     Store metrics in a separate git branch.
@@ -122,13 +126,10 @@ class GitBranchStorage:
         env = dict(os.environ)
         parts = urlsplit(url or "")
         host = parts.netloc.rsplit("@", 1)[-1]
-        server_host = urlsplit(env.get("GITHUB_SERVER_URL", "")).netloc
-        if (
-            self.token
-            and parts.scheme in ("http", "https")
-            and host
-            and (not server_host or host == server_host)
-        ):
+        # The token goes to the GitHub it was issued by, over the scheme that server
+        # uses, and nowhere else: the Actions server when there is one, else github.com.
+        server = urlsplit(env.get("GITHUB_SERVER_URL") or DEFAULT_GITHUB_SERVER)
+        if self.token and (parts.scheme, host) == (server.scheme, server.netloc):
             env["GIT_TERMINAL_PROMPT"] = "0"  # fail, don't wait for a password
             key = f"http.{parts.scheme}://{host}/.extraheader"
             credentials = base64.b64encode(f"x-access-token:{self.token}".encode())

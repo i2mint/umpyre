@@ -75,3 +75,17 @@ def test_no_header_without_token_for_local_ssh_or_foreign_hosts(monkeypatch):
     assert storage._git_env("https://evil.example/o/r") == dict(os.environ)
     storage.token = None
     assert storage._git_env("https://github.com/o/r") == dict(os.environ)
+
+
+def test_without_an_actions_server_the_token_goes_only_to_github(monkeypatch):
+    monkeypatch.delenv("GITHUB_SERVER_URL", raising=False)
+    monkeypatch.delenv("GIT_CONFIG_COUNT", raising=False)
+    storage = GitBranchStorage.__new__(GitBranchStorage)
+    storage.token = "t"
+    for url in (
+        "https://gitlab.com/o/r.git",
+        "https://github.com.evil.test/o/r",
+        "http://github.com/o/r",  # never in cleartext
+    ):
+        assert storage._git_env(url) == dict(os.environ)
+    assert "GIT_CONFIG_COUNT" in storage._git_env("https://github.com/o/r")
