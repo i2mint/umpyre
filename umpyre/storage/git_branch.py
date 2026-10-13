@@ -199,7 +199,13 @@ class GitBranchStorage:
         try:
             result = subprocess.run(
                 # the full ref: a bare name also matches refs/heads/any/prefix/branch
-                ["git", "ls-remote", "--exit-code", self.remote, f"refs/heads/{branch}"],
+                [
+                    "git",
+                    "ls-remote",
+                    "--exit-code",
+                    self.remote,
+                    f"refs/heads/{branch}",
+                ],
                 cwd=self.repo_path,
                 capture_output=True,
                 check=False,
@@ -223,7 +229,9 @@ class GitBranchStorage:
             )
 
         if source_ref is None:
-            local = git("rev-parse", "--verify", f"refs/heads/{branch}", cwd=self.repo_path)
+            local = git(
+                "rev-parse", "--verify", f"refs/heads/{branch}", cwd=self.repo_path
+            )
             source_ref = f"refs/heads/{branch}" if local.returncode == 0 else None
         subprocess.run(
             ["git", "init", "-q"], cwd=target_dir, capture_output=True, check=True
