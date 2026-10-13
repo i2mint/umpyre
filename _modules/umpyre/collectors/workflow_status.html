@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be" />
 
-    <script src="../../../_static/documentation_options.js?v=22607128"></script>
+    <script src="../../../_static/documentation_options.js?v=8618f531"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -410,7 +410,7 @@ window.runMermaid = runMermaid;</script>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.8" />
+  <meta name="docsearch:version" content="0.1.9" />
   
     
     <script src="../../../_static/searchtools.js"></script>
@@ -708,6 +708,9 @@ window.runMermaid = runMermaid;</script>
 <span class="kn">from</span><span class="w"> </span><span class="nn">umpyre.collectors.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">MetricCollector</span><span class="p">,</span> <span class="n">registry</span>
 
 
+<span class="n">DEFAULT_GITHUB_API_URL</span> <span class="o">=</span> <span class="s2">"https://api.github.com"</span>
+
+
 <div class="viewcode-block" id="WorkflowStatusCollector">
 <a class="viewcode-back" href="../../../_autosummary/umpyre.collectors.workflow_status.html#umpyre.WorkflowStatusCollector">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">WorkflowStatusCollector</span><span class="p">(</span><span class="n">MetricCollector</span><span class="p">):</span>
@@ -825,7 +828,10 @@ window.runMermaid = runMermaid;</script>
         <span class="p">}</span>
 
         <span class="c1"># Fetch workflow runs</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"https://api.github.com/repos/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="si">}</span><span class="s2">/actions/runs"</span>
+        <span class="c1"># The API of the GitHub the token belongs to: GITHUB_API_URL on Actions (on an</span>
+        <span class="c1"># Enterprise Server too), github.com's otherwise.</span>
+        <span class="n">api</span> <span class="o">=</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"GITHUB_API_URL"</span><span class="p">)</span> <span class="ow">or</span> <span class="n">DEFAULT_GITHUB_API_URL</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">api</span><span class="si">}</span><span class="s2">/repos/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="si">}</span><span class="s2">/actions/runs"</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">"per_page"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">lookback_runs</span><span class="p">,</span>
             <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"completed"</span><span class="p">,</span>  <span class="c1"># Only completed runs</span>

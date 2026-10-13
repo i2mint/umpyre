@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "built_at": "2026-10-13T05:56:39Z",
+  "built_at": "2026-10-13T06:57:32Z",
   "package": {
     "name": "umpyre",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "display_name": "umpyre",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "17a3adc806e228a04eaa16fd4bf895293d44d80e",
-    "short_commit": "17a3adc",
+    "commit": "ba903a644a7e218ff0c0128d09f206bb9f88f9f7",
+    "short_commit": "ba903a6",
     "branch": "master",
     "tags": [],
     "dirty": false,
     "remote_url": "https://github.com/i2mint/umpyre",
-    "commit_url": "https://github.com/i2mint/umpyre/commit/17a3adc806e228a04eaa16fd4bf895293d44d80e",
+    "commit_url": "https://github.com/i2mint/umpyre/commit/ba903a644a7e218ff0c0128d09f206bb9f88f9f7",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "i2mint/umpyre",
-    "sha": "17a3adc806e228a04eaa16fd4bf895293d44d80e",
+    "sha": "ba903a644a7e218ff0c0128d09f206bb9f88f9f7",
     "sha_in_history": true,
     "ref": "refs/heads/master",
     "ref_name": "master",
-    "run_id": "38353829515",
-    "run_url": "https://github.com/i2mint/umpyre/actions/runs/38353829515",
+    "run_id": "38359484604",
+    "run_url": "https://github.com/i2mint/umpyre/actions/runs/38359484604",
     "server_url": "https://github.com"
   },
   "tools": {
@@ -60,16 +60,16 @@
   },
   "pypi": {
     "checked": true,
-    "latest": "0.1.9",
+    "latest": "0.1.10",
     "relation": "behind",
     "error": null
   },
-  "reproduce": "git clone https://github.com/i2mint/umpyre && cd umpyre\ngit checkout 17a3adc806e228a04eaa16fd4bf895293d44d80e\npip install \"epythet==0.2.14\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/i2mint/umpyre && cd umpyre\ngit checkout ba903a644a7e218ff0c0128d09f206bb9f88f9f7\npip install \"epythet==0.2.14\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
     "aligned": false,
     "notes": [
-      "The documented version (0.1.8) is behind the latest release on PyPI (0.1.9): `pip install umpyre` gives newer code than these docs describe."
+      "The documented version (0.1.9) is behind the latest release on PyPI (0.1.10): `pip install umpyre` gives newer code than these docs describe."
     ]
   }
 }

@@ -5,19 +5,19 @@ orphan: true
 
 # About this build
 
-This documentation was built on **2026-10-13 05:56 UTC** from commit <a href="https://github.com/i2mint/umpyre/commit/17a3adc806e228a04eaa16fd4bf895293d44d80e"><code>17a3adc</code></a> on branch <code>master</code>, for **umpyre 0.1.8** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-10-13 06:57 UTC** from commit <a href="https://github.com/i2mint/umpyre/commit/ba903a644a7e218ff0c0128d09f206bb9f88f9f7"><code>ba903a6</code></a> on branch <code>master</code>, for **umpyre 0.1.9** (from <code>pyproject.toml</code>).
 
 :::{warning}
 The documentation and the package may be misaligned:
 
-- The documented version (0.1.8) is behind the latest release on PyPI (0.1.9): `pip install umpyre` gives newer code than these docs describe.
+- The documented version (0.1.9) is behind the latest release on PyPI (0.1.10): `pip install umpyre` gives newer code than these docs describe.
 :::
 
 ## Source
 
 | | |
 |---|---|
-| Commit | <a href="https://github.com/i2mint/umpyre/commit/17a3adc806e228a04eaa16fd4bf895293d44d80e"><code>17a3adc806e228a04eaa16fd4bf895293d44d80e</code></a> |
+| Commit | <a href="https://github.com/i2mint/umpyre/commit/ba903a644a7e218ff0c0128d09f206bb9f88f9f7"><code>ba903a644a7e218ff0c0128d09f206bb9f88f9f7</code></a> |
 | Branch | <code>master</code> |
 | Tags at this commit | none |
 | Working tree | clean |
@@ -28,9 +28,9 @@ The documentation and the package may be misaligned:
 | | |
 |---|---|
 | Repository | <code>i2mint/umpyre</code> |
-| Run | <a href="https://github.com/i2mint/umpyre/actions/runs/38353829515">38353829515</a> |
+| Run | <a href="https://github.com/i2mint/umpyre/actions/runs/38359484604">38359484604</a> |
 | Ref | <code>refs/heads/master</code> |
-| Event commit | <code>17a3adc806e228a04eaa16fd4bf895293d44d80e</code> (in the history of the built commit) |
+| Event commit | <code>ba903a644a7e218ff0c0128d09f206bb9f88f9f7</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -55,13 +55,13 @@ The documentation and the package may be misaligned:
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/umpyre/0.1.9/">0.1.9</a>, newer than the documented version (0.1.8).
+Latest release: <a href="https://pypi.org/project/umpyre/0.1.10/">0.1.10</a>, newer than the documented version (0.1.9).
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/i2mint/umpyre && cd umpyre
-git checkout 17a3adc806e228a04eaa16fd4bf895293d44d80e
+git checkout ba903a644a7e218ff0c0128d09f206bb9f88f9f7
 pip install "epythet==0.2.14"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
