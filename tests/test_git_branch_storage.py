@@ -89,3 +89,14 @@ def test_without_an_actions_server_the_token_goes_only_to_github(monkeypatch):
     ):
         assert storage._git_env(url) == dict(os.environ)
     assert "GIT_CONFIG_COUNT" in storage._git_env("https://github.com/o/r")
+
+
+def test_host_case_and_the_default_port_do_not_matter(monkeypatch):
+    monkeypatch.setenv("GITHUB_SERVER_URL", "https://github.com")
+    monkeypatch.delenv("GIT_CONFIG_COUNT", raising=False)
+    storage = GitBranchStorage.__new__(GitBranchStorage)
+    storage.token = "t"
+    for url in ("https://GitHub.com/o/r", "https://github.com:443/o/r"):
+        assert "GIT_CONFIG_COUNT" in storage._git_env(url), url
+    for url in ("https://github.com:8443/o/r", "", None):
+        assert storage._git_env(url) == dict(os.environ), url
