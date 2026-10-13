@@ -29,7 +29,11 @@ def workspace(tmp_path):
 
 
 def _collect(work, *args):
-    env = {k: v for k, v in os.environ.items() if k not in ("CI", "GITHUB_ACTIONS")}
+    # Not CI and not a GitHub run: the CLI would read the runner's GITHUB_SHA (a commit
+    # this scratch repo does not have) and treat a failure as non-fatal.
+    env = {
+        k: v for k, v in os.environ.items() if k != "CI" and not k.startswith("GITHUB_")
+    }
     env["PYTHONPATH"] = os.pathsep.join(sys.path)
     return subprocess.run(
         [
