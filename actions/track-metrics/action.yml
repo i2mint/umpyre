@@ -17,7 +17,7 @@ inputs:
     required: true
   
   force-run:
-    description: "Run even if an earlier step of the job failed ('true' or 'false')"
+    description: "Run even if an earlier step of the action failed ('true' or 'false'). To run after a failed step of the calling job, also give the calling step `if: always()`"
     default: 'false'
     required: false
   

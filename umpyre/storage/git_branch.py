@@ -121,15 +121,24 @@ class GitBranchStorage:
         """Environment for git commands that talk to the remote (auth header, if any)."""
         env = dict(os.environ)
         parts = urlsplit(url or "")
-        if self.token and parts.scheme in ("http", "https") and parts.netloc:
-            host = parts.netloc.rsplit("@", 1)[-1]
+        host = parts.netloc.rsplit("@", 1)[-1]
+        server_host = urlsplit(env.get("GITHUB_SERVER_URL", "")).netloc
+        if (
+            self.token
+            and parts.scheme in ("http", "https")
+            and host
+            and (not server_host or host == server_host)
+        ):
+            env["GIT_TERMINAL_PROMPT"] = "0"  # fail, don't wait for a password
+            key = f"http.{parts.scheme}://{host}/.extraheader"
             credentials = base64.b64encode(f"x-access-token:{self.token}".encode())
-            n = int(env.get("GIT_CONFIG_COUNT", "0"))
-            env["GIT_CONFIG_COUNT"] = str(n + 1)
-            env[f"GIT_CONFIG_KEY_{n}"] = f"http.{parts.scheme}://{host}/.extraheader"
-            env[f"GIT_CONFIG_VALUE_{n}"] = (
-                f"AUTHORIZATION: basic {credentials.decode()}"
-            )
+            n = int(env.get("GIT_CONFIG_COUNT") or 0)
+            # actions/checkout leaves its own Authorization header in the repo config,
+            # and GitHub rejects two (HTTP 400): an empty value clears earlier ones.
+            for i, value in enumerate(("", f"AUTHORIZATION: basic {credentials.decode()}")):
+                env[f"GIT_CONFIG_KEY_{n + i}"] = key
+                env[f"GIT_CONFIG_VALUE_{n + i}"] = value
+            env["GIT_CONFIG_COUNT"] = str(n + 2)
         return env
 
     def _fetch_branch(self, branch: str):
@@ -268,6 +277,7 @@ class GitBranchStorage:
                             cwd=work_dir,
                             capture_output=True,
                             check=False,
+                            timeout=60,
                             env=env,
                         )
                     else:

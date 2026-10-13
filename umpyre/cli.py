@@ -114,7 +114,7 @@ def cmd_collect(args):
                 branch=branch,
                 formats=config.storage_formats,
             )
-            print(f"Metrics pushed to branch '{branch}' of the repository's remote")
+            print(f"Metrics stored to branch '{branch}'")
 
         print(f"Collection completed in {duration:.2f}s")
         return 0
