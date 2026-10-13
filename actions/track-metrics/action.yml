@@ -8,16 +8,16 @@ inputs:
     required: false
   
   storage-branch:
-    description: 'Branch to store metrics'
+    description: 'Branch to store metrics on (the default leaves the choice to storage.branch in the config file)'
     default: 'code-metrics'
     required: false
   
   github-token:
-    description: 'GitHub token for API access'
+    description: 'GitHub token: read by the workflow_status collector and used to push the metrics branch (needs contents: write; with a read-only token the push fails, non-fatally)'
     required: true
   
   force-run:
-    description: 'Run even if workflow failed'
+    description: "Run even if an earlier step of the action failed ('true' or 'false'). To run after a failed step of the calling job, also give the calling step `if: always()`"
     default: 'false'
     required: false
   
@@ -40,22 +40,38 @@ runs:
         pip install umpyre coverage wily bandit interrogate
     
     - name: Collect and Store Metrics
+      # Run on success, or on failure too when `force-run` is 'true'.
+      if: ${{ success() || (inputs.force-run == 'true' && !cancelled()) }}
       shell: bash
+      env:
+        # Inputs reach the script as environment variables, never pasted into it.
+        CONFIG_PATH: ${{ inputs.config-path }}
+        STORAGE_BRANCH: ${{ inputs.storage-branch }}
+        # Used by the workflow_status collector and to push the metrics branch.
+        GITHUB_TOKEN: ${{ inputs.github-token }}
       run: |
         echo "::group::Collecting Code Metrics"
-        
+
         # Set up error handling - continue even if collection fails
         set +e
-        
-        # Run umpyre collect
-        if [ -f "${{ inputs.config-path }}" ]; then
-          python -m umpyre.cli collect --config "${{ inputs.config-path }}"
-          EXIT_CODE=$?
-        else
-          python -m umpyre.cli collect
-          EXIT_CODE=$?
+
+        # Build the command. Run from $RUNNER_TEMP in isolated mode (-I) so that a
+        # file in the checked-out repo (umpyre/, yaml.py, ...) can't shadow an
+        # installed package; the repository is passed explicitly.
+        cmd=(python -I -m umpyre.cli collect --repo-path "$GITHUB_WORKSPACE")
+        if [ -n "$CONFIG_PATH" ] && [ -f "$GITHUB_WORKSPACE/$CONFIG_PATH" ]; then
+          cmd+=(--config "$GITHUB_WORKSPACE/$CONFIG_PATH")
+        elif [ -n "$CONFIG_PATH" ] && [ -f "$CONFIG_PATH" ]; then
+          cmd+=(--config "$CONFIG_PATH")
         fi
-        
+        # The input's default leaves the choice to the config file (storage.branch).
+        if [ -n "$STORAGE_BRANCH" ] && [ "$STORAGE_BRANCH" != "code-metrics" ]; then
+          cmd+=(--storage-branch "$STORAGE_BRANCH")
+        fi
+
+        (cd "${RUNNER_TEMP:-/tmp}" && "${cmd[@]}")
+        EXIT_CODE=$?
+
         # Report status but don't fail
         if [ $EXIT_CODE -eq 0 ]; then
           echo "✅ Metrics collection completed successfully"
@@ -63,9 +79,9 @@ runs:
           echo "⚠️ Metrics collection failed with exit code $EXIT_CODE"
           echo "This is informational only - CI pipeline continues"
         fi
-        
+
         echo "::endgroup::"
-        
+
         # Always exit successfully to not break CI
         exit 0
 

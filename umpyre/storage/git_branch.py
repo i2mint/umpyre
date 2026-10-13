@@ -1,10 +1,13 @@
 """Git branch-based storage operations."""
 
+import base64
+import os
 import subprocess
 import tempfile
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
+from urllib.parse import urlsplit
 
 from umpyre.storage.formats import serialize_metrics
 
@@ -22,16 +25,25 @@ class GitBranchStorage:
         >>> storage.store_metrics(metrics, "abc123", branch="code-metrics")  #doctest: +SKIP
     """
 
-    def __init__(self, repo_path: str, remote: str = "origin"):
+    def __init__(
+        self, repo_path: str, remote: str = "origin", *, token: Optional[str] = None
+    ):
         """
         Initialize storage.
+
+        Metrics are pushed to the URL of ``remote`` in ``repo_path`` (e.g. GitHub),
+        not to ``repo_path`` itself.
 
         Args:
             repo_path: Path to git repository
             remote: Git remote name
+            token: Access token used (as an HTTP auth header scoped to the remote's
+                host, never written to a URL or config) to push to an https remote.
+                Without it, the push uses whatever credentials git already has.
         """
         self.repo_path = Path(repo_path)
         self.remote = remote
+        self.token = token
 
         if not (self.repo_path / ".git").exists():
             raise ValueError(f"Not a git repository: {repo_path}")
@@ -91,8 +103,43 @@ class GitBranchStorage:
                 elif fmt == "csv":
                     serialize_metrics(metrics, tmpdir / "metrics.csv", format="csv")
 
-            # Commit and push
+            # Commit and push (to the real remote, not to the local workspace)
             self._commit_and_push(tmpdir, branch, commit_sha)
+
+    def _remote_url(self) -> Optional[str]:
+        """URL of the real remote of ``repo_path``, or ``None`` if it has none."""
+        result = subprocess.run(
+            ["git", "remote", "get-url", self.remote],
+            cwd=self.repo_path,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        return result.stdout.strip() or None if result.returncode == 0 else None
+
+    def _git_env(self, url: Optional[str]) -> dict:
+        """Environment for git commands that talk to the remote (auth header, if any)."""
+        env = dict(os.environ)
+        parts = urlsplit(url or "")
+        host = parts.netloc.rsplit("@", 1)[-1]
+        server_host = urlsplit(env.get("GITHUB_SERVER_URL", "")).netloc
+        if (
+            self.token
+            and parts.scheme in ("http", "https")
+            and host
+            and (not server_host or host == server_host)
+        ):
+            env["GIT_TERMINAL_PROMPT"] = "0"  # fail, don't wait for a password
+            key = f"http.{parts.scheme}://{host}/.extraheader"
+            credentials = base64.b64encode(f"x-access-token:{self.token}".encode())
+            n = int(env.get("GIT_CONFIG_COUNT") or 0)
+            # actions/checkout leaves its own Authorization header in the repo config,
+            # and GitHub rejects two (HTTP 400): an empty value clears earlier ones.
+            for i, value in enumerate(("", f"AUTHORIZATION: basic {credentials.decode()}")):
+                env[f"GIT_CONFIG_KEY_{n + i}"] = key
+                env[f"GIT_CONFIG_VALUE_{n + i}"] = value
+            env["GIT_CONFIG_COUNT"] = str(n + 2)
+        return env
 
     def _fetch_branch(self, branch: str):
         """Fetch metrics branch from remote."""
@@ -103,6 +150,7 @@ class GitBranchStorage:
                 capture_output=True,
                 check=False,  # May not exist yet
                 timeout=30,
+                env=self._git_env(self._remote_url()),
             )
         except subprocess.TimeoutExpired:
             pass
@@ -158,6 +206,17 @@ class GitBranchStorage:
 
     def _commit_and_push(self, work_dir: Path, branch: str, commit_sha: str):
         """Commit changes and push to remote."""
+        # The clone's origin is the local workspace; point it at the real remote.
+        remote_url = self._remote_url()
+        if remote_url:
+            subprocess.run(
+                ["git", "remote", "set-url", "origin", remote_url],
+                cwd=work_dir,
+                capture_output=True,
+                check=True,
+            )
+        env = self._git_env(remote_url)
+
         # Configure git
         subprocess.run(
             ["git", "config", "user.name", "umpyre-bot"],
@@ -202,21 +261,24 @@ class GitBranchStorage:
             for attempt in range(3):
                 try:
                     subprocess.run(
-                        ["git", "push", self.remote, branch],
+                        ["git", "push", "origin", branch],
                         cwd=work_dir,
                         capture_output=True,
                         check=True,
                         timeout=60,
+                        env=env,
                     )
                     break
                 except subprocess.CalledProcessError:
                     if attempt < 2:
                         # Pull and try again
                         subprocess.run(
-                            ["git", "pull", "--rebase", self.remote, branch],
+                            ["git", "pull", "--rebase", "origin", branch],
                             cwd=work_dir,
                             capture_output=True,
                             check=False,
+                            timeout=60,
+                            env=env,
                         )
                     else:
                         raise
