@@ -1,4 +1,4 @@
-> built 2026-10-13 14:52 UTC from a39040c (master) · umpyre 0.1.11. Details: build_info.json
+> built 2026-11-22 21:08 UTC from 7996493 (master) · umpyre 0.1.12. Details: build_info.json
 
 # index.html.md
 
@@ -2301,18 +2301,16 @@ Parse metric filename into components.
 
 # About this build
 
-This documentation was built on **2026-10-13 14:52 UTC** from commit <a href="https://github.com/i2mint/umpyre/commit/a39040cf7d371b360ef8dab7dc3ed6fa3a14d8d1"><code>a39040c</code></a> on branch <code>master</code>, for **umpyre 0.1.11** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-22 21:08 UTC** from commit <a href="https://github.com/i2mint/umpyre/commit/7996493751d60d3a84da70e7786690ca24e2ddb5"><code>7996493</code></a> on branch <code>master</code>, for **umpyre 0.1.12** (from <code>pyproject.toml</code>).
 
-#### WARNING
-The documentation and the package may be misaligned:
-
-- The documented version (0.1.11) is behind the latest release on PyPI (0.1.12): `pip install umpyre` gives newer code than these docs describe.
+#### NOTE
+Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
 
 ## Source
 
 |                     |                                                                                                                                                      |
 |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/i2mint/umpyre/commit/a39040cf7d371b360ef8dab7dc3ed6fa3a14d8d1"><code>a39040cf7d371b360ef8dab7dc3ed6fa3a14d8d1</code></a> |
+| Commit              | <a href="https://github.com/i2mint/umpyre/commit/7996493751d60d3a84da70e7786690ca24e2ddb5"><code>7996493751d60d3a84da70e7786690ca24e2ddb5</code></a> |
 | Branch              | <code>master</code>                                                                                                                                  |
 | Tags at this commit | none                                                                                                                                                 |
 | Working tree        | clean                                                                                                                                                |
@@ -2323,18 +2321,18 @@ The documentation and the package may be misaligned:
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>i2mint/umpyre</code>                                                                 |
-| Run          | <a href="https://github.com/i2mint/umpyre/actions/runs/38416743757">38416743757</a>        |
+| Run          | <a href="https://github.com/i2mint/umpyre/actions/runs/45070171599">45070171599</a>        |
 | Ref          | <code>refs/heads/master</code>                                                             |
-| Event commit | <code>a39040cf7d371b360ef8dab7dc3ed6fa3a14d8d1</code> (in the history of the built commit) |
+| Event commit | <code>7996493751d60d3a84da70e7786690ca24e2ddb5</code> (in the history of the built commit) |
 
 ## Tools
 
 |          |         |
 |----------|---------|
-| epythet  | 0.2.16  |
-| Sphinx   | 9.1.0   |
+| epythet  | 0.2.23  |
+| Sphinx   | 9.1.1   |
 | docutils | 0.22.4  |
-| Python   | 3.12.15 |
+| Python   | 3.12.16 |
 
 ## Configuration as resolved
 
@@ -2350,14 +2348,14 @@ The documentation and the package may be misaligned:
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/umpyre/0.1.12/">0.1.12</a>, newer than the documented version (0.1.11).
+Latest release: <a href="https://pypi.org/project/umpyre/0.1.12/">0.1.12</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/i2mint/umpyre && cd umpyre
-git checkout a39040cf7d371b360ef8dab7dc3ed6fa3a14d8d1
-pip install "epythet==0.2.16"
+git checkout 7996493751d60d3a84da70e7786690ca24e2ddb5
+pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
 
